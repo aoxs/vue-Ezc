@@ -321,8 +321,8 @@ export const asyncRoutes = [
       {
         path: 'download',
         component: () => import('@/views/zip/index'),
-        name: 'ExportZip',
-        meta: { title: 'Export Zip' }
+        name: 'test',
+        meta: { title: 'test' }
       }
     ]
   },
