@@ -382,7 +382,30 @@ export const asyncRoutes = [
       }
     ]
   },
-
+  {
+    path: '/systemSet',
+    component: Layout,
+    redirect: '/systemSet/index',
+    name: 'systemSet',
+    meta: {
+      title: '系统管理',
+      icon: 'theme'
+    },
+    children: [
+      {
+        path: 'groupIns',
+        component: () => import('@/views/systemSet/index'),
+        name: 'groupIns',
+        meta: { title: '组织结构' }
+      },
+      {
+        path: 'user',
+        component: () => import('@/views/systemSet/userset'),
+        name: 'user',
+        meta: { title: '账号管理' }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
