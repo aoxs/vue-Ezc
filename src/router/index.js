@@ -397,12 +397,21 @@ export const asyncRoutes = [
         component: () => import('@/views/systemSet/index'),
         name: 'groupIns',
         meta: { title: '组织结构' }
-      },
-      {
-        path: 'user',
-        component: () => import('@/views/systemSet/userset'),
-        name: 'user',
+      }, {
+        path: 'userSys',
+        component: () => import('@/views/systemSet/userSys'),
+        name: 'userSys',
         meta: { title: '账号管理' }
+      }, {
+        path: 'proUser',
+        component: () => import('@/views/systemSet/proUser'),
+        name: 'proUser',
+        meta: { title: '项目用户账户' }
+      }, {
+        path: 'rolePer',
+        component: () => import('@/views/systemSet/rolePer'),
+        name: 'rolePer',
+        meta: { title: '角色权限' }
       }
     ]
   },
