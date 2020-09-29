@@ -130,6 +130,39 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
+    path: '/systemSet',
+    component: Layout,
+    redirect: '/systemSet/index',
+    name: 'systemSet',
+    meta: {
+      title: '系统管理',
+      icon: 'theme'
+    },
+    children: [
+      {
+        path: 'groupIns',
+        component: () => import('@/views/systemSet/groupIns'),
+        name: 'groupIns',
+        meta: { title: '组织结构' }
+      }, {
+        path: 'userSys',
+        component: () => import('@/views/systemSet/userSys'),
+        name: 'userSys',
+        meta: { title: '账号管理' }
+      }, {
+        path: 'proUser',
+        component: () => import('@/views/systemSet/proUser'),
+        name: 'proUser',
+        meta: { title: '项目用户账户' }
+      }, {
+        path: 'rolePer',
+        component: () => import('@/views/systemSet/rolePer'),
+        name: 'rolePer',
+        meta: { title: '角色权限' }
+      }
+    ]
+  },
+  {
     path: '/permission',
     component: Layout,
     redirect: '/permission/page',
@@ -382,39 +415,7 @@ export const asyncRoutes = [
       }
     ]
   },
-  {
-    path: '/systemSet',
-    component: Layout,
-    redirect: '/systemSet/index',
-    name: 'systemSet',
-    meta: {
-      title: '系统管理',
-      icon: 'theme'
-    },
-    children: [
-      {
-        path: 'groupIns',
-        component: () => import('@/views/systemSet/index'),
-        name: 'groupIns',
-        meta: { title: '组织结构' }
-      }, {
-        path: 'userSys',
-        component: () => import('@/views/systemSet/userSys'),
-        name: 'userSys',
-        meta: { title: '账号管理' }
-      }, {
-        path: 'proUser',
-        component: () => import('@/views/systemSet/proUser'),
-        name: 'proUser',
-        meta: { title: '项目用户账户' }
-      }, {
-        path: 'rolePer',
-        component: () => import('@/views/systemSet/rolePer'),
-        name: 'rolePer',
-        meta: { title: '角色权限' }
-      }
-    ]
-  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
