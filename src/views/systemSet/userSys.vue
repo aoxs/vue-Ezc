@@ -123,6 +123,7 @@ export default {
     },
     handleEdit(index, row) {
       console.log(index, row)
+      this.clickUserRes = []
       this.centerDialogVisible = true
       this.clickUserRes.push(
         row.loginName,
@@ -134,11 +135,11 @@ export default {
     },
     userEupdata() {
       this.centerDialogVisible = false
-      this.clickUserRes = []
+      
     },
     userEback() {
       this.centerDialogVisible = false
-      this.clickUserRes = []
+     
     },
     handleClose(done) {
       this.$confirm('确定关闭？')
@@ -146,12 +147,12 @@ export default {
           done()
           console.log(1, done)
           this.centerDialogVisible = false
-          this.clickUserRes = []
+          
         })
 
         .catch((_) => {
           console.log(2, done)
-          this.clickUserRes = []
+          
         })
     }
   }
