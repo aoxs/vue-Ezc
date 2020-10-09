@@ -13,17 +13,8 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" />
-      <el-table-column
-        prop="loginName"
-        label="登录名"
-        sortable
-        width=""
-      />
-      <el-table-column
-        prop="userName"
-        label="名称"
-        width=""
-      />
+      <el-table-column prop="loginName" label="登录名" sortable width="" />
+      <el-table-column prop="userName" label="名称" width="" />
       <el-table-column
         prop="group"
         label="所属机构"
@@ -45,14 +36,25 @@
         width=""
         show-overflow-tooltip
       />
-      <el-table-column
-        align="center"
-      >
+      <el-table-column align="center">
         <div slot-scope="scope">
           <el-button
             size="mini"
             @click="handleEdit(scope.$index, scope.row)"
           >编辑</el-button>
+          <el-dialog
+            title="提示"
+            :visible.sync="centerDialogVisible"
+            width="80%"
+            :before-close="handleClose"
+          >
+            <span>点击编辑用户</span>
+            <p>登录名为{{ clickUserRes[0] }}</p>
+            <span slot="footer">
+              <el-button @click="userEupdata()">取消</el-button>
+              <el-button type="primary" @click="userEback()">确认</el-button>
+            </span>
+          </el-dialog>
         </div>
       </el-table-column>
     </el-table>
@@ -108,9 +110,10 @@ export default {
           tel: '13035707258',
           role: 'web'
         }
-
       ],
-      multipleSelection: []
+      centerDialogVisible: false,
+      multipleSelection: [],
+      clickUserRes: []
     }
   },
   methods: {
@@ -120,6 +123,36 @@ export default {
     },
     handleEdit(index, row) {
       console.log(index, row)
+      this.centerDialogVisible = true
+      this.clickUserRes.push(
+        row.loginName,
+        row.userName,
+        row.group,
+        row.tel,
+        row.role
+      )
+    },
+    userEupdata() {
+      this.centerDialogVisible = false
+      this.clickUserRes = []
+    },
+    userEback() {
+      this.centerDialogVisible = false
+      this.clickUserRes = []
+    },
+    handleClose(done) {
+      this.$confirm('确定关闭？')
+        .then((_) => {
+          done()
+          console.log(1, done)
+          this.centerDialogVisible = false
+          this.clickUserRes = []
+        })
+
+        .catch((_) => {
+          console.log(2, done)
+          this.clickUserRes = []
+        })
     }
   }
 }
