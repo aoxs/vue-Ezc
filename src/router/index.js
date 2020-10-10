@@ -421,20 +421,9 @@ export const asyncRoutes = [
     ]
   },
 */
-/*
-  {
-    path: '/icon',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/icons/index'),
-        name: 'Icons',
-        meta: { title: 'Icons', icon: 'icon', noCache: true }
-      }
-    ]
-  },
-*/
+
+
+
   /** when your routing map is too long, you can split it into small modules **/
   /* 当您的路由映射太长时，您可以将其分割为小模块 */
   // componentsRouter,
@@ -636,6 +625,21 @@ export const asyncRoutes = [
       ]
     },
   */
+
+ {
+  path: '/icon',
+  component: Layout,
+  children: [
+    {
+      path: 'index',
+      component: () => import('@/views/icons/index'),
+      name: 'Icons',
+      meta: { title: 'Icons', icon: 'icon', noCache: true }
+    }
+  ]
+},
+
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
