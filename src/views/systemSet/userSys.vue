@@ -4,6 +4,15 @@
 
     <!-- 下拉框end -->
     <!-- 组织结构表 -->
+    <el-button
+      :loading="downloadLoading"
+      style="margin: 0 0 20px 20px"
+      type="primary"
+      icon="el-icon-document"
+      @click="handleDownload"
+    >
+      导出Excel
+    </el-button>
     <el-table
       :data="tableData"
       style="width: 80%; margin: 0 auto; margin-top: 20px"
@@ -38,10 +47,9 @@
       />
       <el-table-column align="center">
         <div slot-scope="scope">
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.$index, scope.row)"
-          >编辑</el-button>
+          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
+            >编辑</el-button
+          >
           <el-dialog
             title="提示"
             :visible.sync="centerDialogVisible"
@@ -69,94 +77,137 @@ export default {
     return {
       tableData: [
         {
-          loginName: 'aoxs01',
-          userName: '刘钦求',
-          group: '英联不动产',
-          tel: '13035707258',
-          role: 'web'
+          loginName: "aoxs01",
+          userName: "刘钦求",
+          group: "英联不动产",
+          tel: "13035707258",
+          role: "web",
         },
         {
-          loginName: 'aoxs02',
-          userName: '刘钦求',
-          group: '英联不动产',
-          tel: '13035707258',
-          role: 'web'
+          loginName: "aoxs02",
+          userName: "刘钦求",
+          group: "英联不动产",
+          tel: "13035707258",
+          role: "web",
         },
         {
-          loginName: 'aoxs03',
-          userName: '刘钦求',
-          group: '英联不动产',
-          tel: '13035707258',
-          role: 'web'
+          loginName: "aoxs03",
+          userName: "刘钦求",
+          group: "英联不动产",
+          tel: "13035707258",
+          role: "web",
         },
         {
-          loginName: 'aoxs04',
-          userName: '刘钦求',
-          group: '英联不动产',
-          tel: '13035707258',
-          role: 'web'
+          loginName: "aoxs04",
+          userName: "刘钦求",
+          group: "英联不动产",
+          tel: "13035707258",
+          role: "web",
         },
         {
-          loginName: 'aoxs05',
-          userName: '刘钦求',
-          group: '英联不动产',
-          tel: '13035707258',
-          role: 'web'
+          loginName: "aoxs05",
+          userName: "刘钦求",
+          group: "英联不动产",
+          tel: "13035707258",
+          role: "web",
         },
         {
-          loginName: 'aoxs06',
-          userName: '刘钦求',
-          group: '英联不动产',
-          tel: '13035707258',
-          role: 'web'
-        }
+          loginName: "aoxs06",
+          userName: "刘钦求",
+          group: "英联不动产",
+          tel: "13035707258",
+          role: "web",
+        },
       ],
+      list: null,
+      listLoading: true,
+      downloadLoading: false,
+      filename: "",
+      autoWidth: true,
+      bookType: "xlsx",
       centerDialogVisible: false,
       multipleSelection: [],
-      clickUserRes: []
-    }
+      clickUserRes: [],
+    };
+  },
+  created(){
+    this.fetchData()
   },
   methods: {
+    fetchData() {
+      this.listLoading = true;
+      fetchList().then((response) => {
+        this.list = response.data.items;
+        this.listLoading = false;
+      });
+    },
+    handleDownload() {
+      this.downloadLoading = true;
+      import("@/vendor/Export2Excel").then((excel) => {
+        const tHeader = ["登录名", "名称", "所属机构", "联系电话", "角色"];
+        const filterVal = ["登录名", "名称", "所属机构", "联系电话", "角色"];
+        const list = this.list;
+        const data = this.formatJson(filterVal, list);
+        excel.export_json_to_excel({
+          header: tHeader,
+          data,
+          filename: this.filename,
+          autoWidth: this.autoWidth,
+          bookType: this.bookType,
+        });
+        this.downloadLoading = false;
+      });
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map((v) =>
+        filterVal.map((j) => {
+          if (j === "timestamp") {
+            return parseTime(v[j]);
+          } else {
+            return v[j];
+          }
+        })
+      );
+    },
+
+    /////////////////////////
+
     handleSelectionChange(val) {
-      this.multipleSelection = val
+      this.multipleSelection = val;
       //   console.log(val)
     },
     handleEdit(index, row) {
-      console.log(index, row)
-      this.clickUserRes = []
-      this.centerDialogVisible = true
+      console.log(index, row);
+      this.clickUserRes = [];
+      this.centerDialogVisible = true;
       this.clickUserRes.push(
         row.loginName,
         row.userName,
         row.group,
         row.tel,
         row.role
-      )
+      );
     },
     userEupdata() {
-      this.centerDialogVisible = false
-      
+      this.centerDialogVisible = false;
     },
     userEback() {
-      this.centerDialogVisible = false
-     
+      this.centerDialogVisible = false;
     },
     handleClose(done) {
-      this.$confirm('确定关闭？')
+      this.$confirm("确定关闭？")
         .then((_) => {
-          done()
-          console.log(1, done)
-          this.centerDialogVisible = false
-          
+          done();
+          console.log(1, done);
+          this.centerDialogVisible = false;
         })
 
         .catch((_) => {
-          console.log(2, done)
-          
-        })
-    }
-  }
-}
+          console.log(2, done);
+        });
+    },
+  },
+};
 </script>
 
 <style>
