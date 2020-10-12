@@ -8,21 +8,43 @@
 
     <el-row>
       <!-- 阶段进度 -->
-      <el-col :lg="16" :mb="8" class="Ppro">
-        <phase-progress />
+      <el-col :lg="16" :mb="8" class="Ppro" style="margin-bottom: 20px">
+        <div style="height: 576px; background-color: #fff">
+          <phase-progress />
+        </div>
       </el-col>
 
       <!-- 每日进度 -->
-      <el-col :lg="8" :mb="8" class="Dpro">
-        <days-progress />
+      <el-col :lg="8" :mb="8" class="Dpro" style="margin-bottom: 20px">
+        <div style="height: 576px; background-color: #fff">
+          <days-progress />
+        </div>
       </el-col>
     </el-row>
 
-    <el-row style="background: #fff; padding: 16px 16px 0; margin-bottom: 32px">
-      <line-chart :chart-data="lineChartData" />
+    <el-row>
+      <!-- 工作照片 -->
+
+      <el-col :lg="14" :mb="8" class="Ppro" style="margin-bottom: 20px">
+        <div style=" background-color: #fff">
+          <work-jpg></work-jpg>
+        </div>
+      </el-col>
+
+      <!-- 安置房意愿调查表 -->
+
+      <el-col :lg="10" :mb="8" class="Dpro" style="margin-bottom: 20px">
+        <div style=" background-color: #fff">
+          
+        </div>
+      </el-col>
     </el-row>
 
-    <el-row :gutter="32">
+    <!-- <el-row style="background: #fff; padding: 16px 16px 0; margin-bottom: 32px">
+      <line-chart :chart-data="lineChartData" />
+    </el-row> -->
+
+    <!-- <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
           <raddar-chart />
@@ -71,7 +93,7 @@
       >
         <box-card />
       </el-col>
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 
@@ -88,6 +110,8 @@ import BoxCard from "./components/BoxCard";
 import ProgIndex from "./components/ProgIndex";
 import PhaseProgress from "./components/PhaseProgress";
 import DaysProgress from "./components/DaysProgress";
+import WorkJpg from "./components/WorkJpg";
+
 
 const lineChartData = {
   newVisitis: {
@@ -123,6 +147,7 @@ export default {
     ProgIndex,
     PhaseProgress,
     DaysProgress,
+    WorkJpg,
   },
   data() {
     return {
@@ -134,6 +159,7 @@ export default {
       this.lineChartData = lineChartData[type];
     },
   },
+  mounted() {},
 };
 </script>
 
@@ -159,7 +185,6 @@ export default {
     padding-left: 0px;
   }
 }
-
 
 @media (max-width: 1024px) {
   // .chart-wrapper {
