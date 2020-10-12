@@ -15,7 +15,7 @@
       <template v-if="device !== 'mobile'">
         <search id="header-search" class="right-menu-item" />
 
-        <error-log class="errLog-container right-menu-item hover-effect" />
+        <!-- <error-log class="errLog-container right-menu-item hover-effect" /> -->
 
         <!-- <screenfull id="screenfull" class="right-menu-item hover-effect" /> -->
 
@@ -34,19 +34,19 @@
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
-            <el-dropdown-item>个人信息</el-dropdown-item>
+            <el-dropdown-item><i class="el-icon-user" />个人信息</el-dropdown-item>
           </router-link>
           <router-link to="/">
-            <el-dropdown-item>权限设置</el-dropdown-item>
+            <el-dropdown-item><i class="el-icon-setting" />权限设置</el-dropdown-item>
           </router-link>
           <router-link to="/">
-            <el-dropdown-item>修改密码</el-dropdown-item>
+            <el-dropdown-item><i class="el-icon-key" />修改密码</el-dropdown-item>
           </router-link>
           <!-- <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
             <el-dropdown-item>文档</el-dropdown-item>
           </a> -->
           <el-dropdown-item divided @click.native="logout">
-            <span style="display: block">退出</span>
+            <span style="display: block"><i class="el-icon-bicycle" />退出</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -58,7 +58,7 @@
 import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
-import ErrorLog from "@/components/ErrorLog";
+// import ErrorLog from "@/components/ErrorLog";
 // import Screenfull from "@/components/Screenfull";
 import SizeSelect from "@/components/SizeSelect";
 import Search from "@/components/HeaderSearch";
@@ -68,7 +68,7 @@ export default {
   components: {
     Breadcrumb,
     Hamburger,
-    ErrorLog,
+    // ErrorLog,
     // Screenfull,
     SizeSelect,
     Search,

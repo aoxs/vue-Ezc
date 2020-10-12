@@ -103,7 +103,7 @@ export default {
             }
           },
           smooth: true,
-          type: 'line',
+          type: 'bar',
           data: expectedData,
           animationDuration: 2800,
           animationEasing: 'cubicInOut'
@@ -111,7 +111,7 @@ export default {
         {
           name: 'actual',
           smooth: true,
-          type: 'line',
+          type: 'bar',
           itemStyle: {
             normal: {
               color: '#3888fa',

@@ -12,12 +12,14 @@
         :status="porjectT.pro == 100 ? 'success' : ''"
       ></el-progress>
     </div> -->
+
+    <p class="comTitle">项目进度</p>
     <div class="pjctPro">
       <div id="pjPro" class="proUl">
         <div v-for="(i, key) of projectPro" :key="key" class="proLi">
           <div class="proBig">
             <div class="proDiv" style="">
-              <p>{{ i.title }}</p>
+              <p class="p1">{{ i.title }}</p>
               <el-progress
                 type="circle"
                 :percentage="i.pro"
@@ -32,12 +34,12 @@
         <div class="pjTotal">
           <!-- <div class="proBig"> -->
           <div class="pjTdiv" style="">
-            <p>{{ porjectT.title }}</p>
+            <p class="p1">{{ porjectT.title }}</p>
             <el-progress
               type="circle"
               :percentage="porjectT.pro"
               :status="porjectT.pro == 100 ? 'success' : ''"
-              color="#f00"
+              :color="porjectT.pro == 100 ? '' : '#f00'"
               width="40"
             />
             <p class="p2">{{ porjectT.date }}</p>
@@ -138,51 +140,57 @@ export default {
   data() {
     return {
       porjectT: {
-        title: '土地整备总进度',
-        pro: '55',
-        date: '2020/07/01 0:00:00 - 2020/07/31 23:59:00'
+        title: "土地整备总进度",
+        pro: "12",
+        date: "2020/07/01 0:00:00 - 2020/07/31 23:59:00",
       },
       projectPro: [
         {
-          pid: '1',
-          title: '未批未建集体农用地',
-          pro: '100',
-          date: '2020/07/01 0:00:00 - 2020/07/31 23:59:00'
+          pid: "1",
+          title: "未批未建集体农用地",
+          pro: "100",
+          date: "2020/07/01 0:00:00 - 2020/07/31 23:59:00",
         },
         {
-          pid: '2',
-          title: '私人住宅',
-          pro: '10',
-          date: '2020/07/01 0:00:00 - 2020/07/31 23:59:00'
+          pid: "2",
+          title: "私人住宅",
+          pro: "10",
+          date: "2020/07/01 0:00:00 - 2020/07/31 23:59:00",
         },
         {
-          pid: '3',
-          title: '其它土地及物业',
-          pro: '16',
-          date: '2020/07/01 0:00:00 - 2020/07/31 23:59:00'
-        }
-      ]
-    }
+          pid: "3",
+          title: "其它土地及物业",
+          pro: "16",
+          date: "2020/07/01 0:00:00 - 2020/07/31 23:59:00",
+        },
+      ],
+    };
   },
   mounted() {},
   methods: {
     // fromat(percentage) {
     //   return percentage == 100 ? ' ' : ' '
     // }
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
 .A {
-  background-color: #ff0;
+  background-color: #fff;
+}
+.comTitle {
+  margin: 0;
+  font-size: 18px;
+  padding: 10px 15px;
+  border-bottom: 1px solid #d8d8d8;
 }
 .pjctPro {
   width: 100%;
   background-color: #fff;
   margin-bottom: 20px;
 }
-p {
+.p1 {
   margin: 5px 0px;
   text-align: center;
   line-height: 16px;
@@ -252,7 +260,6 @@ p {
   background-color: #20a0ff;
   display: inline-block;
   transform: translate(0px, -8px);
-
 }
 .lispan {
   /* width: 40px; */

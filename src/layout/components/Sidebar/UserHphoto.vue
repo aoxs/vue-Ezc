@@ -4,11 +4,14 @@
  <transition name="sidebarLogoFade">
 <div v-if="collapse" key="collapse"></div>
     <div  v-else key="collapse" class="user_info">
-      <img
+      <div class="head_div">
+        <img
         class="head_img"
-        :src="image"
+        src="@/assets/layout_images/922d81444221029c2eb884fb7dcf2df5.jpg"
         alt=""
       />
+      </div>
+      
       <h3>欢迎使用</h3>
       <p><i class="el-icon-success" style="color: #22af47" />{{username}}</p>
     </div>
@@ -29,7 +32,7 @@ export default {
   },
   data(){
     return{
-      image: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aoxs/6345f080-0aad-11eb-b680-7980c8a877b8.jpg',
+      image: '',
       username: 'Admin'
     }
   }
@@ -43,13 +46,20 @@ export default {
   /* height: 200px; */
   font-size: 16px;
 }
-.head_img {
-  width: 80px;
+.head_div{
+width: 80px;
   height: 80px;
-  display: block;
   margin: 20px auto;
+  overflow: hidden;
   border-radius: 50%;
   border: 2px solid #fff;
+}
+.head_img {
+  width: 100%;
+  transition: all .3s;
+}
+.head_img:hover{
+    transform: scale(1.2);
 }
 p,
 h3 {

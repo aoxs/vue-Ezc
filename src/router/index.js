@@ -7,10 +7,10 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
+// import componentsRouter from './modules/components'
+// import chartsRouter from './modules/charts'
+// import tableRouter from './modules/table'
+// import nestedRouter from './modules/nested'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -79,7 +79,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: '项目首页', icon: 'dashboard', affix: true }
+        meta: { title: '项目首页', icon: 'chart', affix: true }
       }
     ]
   },
@@ -103,7 +103,7 @@ export const constantRoutes = [
     name: 'prodyn',
     meta: {
       title: '项目动态',
-      icon: 'theme'
+      icon: 'component'
     },
     children: [
       {
@@ -130,7 +130,7 @@ export const constantRoutes = [
     name: 'info',
     meta: {
       title: '基础信息',
-      icon: 'tree'
+      icon: 'clipboard'
     },
     children: [
       {
@@ -166,7 +166,7 @@ export const constantRoutes = [
     name: 'infoCheck',
     meta: {
       title: '信息核查',
-      icon: 'clipboard'
+      icon: 'nested'
     },
     children: [
       {
@@ -257,7 +257,7 @@ export const constantRoutes = [
     name: 'proMang',
     meta: {
       title: '项目管理',
-      icon: 'nested'
+      icon: 'tree'
     },
     children: [
       {
