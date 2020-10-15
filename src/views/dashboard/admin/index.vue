@@ -164,11 +164,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dashboard-editor-container {
-  padding: 32px;
-  background-color: rgb(240, 242, 245);
-  position: relative;
-}
+
 @media screen and (min-width: 1200px) {
   .Ppro {
     padding-right: 10px;

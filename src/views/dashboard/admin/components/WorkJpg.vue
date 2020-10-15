@@ -4,7 +4,7 @@
     <el-carousel height="446px" style="padding: 5px 10px;">
       <el-carousel-item v-for="i in Jpg" :key="i">
         <!-- content -->
-        <img class="" style="width:100%" :src="i" />
+        <img class="" style="width:100%;height:100%" :src="i" />
       </el-carousel-item>
     </el-carousel>
   </div>

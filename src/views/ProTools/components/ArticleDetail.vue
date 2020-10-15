@@ -6,6 +6,14 @@
         <!-- <CommentDropdown v-model="postForm.comment_disabled" />
         <PlatformDropdown v-model="postForm.platforms" />
         <SourceUrlDropdown v-model="postForm.source_uri" /> -->
+        <router-link to='/ProTools/NewsTools'>
+            <!-- <el-button type="primary" size="mini" > -->
+              <el-button v-loading="loading" style="margin-left: 10px;" type="info"  icon="el-icon-arrow-left">
+            返回
+          
+            </el-button>
+          </router-link>
+
         <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
           发表
         </el-button>
@@ -63,13 +71,15 @@
           <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
         </el-form-item>
 
+      <el-form-item prop="image_uri" style="margin-bottom: 30px;" label="上传封面:">
+          <Upload v-model="postForm.image_uri" />
+        </el-form-item>
+
         <el-form-item prop="content" style="margin-bottom: 30px;">
           <Tinymce ref="editor" v-model="postForm.content" :height="400" />
         </el-form-item>
 
-        <!-- <el-form-item prop="image_uri" style="margin-bottom: 30px;">
-          <Upload v-model="postForm.image_uri" />
-        </el-form-item> -->
+        
       </div>
     </el-form>
   </div>
@@ -77,7 +87,7 @@
 
 <script>
 import Tinymce from '@/components/Tinymce'
-// import Upload from '@/components/Upload/SingleImage3'
+import Upload from '@/components/Upload/SingleImage3'
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
 import { validURL } from '@/utils/validate'
@@ -102,7 +112,7 @@ const defaultForm = {
 
 export default {
   name: 'ArticleDetail',
-  components: { Tinymce, MDinput, Sticky, Warning },
+  components: { Tinymce, MDinput, Sticky, Warning, Upload },
   props: {
     isEdit: {
       type: Boolean,
@@ -274,7 +284,6 @@ export default {
     position: absolute;
     right: 10px;
     top: 0px;
-    ;
   }
 }
 

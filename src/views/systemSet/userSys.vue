@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dashboard-editor-container">
     <!-- 下拉框 -->
 
     <!-- 下拉框end -->

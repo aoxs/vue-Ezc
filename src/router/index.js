@@ -7,7 +7,7 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-// import componentsRouter from './modules/components'
+import componentsRouter from './modules/components'
 // import chartsRouter from './modules/charts'
 // import tableRouter from './modules/table'
 // import nestedRouter from './modules/nested'
@@ -60,11 +60,11 @@ export const constantRoutes = [
     component: () => import('@/views/login/auth-redirect'),
     hidden: true
   },
-  {
-    path: '/404',
-    component: () => import('@/views/error-page/404'),
-    hidden: true
-  },
+  // {
+  //   path: '/404',
+  //   component: () => import('@/views/error-page/404'),
+  //   hidden: true
+  // },
   {
     path: '/401',
     component: () => import('@/views/error-page/401'),
@@ -111,6 +111,12 @@ export const constantRoutes = [
         component: () => import('@/views/prodyn/proNews'),
         name: 'proNews',
         meta: { title: '项目新闻' }
+      }, {
+        path: 'NewsDetails/:id(\\d+)',
+        component: () => import('@/views/prodyn/NewsDetails'),
+        name: 'NewsDetails',
+        meta: { title: '新闻详情', noCache: true, activeMenu: '/prodyn/proNews' },
+        hidden: true
       }, {
         path: 'proPolicy',
         component: () => import('@/views/prodyn/proPolicy'),
@@ -237,7 +243,7 @@ export const constantRoutes = [
 
     ]
   },
-  
+
   {
     path: '/fileMang',
     component: Layout,
@@ -250,7 +256,43 @@ export const constantRoutes = [
       }
     ]
   },
-
+  {
+    path: '/ProTools',
+    component: Layout,
+    name: 'ProTools',
+    meta: {
+      title: '项目工具箱',
+      icon: 'tree'
+    },
+    children: [
+      {
+        path: 'NewsTools',
+        component: () => import('@/views/ProTools/NewsTools'),
+        name: 'NewsTools',
+        meta: { title: '项目新闻工具' }
+      },
+      {
+        path: 'createnews',
+        component: () => import('@/views/ProTools/createnews'),
+        name: 'CreateNews',
+        meta: { title: '新建新闻', noCache: true, activeMenu: '/ProTools/NewsTools' },
+        hidden: true
+      },
+      {
+        path: 'editNews/:id(\\d+)',
+        component: () => import('@/views/ProTools/editNews'),
+        name: 'EditNews',
+        meta: { title: '新闻编辑', noCache: true, activeMenu: '/ProTools/NewsTools' },
+        hidden: true
+      },
+      {
+        path: 'relevantData',
+        component: () => import('@/views/ProTools/relevantData'),
+        name: 'relevantData',
+        meta: { title: '相关资料' }
+      },
+    ]
+  },
   {
     path: '/proMang',
     component: Layout,
@@ -339,10 +381,10 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  
-  
- 
-  
+
+
+
+
   {
     path: '/systemSet',
     component: Layout,
@@ -426,44 +468,44 @@ export const asyncRoutes = [
 
   /** when your routing map is too long, you can split it into small modules **/
   /* 当您的路由映射太长时，您可以将其分割为小模块 */
-  // componentsRouter,
+  componentsRouter,
   // chartsRouter,
   // nestedRouter,
   // tableRouter,
 
-  /*
-    {
-      path: '/example',
-      component: Layout,
-      redirect: '/example/list',
-      name: 'Example',
-      meta: {
-        title: 'Example',
-        icon: 'el-icon-s-help'
-      },
-      children: [
-        {
-          path: 'create',
-          component: () => import('@/views/example/create'),
-          name: 'CreateArticle',
-          meta: { title: 'Create Article', icon: 'edit' }
-        },
-        {
-          path: 'edit/:id(\\d+)',
-          component: () => import('@/views/example/edit'),
-          name: 'EditArticle',
-          meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
-          hidden: true
-        },
-        {
-          path: 'list',
-          component: () => import('@/views/example/list'),
-          name: 'ArticleList',
-          meta: { title: 'Article List', icon: 'list' }
-        }
-      ]
+
+  {
+    path: '/example',
+    component: Layout,
+    redirect: '/example/list',
+    name: 'Example',
+    meta: {
+      title: 'Example',
+      icon: 'el-icon-s-help'
     },
-  
+    children: [
+      {
+        path: 'create',
+        component: () => import('@/views/example/create'),
+        name: 'CreateArticle',
+        meta: { title: 'Create Article', icon: 'edit' }
+      },
+      {
+        path: 'edit/:id(\\d+)',
+        component: () => import('@/views/example/edit'),
+        name: 'EditArticle',
+        meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
+        hidden: true
+      },
+      {
+        path: 'list',
+        component: () => import('@/views/example/list'),
+        name: 'ArticleList',
+        meta: { title: 'Article List', icon: 'list' }
+      }
+    ]
+  },
+  /*
     {
       path: '/tab',
       component: Layout,
@@ -626,22 +668,56 @@ export const asyncRoutes = [
     },
   */
 
- {
-  path: '/icon',
-  component: Layout,
-  children: [
-    {
-      path: 'index',
-      component: () => import('@/views/icons/index'),
-      name: 'Icons',
-      meta: { title: 'Icons', icon: 'icon', noCache: true }
-    }
-  ]
-},
+
+  {
+    path: '/test',
+    component: Layout,
+    // redirect: '/systemSet/index',
+    name: 'test',
+    meta: {
+      title: '测试路由',
+      icon: 'eye'
+    },
+    children: [
+      {
+        path: 'editor',
+        component: () => import('@/views/test/editoraa'),
+        name: 'editor',
+        meta: { title: '富文本编辑器' }
+      }, {
+        path: 'create',
+        component: () => import('@/views/test/createaa'),
+        name: 'create',
+        meta: { title: '创建' }
+      }
+    ]
+  },
+
+
+
+
+
+
+
+
+
+
+  {
+    path: '/icon',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/icons/index'),
+        name: 'Icons',
+        meta: { title: 'Icons', icon: 'icon', noCache: true }
+      }
+    ]
+  },
 
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({

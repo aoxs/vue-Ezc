@@ -5,6 +5,7 @@
       :multiple="false"
       :show-file-list="false"
       :on-success="handleImageSuccess"
+      name=""
       class="image-uploader"
       drag
       action="https://httpbin.org/post"
@@ -63,6 +64,8 @@ export default {
       this.$emit('input', val)
     },
     handleImageSuccess(file) {
+      console.log(file)
+      // console.log(file.files.file)
       this.emitInput(file.files.file)
     },
     beforeUpload() {

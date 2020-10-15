@@ -195,11 +195,7 @@ export default {
 };
 </script>
 <style scoped>
-.dashboard-editor-container {
-  padding: 32px;
-  background-color: rgb(240, 242, 245);
-  position: relative;
-}
+
 .ovHead {
   margin: 0;
   padding: 0;
