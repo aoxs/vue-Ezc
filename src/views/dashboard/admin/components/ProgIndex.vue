@@ -142,26 +142,26 @@ export default {
       porjectT: {
         title: "土地整备总进度",
         pro: "12",
-        date: "2020/07/01 0:00:00 - 2020/07/31 23:59:00",
+        date: "2020/07/01 - 2020/07/31",
       },
       projectPro: [
         {
           pid: "1",
           title: "未批未建集体农用地",
           pro: "100",
-          date: "2020/07/01 0:00:00 - 2020/07/31 23:59:00",
+          date: "2020/07/01 - 2020/07/31",
         },
         {
           pid: "2",
           title: "私人住宅",
           pro: "10",
-          date: "2020/07/01 0:00:00 - 2020/07/31 23:59:00",
+          date: "2020/07/01 - 2020/07/31",
         },
         {
           pid: "3",
           title: "其它土地及物业",
           pro: "16",
-          date: "2020/07/01 0:00:00 - 2020/07/31 23:59:00",
+          date: "2020/07/01 - 2020/07/31",
         },
       ],
     };
@@ -203,6 +203,7 @@ export default {
 .p2 {
   width: 150px;
   font-size: 12px;
+  text-align: center;
   color: #a1a1a1;
   white-space: normal;
 }
@@ -259,7 +260,7 @@ export default {
   padding: 3px;
   background-color: #20a0ff;
   display: inline-block;
-  transform: translate(0px, -8px);
+  transform: translate(0px, -6px);
 }
 .lispan {
   /* width: 40px; */
