@@ -6,44 +6,21 @@
         border-radius: 5px;
         overflow: hidden;
       ">
-      <div style="width: 95%; margin: 0 auto; padding-top: 20px">
-        <div style="display: flex; align-items: center">
-          <div style="padding-left: 15px; width: 40%">
-            <!-- <el-button type="primary" size="mini" @click="createBtn()">
-              <i class="el-icon-plus" style="font-weight: 1000" />新建
-            </el-button> -->
-            <router-link to="/ProTools/createnews">
-              <el-button type="primary"
-                         size="mini"
-                         icon="el-icon-plus">
-                新建
-              </el-button>
-            </router-link>
-            <el-button style="margin-left: 10px"
-                       type="primary"
-                       size="mini"
-                       @click="delBtn()"
-                       icon="el-icon-delete">
-              删除
-            </el-button>
-            <el-button type="primary"
-                       size="mini"
-                       @click="chenkBtn()">
-              <i class="el-icon-tickets" />查看详情
-            </el-button>
-          </div>
+      <div style="width: 95%; margin: 0 auto; padding-top: 20px ">
+
+        <div style="display: flex;justify-content:space-around; align-items: center">
           <div style="
-              width: 60%;
-              margin: 20px 20px;
+              width: 50%;
+              margin: 20px 00px;
               display: flex;
               align-items: center;
             ">
-            <el-input v-model="test1"
+            <el-input v-model="TitleSearch"
                       style="margin: 0 5px">
               <template slot="prepend"> 标题： </template>
             </el-input>
 
-            <div style="white-space: nowrap; margin: 0 5px">
+            <!-- <div style="white-space: nowrap; margin: 0 5px">
               重要程度：
               <el-rate v-model="importance"
                        :max="3"
@@ -51,13 +28,41 @@
                        :low-threshold="1"
                        :high-threshold="3"
                        style="display: inline-block" />
+            </div> -->
+
+            <el-button  @click="newsSearch()"><i class="el-icon-search" />查询</el-button>
+            <el-button @click="newsReset()"><i class="el-icon-refresh" />重置</el-button>
+          </div>
+          <div style="padding-left: 15px; width: 40%">
+            <!-- <el-button type="primary" size="mini" @click="createBtn()">
+              <i class="el-icon-plus" style="font-weight: 1000" />新建
+            </el-button> -->
+            <div style="display:flex;  flex-direction: row-reverse;">
+              <el-button style="margin-left: 10px;"
+                         type="primary"
+                         size="mini"
+                         @click="chenkBtn()">
+                <i class="el-icon-tickets" />查看详情
+              </el-button>
+              <el-button style="margin-left: 10px;"
+                         type="primary"
+                         size="mini"
+                         @click="delBtn()"
+                         icon="el-icon-delete">
+                删除
+              </el-button>
+              <router-link to="/ProTools/createnews">
+                <el-button type="primary"
+                           size="mini"
+                           icon="el-icon-plus">
+                  新建
+                </el-button>
+              </router-link>
+
             </div>
 
-            <el-button type="mini"
-                       @click="test()"><i class="el-icon-search" />查询</el-button>
-            <el-button type="mini"
-                       @click="test()"><i class="el-icon-refresh" />重置</el-button>
           </div>
+
         </div>
         <el-table :data="tableData"
                   style="border-radius: 6px; margin-top: 10px"
@@ -206,7 +211,7 @@ export default {
       centerDialogVisible: false,
       multipleSelection: [],
       clickUserRes: [],
-      test1: "",
+      TitleSearch: "",
       importance: 0,
     };
   },
@@ -214,7 +219,7 @@ export default {
     this.fetchData();
   },
   methods: {
-    test() {
+    newsSearch() {
       console.log(this.test1);
     },
     createBtn() { },

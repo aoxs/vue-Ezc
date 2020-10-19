@@ -33,6 +33,11 @@ import componentsRouter from './modules/components'
   }
  */
 
+
+// 发送请求获取用户名数组，以控制页面权限
+const admin = ['admin']
+const all = ['admin', 'editor']
+
 /**
  * constantRoutes
  * a base page that does not have permission requirements
@@ -468,43 +473,43 @@ export const asyncRoutes = [
 
   /** when your routing map is too long, you can split it into small modules **/
   /* 当您的路由映射太长时，您可以将其分割为小模块 */
-  componentsRouter,
+  // componentsRouter,
   // chartsRouter,
   // nestedRouter,
   // tableRouter,
 
 
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/list',
-    name: 'Example',
-    meta: {
-      title: 'Example',
-      icon: 'el-icon-s-help'
-    },
-    children: [
-      {
-        path: 'create',
-        component: () => import('@/views/example/create'),
-        name: 'CreateArticle',
-        meta: { title: 'Create Article', icon: 'edit' }
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        component: () => import('@/views/example/edit'),
-        name: 'EditArticle',
-        meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
-        hidden: true
-      },
-      {
-        path: 'list',
-        component: () => import('@/views/example/list'),
-        name: 'ArticleList',
-        meta: { title: 'Article List', icon: 'list' }
-      }
-    ]
-  },
+  // {
+  //   path: '/example',
+  //   component: Layout,
+  //   redirect: '/example/list',
+  //   name: 'Example',
+  //   meta: {
+  //     title: 'Example',
+  //     icon: 'el-icon-s-help'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'create',
+  //       component: () => import('@/views/example/create'),
+  //       name: 'CreateArticle',
+  //       meta: { title: 'Create Article', icon: 'edit' }
+  //     },
+  //     {
+  //       path: 'edit/:id(\\d+)',
+  //       component: () => import('@/views/example/edit'),
+  //       name: 'EditArticle',
+  //       meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
+  //       hidden: true
+  //     },
+  //     {
+  //       path: 'list',
+  //       component: () => import('@/views/example/list'),
+  //       name: 'ArticleList',
+  //       meta: { title: 'Article List', icon: 'list' }
+  //     }
+  //   ]
+  // },
   /*
     {
       path: '/tab',
@@ -679,17 +684,32 @@ export const asyncRoutes = [
       icon: 'eye'
     },
     children: [
+
+      {
+        path: 'directive',
+        component: () => import('@/views/test/directive'),
+        name: 'directivePermission',
+        meta: {
+          title: '权限设置  (完成)',
+          roles: all // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'role',
+        component: () => import('@/views/test/role'),
+        name: 'RolePermission',
+        meta: {
+          title: '用户管理',
+          roles: admin
+        }
+      },
       {
         path: 'editor',
         component: () => import('@/views/test/editoraa'),
         name: 'editor',
-        meta: { title: '富文本编辑器' }
-      }, {
-        path: 'create',
-        component: () => import('@/views/test/createaa'),
-        name: 'create',
-        meta: { title: '创建' }
-      }
+        meta: { title: '所有用户可查看', roles: all },
+
+      },
     ]
   },
 

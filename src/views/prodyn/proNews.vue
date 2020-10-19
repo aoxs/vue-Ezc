@@ -26,10 +26,9 @@
             <p class="P_title">{{ i.title }}</p>
             <p class="p2">发布时间：{{ i.date }}</p>
             <p class="p3">{{ i.message }}</p>
-            <router-link :to='"/prodyn/NewsDetails/"+i.NewsId'>
-              <el-button class="btn"
-                         type="danger"
-                         size="default">查看详情</el-button>
+            <router-link :to='"/prodyn/NewsDetails/"+i.NewsId'
+                         class="pan-btn pink-btn btnsss">
+              查看详情
             </router-link>
           </div>
 
@@ -183,7 +182,8 @@ p {
   overflow: hidden;
   max-width: 690px;
 }
-.btn {
+.btnsss {
+  margin-top: 30px;
   padding: 12px 14px;
   font-size: 16px;
 }
@@ -203,7 +203,7 @@ p {
   .p2 {
     padding-bottom: 10px;
   }
-  .btn {
+  .btnsss {
     margin-top: 40px;
   }
 }
@@ -214,7 +214,7 @@ p {
   .P_title {
     margin-bottom: 10px;
   }
-  .btn {
+  .btnsss {
     margin-top: 15px;
   }
 }
@@ -236,6 +236,9 @@ p {
   }
   .p3 {
     margin-bottom: 10px;
+  }
+  .btnsss{
+    margin-top: 5px
   }
 }
 </style>
