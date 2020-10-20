@@ -16,7 +16,7 @@
               align-items: center;
             ">
             <el-input v-model="TitleSearch"
-                      style="margin: 0 5px">
+                      style="margin: 0 5px" clearable>
               <template slot="prepend"> 标题： </template>
             </el-input>
 
@@ -31,7 +31,7 @@
             </div> -->
 
             <el-button  @click="newsSearch()"><i class="el-icon-search" />查询</el-button>
-            <el-button @click="newsReset()"><i class="el-icon-refresh" />重置</el-button>
+            <!-- <el-button @click="newsReset()"><i class="el-icon-refresh" />重置</el-button> -->
           </div>
           <div style="padding-left: 15px; width: 40%">
             <!-- <el-button type="primary" size="mini" @click="createBtn()">
@@ -51,13 +51,14 @@
                          icon="el-icon-delete">
                 删除
               </el-button>
-              <router-link to="/ProTools/createnews">
+              <!-- <router-link to="/ProTools/createnews" > -->
                 <el-button type="primary"
                            size="mini"
-                           icon="el-icon-plus">
+                           icon="el-icon-plus"
+                           @click="createBtn" :disabled="CreateDisable">
                   新建
                 </el-button>
-              </router-link>
+              <!-- </router-link> -->
 
             </div>
 
@@ -109,11 +110,14 @@
                            sortable
                            width=""
                            show-overflow-tooltip />
-          <el-table-column align="center">
+          <el-table-column align="center" v-if="editDisable">
             <div slot-scope="scope">
               <router-link :to="'/ProTools/editNews/' + scope.row.NewsId">
                 <el-button size="mini"
-                           @click="handleEdit(scope.$index, scope.row)"><i class="el-icon-edit-outline" />编辑</el-button>
+                           @click="handleEdit(scope.$index, scope.row)" >
+                           <i class="el-icon-edit-outline" />
+                           编辑
+                           </el-button>
               </router-link>
 
               <!-- 
@@ -144,6 +148,7 @@
 
 <script>
 export default {
+  
   data() {
     return {
       tableData: [
@@ -213,24 +218,39 @@ export default {
       clickUserRes: [],
       TitleSearch: "",
       importance: 0,
+      // 用户新建权限：true 禁用；false 可用
+      CreateDisable: false,
+      // 用户编辑权限：true 可用；false 禁用
+      editDisable: true,
     };
   },
   created() {
-    this.fetchData();
+    // this.fetchData(); 
+    if(this.$store.getters.roles[0]=='admin'){
+        this.CreateDisable = false
+        this.editDisable = true
+    }else{
+      this.CreateDisable = true
+      this.editDisable = false
+    }
+    console.log(this.$store.getters.roles[0])
   },
   methods: {
     newsSearch() {
-      console.log(this.test1);
+      console.log(this.TitleSearch);
     },
-    createBtn() { },
+    
+    createBtn() { 
+      this.$router.push("/ProTools/createnews");
+    },
     delBtn() { },
     checkBtn() { },
     fetchData() {
-      this.listLoading = true;
-      fetchList().then((response) => {
-        this.list = response.data.items;
-        this.listLoading = false;
-      });
+      // this.listLoading = true;
+      // fetchList().then((response) => {
+      //   this.list = response.data.items;
+      //   this.listLoading = false;
+      // });
     },
     // handleDownload() {
     //   this.downloadLoading = true;
