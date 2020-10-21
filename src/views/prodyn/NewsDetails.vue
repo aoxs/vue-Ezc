@@ -376,8 +376,5 @@ export default {
 </script>
 
 <style>
-img {
-  /* width: 60%; */
-  /* margin-bottom: 20px; */
-}
+
 </style>

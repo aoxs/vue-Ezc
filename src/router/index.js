@@ -710,6 +710,13 @@ export const asyncRoutes = [
         meta: { title: '所有用户可查看', roles: all },
 
       },
+      {
+        path: 'tableSearch',
+        component: () => import('@/views/test/tableSearch'),
+        name: 'tableSearch',
+        meta: { title: '表格筛查', roles: all },
+
+      },
     ]
   },
 
