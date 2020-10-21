@@ -4,7 +4,8 @@
       <!-- 树形结构框 -->
       <div style="display:flex">
 
-        <div style="width:22%;height: 700px;border: 1px solid red;padding:10px">
+        <div style=""
+             class="groupTree">
           <el-tree :data="groupData"
                    :props="defaultProps"
                    :expand-on-click-node="false"
@@ -14,7 +15,7 @@
         <!-- 树形结构框end -->
 
         <!-- 增删改查按钮 -->
-        <div style="width:78%;padding-top:30px;white-space: nowrap;">
+        <div style="width:78%;padding-top:20px;white-space: nowrap;">
           <el-button type="primary"
                      size="small"
                      style="margin-left:25px"
@@ -198,7 +199,11 @@ export default {
 </script>
 
 <style>
-a {
-  /* font-weight: ; */
+.groupTree {
+  width: 180px;
+  height: 530px;
+  border-right: 2px solid #F0F2F5;
+  padding: 10px;
+  padding-top: 20px;
 }
 </style>
