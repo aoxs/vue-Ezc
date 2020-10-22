@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.checkboxBottom.type)
+      console.log(this.checkboxBottom)
     }
   }
 }

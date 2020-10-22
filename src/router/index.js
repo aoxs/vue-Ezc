@@ -133,6 +133,60 @@ export const constantRoutes = [
         name: 'proInfo',
         meta: { title: '项目资料' }
       },
+      
+      
+      
+    ]
+  },
+  {
+    path: '/proMap',
+    component: Layout,
+    // redirect: '/index',
+    children: [
+      {
+        path: 'proMap',
+        component: () => import('@/views/proMap/index'),
+        name: 'proMap',
+        meta: { title: '项目地图', icon: 'international', affix: true }
+      }
+    ]
+  },
+  {
+    path: 'statistical',
+    // component: () => import('@/views/prodyn/statistical'),
+    name: 'statistical',
+    meta: { title: '统计分析',icon:'nested' },
+    children:[
+      {
+        path: 'survey',
+        component: () => import('@/views/statistical/survey'),
+        name: 'survey',
+        meta: { title: '意愿调查' },
+      },
+      {
+        path: 'MadeBy',
+        component: () => import('@/views/statistical/MadeBy'),
+        name: 'MadeBy',
+        meta: { title: '确权统计' },
+      },
+      {
+        path: 'signing',
+        component: () => import('@/views/statistical/signing'),
+        name: 'signing',
+        meta: { title: '签约统计' },
+      },
+      {
+        path: 'payment',
+        component: () => import('@/views/statistical/payment'),
+        name: 'payment',
+        meta: { title: '付款统计' },
+      },
+      {
+        path: 'demolition',
+        component: () => import('@/views/statistical/demolition'),
+        name: 'demolition',
+        meta: { title: '移交拆除' },
+      },
     ]
   },
   {
@@ -199,7 +253,7 @@ export const constantRoutes = [
     component: Layout,
     name: 'signing',
     meta: {
-      title: '签约',
+      title: '签约管理',
       icon: 'form'
     },
     children: [
@@ -249,24 +303,24 @@ export const constantRoutes = [
     ]
   },
 
-  {
-    path: '/fileMang',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/fileMang/index'),
-        name: 'fileMang',
-        meta: { title: '档案管理', icon: 'excel', noCache: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/fileMang',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/fileMang/index'),
+  //       name: 'fileMang',
+  //       meta: { title: '档案管理', icon: 'excel', noCache: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/ProTools',
     component: Layout,
     name: 'ProTools',
     meta: {
-      title: '项目工具箱',
+      title: '工具箱',
       icon: 'tree'
     },
     children: [
@@ -274,7 +328,13 @@ export const constantRoutes = [
         path: 'NewsTools',
         component: () => import('@/views/ProTools/NewsTools'),
         name: 'NewsTools',
-        meta: { title: '项目新闻工具' }
+        meta: { title: '新闻管理' }
+      },
+      {
+        path: 'index',
+        component: () => import('@/views/ProTools/index'),
+        name: 'fileMang',
+        meta: { title: '档案管理' }
       },
       {
         path: 'createnews',
@@ -325,12 +385,7 @@ export const constantRoutes = [
         name: 'perMang',
         meta: { title: '权限管理' }
       },
-      {
-        path: 'proMap',
-        component: () => import('@/views/proMang/proMap'),
-        name: 'proMap',
-        meta: { title: '项目地图' }
-      },
+      
     ]
   },
 

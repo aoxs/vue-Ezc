@@ -1,11 +1,12 @@
 <template>
   <div class="pro_select">
-    <el-select  v-model="proCheck" style="width: 100%">
+    <el-select  v-model="proCheck"  @change="checkClick" style="width: 100%">
       <el-option
         v-for="item in proNames"
         :key="item.value"
         :label="item.title"
         :value="item.id"
+       
       >
       </el-option>
     </el-select>
@@ -28,6 +29,12 @@ export default {
   created() {
     this.proCheck = this.proNames[0].title
   },
+  methods:{
+     checkClick(){
+      // 下拉框,选择触发
+      console.log(this.proCheck)
+    }
+  }
 };
 </script>
 

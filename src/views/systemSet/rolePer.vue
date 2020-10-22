@@ -41,7 +41,7 @@
             <!-- 按钮权限end -->
 
             <!-- 上传文件分类 -->
-            <tree-data3></tree-data3>
+            <!-- <tree-data3></tree-data3> -->
             <!-- 上传文件分类end -->
           </div>
         </el-col>

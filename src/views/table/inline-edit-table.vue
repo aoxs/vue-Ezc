@@ -126,6 +126,7 @@ export default {
       })
     },
     confirmEdit(row) {
+      console.log(row)
       row.edit = false
       row.originalTitle = row.title
       this.$message({
