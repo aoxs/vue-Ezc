@@ -174,7 +174,6 @@ export default {
         { PId: 4, loginName: "布奇", userName: '张三', groupName: "xxx分组", tel: "13035707258", isEnable: 0 },
         { PId: 5, loginName: "斯派克", userName: '张三', groupName: "xxx分组", tel: "13035707258", isEnable: 0 },
         { PId: 6, loginName: "泰克", userName: '张三', groupName: "xxx分组", tel: "13035707258", isEnable: 1 },
-
       ],
       dialogVisible: false,
       userSet: [],

@@ -126,16 +126,16 @@ export const constantRoutes = [
         path: 'proPolicy',
         component: () => import('@/views/prodyn/proPolicy'),
         name: 'proPolicy',
-        meta: { title: '项目政策' }
+        meta: { title: '相关政策' }
       }, {
         path: 'proInfo',
         component: () => import('@/views/prodyn/proInfo'),
         name: 'proInfo',
         meta: { title: '项目资料' }
       },
-      
-      
-      
+
+
+
     ]
   },
   {
@@ -152,11 +152,11 @@ export const constantRoutes = [
     ]
   },
   {
-    path: 'statistical',
-    // component: () => import('@/views/prodyn/statistical'),
+    path: '/statistical',
+    component: Layout,
     name: 'statistical',
-    meta: { title: '统计分析',icon:'nested' },
-    children:[
+    meta: { title: '统计分析', icon: 'education' },
+    children: [
       {
         path: 'survey',
         component: () => import('@/views/statistical/survey'),
@@ -224,7 +224,47 @@ export const constantRoutes = [
       },
     ]
   },
-
+  {
+    path: '/EarlyStage',
+    component: Layout,
+    name: 'EarlyStage',
+    meta: {
+      title: '前期阶段',
+      icon: 'nested'
+    },
+    children: [
+      {
+        path: 'farmersTab',
+        component: () => import('@/views/EarlyStage/farmersTab'),
+        name: 'farmersTab',
+        meta: { title: '农用地信息' }
+      },
+      {
+        path: 'farmersPro',
+        component: () => import('@/views/EarlyStage/farmersPro'),
+        name: 'farmersPro',
+        meta: { title: '农用地进度管理' }
+      },
+      {
+        path: 'Green',
+        component: () => import('@/views/EarlyStage/Green'),
+        name: 'Green',
+        meta: { title: '青苗、构筑附属物' }
+      },
+      {
+        path: 'privHomePro',
+        component: () => import('@/views/EarlyStage/privHomePro'),
+        name: 'privHomePro',
+        meta: { title: '私宅及其他进度' }
+      },
+      {
+        path: 'privHomeTab',
+        component: () => import('@/views/EarlyStage/privHomeTab'),
+        name: 'privHomeTab',
+        meta: { title: '私人住宅信息表' }
+      },
+    ]
+  },
   {
     path: '/infoCheck',
     component: Layout,
@@ -303,25 +343,25 @@ export const constantRoutes = [
     ]
   },
 
-  // {
-  //   path: '/fileMang',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/fileMang/index'),
-  //       name: 'fileMang',
-  //       meta: { title: '档案管理', icon: 'excel', noCache: true }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/fileMang',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/fileMang/index'),
+        name: 'fileMang',
+        meta: { title: '档案管理', icon: 'excel', noCache: true }
+      }
+    ]
+  },
   {
     path: '/ProTools',
     component: Layout,
     name: 'ProTools',
     meta: {
       title: '工具箱',
-      icon: 'tree'
+      icon: 'bug'
     },
     children: [
       {
@@ -330,12 +370,12 @@ export const constantRoutes = [
         name: 'NewsTools',
         meta: { title: '新闻管理' }
       },
-      {
-        path: 'index',
-        component: () => import('@/views/ProTools/index'),
-        name: 'fileMang',
-        meta: { title: '档案管理' }
-      },
+      // {
+      //   path: 'index',
+      //   component: () => import('@/views/ProTools/index'),
+      //   name: 'fileMang',
+      //   meta: { title: '档案管理' }
+      // },
       {
         path: 'createnews',
         component: () => import('@/views/ProTools/createnews'),
@@ -367,12 +407,12 @@ export const constantRoutes = [
       icon: 'tree'
     },
     children: [
-      {
-        path: 'proCreate',
-        component: () => import('@/views/proMang/proCreate'),
-        name: 'proCreate',
-        meta: { title: '新建项目' }
-      },
+      // {
+      //   path: 'proCreate',
+      //   component: () => import('@/views/proMang/proCreate'),
+      //   name: 'proCreate',
+      //   meta: { title: '新建项目' }
+      // },
       {
         path: 'tempConfig',
         component: () => import('@/views/proMang/tempConfig'),
@@ -385,7 +425,7 @@ export const constantRoutes = [
         name: 'perMang',
         meta: { title: '权限管理' }
       },
-      
+
     ]
   },
 
@@ -452,9 +492,15 @@ export const asyncRoutes = [
     name: 'systemSet',
     meta: {
       title: '系统管理',
-      icon: 'tree-table'
+      icon: 'user'
     },
     children: [
+      {
+        path: 'proCreate',
+        component: () => import('@/views/systemSet/proCreate'),
+        name: 'proCreate',
+        meta: { title: '新建项目' }
+      },
       {
         path: 'groupIns',
         component: () => import('@/views/systemSet/groupIns'),
@@ -465,12 +511,14 @@ export const asyncRoutes = [
         component: () => import('@/views/systemSet/userSys'),
         name: 'userSys',
         meta: { title: '账号管理' }
-      }, {
-        path: 'proUser',
-        component: () => import('@/views/systemSet/proUser'),
-        name: 'proUser',
-        meta: { title: '项目用户账户' }
-      }, {
+      }, 
+      // {
+      //   path: 'proUser',
+      //   component: () => import('@/views/systemSet/proUser'),
+      //   name: 'proUser',
+      //   meta: { title: '项目用户账户' }
+      // }, 
+      {
         path: 'rolePer',
         component: () => import('@/views/systemSet/rolePer'),
         name: 'rolePer',

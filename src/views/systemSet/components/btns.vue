@@ -82,6 +82,9 @@ export default {
         type: 'warning'
       })
     },
+    confirmRole(){
+      this.dialogVisible = false
+    },
     groupCheck() {
 
     },

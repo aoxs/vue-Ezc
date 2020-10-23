@@ -7,7 +7,7 @@
       <div class="head_div">
         <img
         class="head_img"
-        src="@/assets/layout_images/fad75e554327e62c8d707cd54e37f53.png"
+        src="@/assets/layout_images/20201023085749.jpg"
         alt=""
       />
       </div>

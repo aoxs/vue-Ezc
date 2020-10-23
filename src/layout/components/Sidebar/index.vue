@@ -2,14 +2,15 @@
   <div :class="{ 'has-logo': showLogo }">
     <logo v-if="showLogo" :collapse="isCollapse" />
 
-    <el-scrollbar wrap-class="scrollbar-wrapper">
+    <el-scrollbar wrap-class="scrollbar-wrapper" class="bgcimage">
       <user-hphoto v-if="showLogo" :collapse="isCollapse"></user-hphoto>
       <el-menu
+      
         :default-active="activeMenu"
         :collapse="isCollapse"
         :background-color="variables.menuBg"
         :text-color="variables.menuText"
-        :unique-opened="false"
+        :unique-opened="true"
         :active-text-color="variables.menuActiveText"
         :collapse-transition="false"
         mode="vertical"
@@ -19,6 +20,7 @@
           :key="route.path"
           :item="route"
           :base-path="route.path"
+          
         />
       </el-menu>
     </el-scrollbar>
@@ -57,3 +59,11 @@ export default {
   },
 };
 </script>
+<style scoped>
+.bgcimage{
+  background-image: url(https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aoxs/a31126b0-14d2-11eb-81ea-f115fe74321c.png);
+  background-repeat: no-repeat;
+  background-size: 186px 100%
+}
+
+</style>

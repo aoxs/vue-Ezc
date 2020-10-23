@@ -9,15 +9,17 @@ $yellow:#FEC171;
 $panGreen: #30B08F;
 
 // sidebar
-$menuText:#bfcbd9;
-$menuActiveText:#409EFF;
+$menuText:#333;
+$menuActiveText:#fff;
 $subMenuActiveText:#f4f4f5; // https://github.com/ElemeFE/element/issues/12951
 
-$menuBg:#304156;
-$menuHover:#263445;
+// $menuBg:rgba(255,255,0, 0);
+$menuBg:rgba(131,201,250, 0);
+$menuHover:#36A2F5;
 
-$subMenuBg:#1f2d3d;
-$subMenuHover:#001528;
+// $subMenuBg:rgba(255,255,0, 0);
+$subMenuBg: rgba(255,255,0, 0);
+$subMenuHover:#36A2F5;
 
 $sideBarWidth: 186px;
 
