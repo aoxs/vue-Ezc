@@ -10,11 +10,67 @@
 
         <div style="width:78%;padding-top:20px;white-space: nowrap;">
           <!-- 增删改查按钮 -->
-          <btns />
+          <!-- <btns /> -->
+          <div style="display:flex;justify-content:flex-end ;">
+            <!-- 按钮 -->
+            <div style=" padding: 5px 10px">
+              <div class="pagRight"
+                   style="padding-right:20px">
+                <div style="">
+                  <el-button type="primary"
+                             size="small"
+                             style=""
+                             @click="groupAdd">
+                    <i class="el-icon-plus"
+                       style="font-weight:1000;" />
+                    新增
+                  </el-button>
+                  <!-- <el-button type="primary"
+               size="small"
+               @click="groupEdit">
+      <i class="el-icon-edit" />
+      编辑
+    </el-button> -->
+                  <el-button type="primary"
+                             size="small"
+                             @click="groupDel">
+                    <i class="el-icon-delete-solid" />
+                    删除
+                  </el-button>
+                  <!-- <el-button type="primary"
+                     size="small"
+                     @click="groupCheck">
+            <i class="el-icon-tickets" />
+            查看详情
+          </el-button> -->
+                </div>
+              </div>
+            </div>
+            <!-- 弹窗 -->
+            <el-dialog :visible.sync="createDialogVisible"
+                       title='新建组织结构'>
+              <!-- <el-form :model="multipleSelection"
+               label-width="80px"
+               label-position="left">
+        <el-form-item label="">
+
+        </el-form-item>
+        <el-form-item label="">
+
+        </el-form-item>
+
+      </el-form> -->
+              <div style="text-align:right;">
+                <el-button type="info"
+                           @click="createDialogVisible=false">取消</el-button>
+                <el-button type="primary"
+                           @click="confirmRole">保存</el-button>
+              </div>
+            </el-dialog>
+          </div>
           <!-- 增删改查 弹窗end -->
           <!-- 组织结构表 -->
           <el-table :data="YLData"
-                    :key="reflush"
                     style="width:95%;margin:0 auto;margin-top:20px;border-radius: 8px;"
                     stripe
                     border
@@ -51,15 +107,15 @@
                 <el-button size="mini"
                            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                 <el-dialog title="提示"
-                           :visible.sync="centerDialogVisible"
+                           :visible.sync="editDialogVisible"
                            width="80%"
                            :before-close="handleClose">
                   <span>点击编辑用户</span>
                   <p>登录名为{{ groupSet[0] }}</p>
                   <span slot="footer">
-                    <el-button @click="userEupdata()">取消</el-button>
+                    <el-button @click="userEback()">取消</el-button>
                     <el-button type="primary"
-                               @click="userEback()">确认</el-button>
+                               @click="userEupdata()">确认</el-button>
                   </span>
                 </el-dialog>
               </div>
@@ -107,11 +163,44 @@ export default {
         },
       ],
       multipleSelection: [],// table 选择的信息添加到数组
-      centerDialogVisible: false,
+      editDialogVisible: false,
+
+       createDialogVisible: false,
       groupSet: [],// 存放 点击编辑的数据
     }
   },
   methods: {
+    // 增删改 按钮
+    groupAdd() {
+      // this.dialogType = 'add'
+      this.createDialogVisible = true
+    },
+    // groupEdit() {
+    //   this.dialogType = 'edit'
+    //   this.createDialogVisible = true
+    // },
+    groupDel() {
+      if (this.multipleSelection.length == 0) {
+        this.$confirm('未选中项目', "提示", {
+          confirmButtonText: '确认',
+          type: 'info'
+        })
+      } else {
+        this.$confirm('确认删除?', '警告', {
+          confirmButtonText: '确认',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+      }
+    },
+    confirmRole() {
+      this.createDialogVisible = false
+    },
+
+    //增删改 按钮end
+
+
+
     handleSelectionChange(val) {
       this.multipleSelection = val
       console.log(val)
@@ -119,7 +208,7 @@ export default {
     handleEdit(index, row) {
       console.log(index, row);
       this.groupSet = [];
-      this.centerDialogVisible = true;
+      this.editDialogVisible = true;
       this.groupSet.push(
         row.groupName,
         row.serviceType,
@@ -129,17 +218,17 @@ export default {
       );
     },
     userEupdata() {
-      this.centerDialogVisible = false;
+      this.editDialogVisible = false;
     },
     userEback() {
-      this.centerDialogVisible = false;
+      this.editDialogVisible = false;
     },
     handleClose(done) {
       this.$confirm("确定关闭？")
         .then((_) => {
           done();
           console.log(1, done);
-          this.centerDialogVisible = false;
+          this.editDialogVisible = false;
         })
 
         .catch((_) => {
@@ -150,5 +239,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.pagRight {
+  display: flex;
+  flex-direction: row-reverse;
+  /* justify-content: flex-end; */
+}
 </style>

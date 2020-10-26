@@ -37,7 +37,7 @@
     </el-button> -->
                 <el-button type="primary"
                            size="small"
-                           @click="groupDel">
+                           @click="userDel">
                   <i class="el-icon-delete-solid" />
                   删除
                 </el-button>
@@ -206,12 +206,34 @@ export default {
      confirmRole(){
       this.dialogVisible = false
     },
-    groupDel() {
-      this.$confirm('确定要删除所选中的信息吗？', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
+    userDel() {
+     if (this.multipleSelection.length == 0) {
+        this.$confirm('未选中项目', "提示", {
+          confirmButtonText: '确认',
+          type: 'info'
+        })
+      } else {
+        this.$confirm('确认删除?', '警告', {
+          confirmButtonText: '确认',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+          // .then( () => {
+          //   // console.log(this.multipleSelection[0].proId)
+          //   let j =  this.multipleSelection.length 
+          //   for(var i = 0; i<j ; i++){
+          //     let id = this.multipleSelection[i].proId
+          //     let _tableData = this.tableData.find( x => x.proId == id )
+          //     console.log(_tableData)
+          //     this.tableData.splice(this.tableData.indexOf(_tableData), 1 )
+          //   }
+          //   // this.rolesList.splice($index, 1)
+          //   this.$message({
+          //     type: 'success',
+          //     message: '删除成功!'
+          //   })
+          // })
+      }
     },
     groupCheck() {
 
