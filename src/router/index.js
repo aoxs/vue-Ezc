@@ -230,7 +230,7 @@ export const constantRoutes = [
     name: 'EarlyStage',
     meta: {
       title: '前期阶段',
-      icon: 'nested'
+      icon: 'table'
     },
     children: [
       {
