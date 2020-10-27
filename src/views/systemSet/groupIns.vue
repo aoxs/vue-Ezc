@@ -47,22 +47,36 @@
               </div>
             </div>
             <!-- 弹窗 -->
-            <el-dialog :visible.sync="createDialogVisible"
-                       title='新建组织结构'>
-              <!-- <el-form :model="multipleSelection"
-               label-width="80px"
-               label-position="left">
-        <el-form-item label="">
-
-        </el-form-item>
-        <el-form-item label="">
-
-        </el-form-item>
-
-      </el-form> -->
+            <el-dialog :visible.sync="dialogGroup"
+                       :title="dialogType==='edit'?'编辑组织结构':'新建组织结构'" 
+                       >
+              <el-form :model="group"
+                       label-width="80px"
+                       label-position="right">
+                <el-form-item label="机构名称:">
+                  <el-input v-model="group.groupName"
+                            placeholder="机构名称"></el-input>
+                </el-form-item>
+                <el-form-item label="服务类型:">
+                  <el-input v-model="group.serviceType"
+                            placeholder="服务类型"></el-input>
+                </el-form-item>
+                <el-form-item label="服务内容:">
+                  <el-input v-model="group.serviceContent"
+                            placeholder="服务内容"></el-input>
+                </el-form-item>
+                <el-form-item label="负责人:">
+                  <el-input v-model="group.principal"
+                            placeholder="负责人姓名"></el-input>
+                </el-form-item>
+                <el-form-item label="联系电话:">
+                  <el-input v-model="group.tel"
+                            placeholder="联系电话"></el-input>
+                </el-form-item>
+              </el-form>
               <div style="text-align:right;">
                 <el-button type="info"
-                           @click="createDialogVisible=false">取消</el-button>
+                           @click="dialogGroup=false">取消</el-button>
                 <el-button type="primary"
                            @click="confirmRole">保存</el-button>
               </div>
@@ -105,8 +119,8 @@
             <el-table-column align="center">
               <div slot-scope="scope">
                 <el-button size="mini"
-                           @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                <el-dialog title="提示"
+                           @click="groupEdit(scope)">编辑</el-button>
+                <!-- <el-dialog title="提示"
                            :visible.sync="editDialogVisible"
                            width="80%"
                            :before-close="handleClose">
@@ -117,7 +131,7 @@
                     <el-button type="primary"
                                @click="userEupdata()">确认</el-button>
                   </span>
-                </el-dialog>
+                </el-dialog> -->
               </div>
             </el-table-column>
           </el-table>
@@ -129,8 +143,20 @@
 </template>
 
 <script>
+import { deepClone } from '@/utils';
 import UserGroup from './components/UserGroup'
 import btns from './components/btns'
+
+const defaultGroup = {
+  
+  children: [],
+  groupName: "",
+  principal: "",
+  serviceContent: "",
+  serviceType: "",
+  tel: "",
+}
+
 export default {
   name: 'groupIns',
   components: { UserGroup, btns },
@@ -164,21 +190,26 @@ export default {
       ],
       multipleSelection: [],// table 选择的信息添加到数组
       editDialogVisible: false,
-
-       createDialogVisible: false,
-      groupSet: [],// 存放 点击编辑的数据
+      dialogType: 'add',
+      dialogGroup: false,
+      group: Object.assign({}, defaultGroup),
+      // groupSet: [],// 存放 点击编辑的数据
     }
   },
   methods: {
     // 增删改 按钮
     groupAdd() {
-      // this.dialogType = 'add'
-      this.createDialogVisible = true
+      this.dialogType = 'add'
+      this.dialogGroup = true
+      this.group = {}
     },
-    // groupEdit() {
-    //   this.dialogType = 'edit'
-    //   this.createDialogVisible = true
-    // },
+    groupEdit(scope) {
+      console.log(scope.row)
+      this.dialogType = 'edit'
+      this.dialogGroup = true
+      this.group = deepClone(scope.row)
+
+    },
     groupDel() {
       if (this.multipleSelection.length == 0) {
         this.$confirm('未选中项目', "提示", {
@@ -193,8 +224,11 @@ export default {
         })
       }
     },
+    // 保存
     confirmRole() {
-      this.createDialogVisible = false
+      this.dialogGroup = false
+      
+      console.log(this.group)
     },
 
     //增删改 按钮end
@@ -207,22 +241,22 @@ export default {
     },
     handleEdit(index, row) {
       console.log(index, row);
-      this.groupSet = [];
+      // this.groupSet = [];
       this.editDialogVisible = true;
-      this.groupSet.push(
-        row.groupName,
-        row.serviceType,
-        row.serviceContent,
-        row.principal,
-        row.tel
-      );
+      // this.groupSet.push(
+      //   row.groupName,
+      //   row.serviceType,
+      //   row.serviceContent,
+      //   row.principal,
+      //   row.tel
+      // );
     },
-    userEupdata() {
-      this.editDialogVisible = false;
-    },
-    userEback() {
-      this.editDialogVisible = false;
-    },
+    // userEupdata() {
+    //   this.editDialogVisible = false;
+    // },
+    // userEback() {
+    //   this.editDialogVisible = false;
+    // },
     handleClose(done) {
       this.$confirm("确定关闭？")
         .then((_) => {

@@ -44,11 +44,13 @@
 
         </div>
         <div>
-          <el-button type="primary"
+          <el-button type="info"
                      size="small"
+                     plain
                      @click="changeClick"><i class="el-icon-search" />查询</el-button>
-          <el-button type="primary"
+          <el-button type="info"
                      size="small"
+                     plain
                      @click="resetClick"><i class="el-icon-refresh" />重置</el-button>
 
         </div>
@@ -78,6 +80,82 @@
         </el-button>
       </div>
       <!-- 信息表操作按钮end -->
+
+      <!-- 弹窗 -->
+      <el-dialog :visible.sync="dialogProCreate"
+                 :title="dialogType==='edit'?'编辑组织结构':'新建组织结构'"
+                 width="95%">
+        <el-form :model="pro"
+                 label-width="80px"
+                 label-position="right">
+          <el-row :gutter="10">
+            <el-col :sm="8"
+                    :xs="24"
+                    :offset="0">
+              <el-form-item label="项目名称:">
+                <el-input v-model="pro.ProName"
+                          placeholder="项目名称"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :sm="8"
+                    :xs="24"
+                    :offset="0">
+              <el-form-item label="排序顺序:">
+                <el-input placeholder="排序顺序"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :sm="8"
+                    :xs="24"
+                    :offset="0">
+              <el-form-item label="项目类型:">
+                <el-input v-model="pro.ProType"
+                          placeholder="请选择"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :sm="8"
+                    :xs="24"
+                    :offset="0">
+              <el-form-item label="项目状态:">
+                <el-input v-model="pro.ProStatus"
+                          placeholder="请选择"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="24"
+                    :offset="0">
+              <el-form-item label="项目图片:">
+                <el-upload class="upload-demo"
+                           action="http://120.86.117.97:8577/upload/"
+                           :on-preview="handlePreview"
+                           :on-remove="handleRemove"
+                           :file-list="fileList"
+                           list-type="picture">
+                  <el-button size="small"
+                             type="primary">上传</el-button>
+                  <el-button style="margin-left: 10px;"
+                             size="small"
+                             type="success"
+                             @click="submitUpload">上传到服务器</el-button>
+                  <div slot="tip"
+                       class="el-upload__tip">
+                    只能上传jpg/png文件，且不超过500kb
+                  </div>
+                </el-upload>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+        </el-form>
+
+        <div style="text-align:right;">
+          <el-button type="info"
+                     @click="dialogProCreate=false">取消</el-button>
+          <el-button type="primary"
+                     @click="updataPro">保存</el-button>
+        </div>
+      </el-dialog>
+
+      <!-- 弹窗end -->
+
       <!-- 信息表 -->
       <el-table :data="tableData"
                 ref="multipleTable"
@@ -179,6 +257,28 @@
 </template>
 
 <script>
+import { deepClone } from '@/utils';
+
+const defaultRole = {
+  proId: 0,
+  ProName: '',
+  ProType: 0,
+  provinces: '',
+  city: '',
+  county: '',
+  located: '',
+  developers: '',
+  gove: '',
+  transaction: "",
+  houseNum: 0,
+  coversArea: 0,
+  conArea: 0,
+  rehousingNum: 0,
+  rehousingArea: 0,
+  compensation: 0,
+  ProStatus: 0
+}
+
 export default {
   data() {
     return {
@@ -211,10 +311,14 @@ export default {
       ],
       multipleSelection: [],
       tableData: [
-        { proId: 1, ProName: '水乡新城片区首期土地整备', ProType: '1', provinces: '广东省', city: '东莞市', county: '水乡', located: '广东省东莞水乡', developers: '华夏幸福基业股份有限公司', gove: '滨海湾新区管委会、虎门镇人民政府', transaction: "东莞市滨海湾新区威远岛土地整备现场指挥部", houseNum: 2000, coversArea: 1200000, conArea: 1010000, rehousingNum: 0, rehousingArea: 0, compensation: 0, ProStatus: '1' },
-        { proId: 2, ProName: '水乡新城片区首期土地整备', ProType: '4', provinces: '广东省', city: '东莞市', county: '水乡', located: '广东省东莞水乡', developers: '华夏幸福基业股份有限公司', gove: '滨海湾新区管委会、虎门镇人民政府', transaction: "东莞市滨海湾新区威远岛土地整备现场指挥部", houseNum: 2000, coversArea: 1200000, conArea: 1010000, rehousingNum: 0, rehousingArea: 0, compensation: 0, ProStatus: '5' },
-        { proId: 3, ProName: '水乡新城片区首期土地整备', ProType: '0', provinces: '广东省', city: '东莞市', county: '水乡', located: '广东省东莞水乡', developers: '华夏幸福基业股份有限公司', gove: '滨海湾新区管委会、虎门镇人民政府', transaction: "东莞市滨海湾新区威远岛土地整备现场指挥部", houseNum: 2000, coversArea: 1200000, conArea: 1010000, rehousingNum: 0, rehousingArea: 0, compensation: 0, ProStatus: '0' }
-      ]
+        { proId: 1, ProName: '水乡新城片区首期土地整备', ProType: 4, provinces: '广东省', city: '东莞市', county: '水乡', located: '广东省东莞水乡', developers: '华夏幸福基业股份有限公司', gove: '滨海湾新区管委会、虎门镇人民政府', transaction: "东莞市滨海湾新区威远岛土地整备现场指挥部", houseNum: 2000, coversArea: 1200000, conArea: 1010000, rehousingNum: 0, rehousingArea: 0, compensation: 0, ProStatus: '1' },
+        { proId: 2, ProName: '水乡新城片区首期土地整备', ProType: 1, provinces: '广东省', city: '东莞市', county: '水乡', located: '广东省东莞水乡', developers: '华夏幸福基业股份有限公司', gove: '滨海湾新区管委会、虎门镇人民政府', transaction: "东莞市滨海湾新区威远岛土地整备现场指挥部", houseNum: 2000, coversArea: 1200000, conArea: 1010000, rehousingNum: 0, rehousingArea: 0, compensation: 0, ProStatus: '5' },
+        { proId: 3, ProName: '水乡新城片区首期土地整备', ProType: 0, provinces: '广东省', city: '东莞市', county: '水乡', located: '广东省东莞水乡', developers: '华夏幸福基业股份有限公司', gove: '滨海湾新区管委会、虎门镇人民政府', transaction: "东莞市滨海湾新区威远岛土地整备现场指挥部", houseNum: 2000, coversArea: 1200000, conArea: 1010000, rehousingNum: 0, rehousingArea: 0, compensation: 0, ProStatus: '0' }
+      ],
+      pro: Object.assign({}, defaultRole),
+      dialogType: "edit",
+      dialogProCreate: false,
+      fileList: [],
     }
   },
   methods: {
@@ -235,9 +339,10 @@ export default {
     },
     // 勾选
     handleSelectionChange(val) {
+
       this.multipleSelection = val;
 
-      console.log(val)
+      // console.log(this.multipleSelection)
     },
     // 表格 格式化内容
     ProType(row, column) {
@@ -278,14 +383,19 @@ export default {
     },
 
     // 增删改按钮
-createPro(){
-  this.$alert('跳转-新增项目', "提示", {
-          confirmButtonText: '确认',
-          type: 'info'
-        })
-},
-editPro(){
-  if (this.multipleSelection.length == 0) {
+    createPro() {
+      this.pro = {}
+      this.dialogProCreate = true
+
+      this.dialogType = "add"
+      // this.$alert('跳转-新增项目', "提示", {
+      //   confirmButtonText: '确认',
+      //   type: 'info'
+      // })
+    },
+    // 编辑
+    editPro() {
+      if (this.multipleSelection.length == 0) {
         this.$alert('未选中项目', "提示", {
           confirmButtonText: '确认',
           type: 'info'
@@ -296,12 +406,19 @@ editPro(){
           type: 'info'
         })
       } else {
-        this.$alert('跳转-编辑项目', "提示", {
-          confirmButtonText: '确认',
-          type: 'info'
-        })
+        this.dialogType = "edit"
+        this.dialogProCreate = true
+        this.pro = deepClone(this.multipleSelection[0])
+        console.log(this.pro)
+
       }
-},
+    },
+    // 保存
+    updataPro() {
+      this.dialogProCreate = false
+      console.log(this.pro)
+    },
+    // 删除
     proDelete() {
       if (this.multipleSelection.length == 0) {
         this.$confirm('未选中项目', "提示", {
@@ -330,7 +447,18 @@ editPro(){
             })
           })
       }
-    }
+    },
+
+    // 图片上传
+    submitUpload() {
+        this.$refs.upload.submit();
+      },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
   }
 }
 </script>
