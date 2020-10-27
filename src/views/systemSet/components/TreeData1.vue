@@ -4,9 +4,10 @@
                style=""
                class="tabHeader">
       <!-- Header content -->
-      <div style="display:flex;justify-content: space-around;">
+      <div style="display:flex;justify-content: space-between;">
         <p style="padding: 0;margin: 0;line-height: 36px;">功能模块</p>
-        <el-button type="danger"
+        <el-button type="success"
+                   size="small"
                    @click="determine">
           <i class="el-icon-check" />
           确定
@@ -76,8 +77,8 @@ export default {
         label: 'label'
       },
       checkedKeys1: [4, 1, 6],
-      
-      
+
+
     }
   },
   methods: {
@@ -97,10 +98,8 @@ export default {
 </script>
 
 <style  scoped>
-
-
 .table {
-  border-radius: 10px; 
+  border-radius: 10px;
   border: 1px solid #dddddd;
   padding-bottom: 40px;
   /* padding: 5px 5px; */
@@ -109,6 +108,9 @@ export default {
 .tabHeader {
   background-color: #f5f5f5;
   padding: 10px 10px;
+  padding-left: 20px;
   border-bottom: 1px solid #a5a5a5;
+  font-size: 16px;
+  font-weight: 700;
 }
 </style>

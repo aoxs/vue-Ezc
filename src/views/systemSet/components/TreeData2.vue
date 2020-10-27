@@ -9,9 +9,10 @@
                  style=""
                  class="tabHeader">
 
-        <div style="display:flex;justify-content: space-around;">
+        <div style="display:flex;justify-content: space-between;">
           <p style="padding: 0;margin: 0;line-height: 36px;">按钮权限</p>
-          <el-button type="danger"
+          <el-button type="success"
+                     size="small"
                      @click="onSubmit">
             <i class="el-icon-check" />
             确定
@@ -29,19 +30,16 @@
                      name="type">
         </el-checkbox>
         <el-checkbox border
-                     
                      style="margin:5px;padding:5px 5px 5px 5px"
                      label="编辑"
                      name="type">
         </el-checkbox>
         <el-checkbox border
-                     
                      style="margin:5px;padding:5px 5px 5px 5px"
                      label="删除"
                      name="type">
         </el-checkbox>
         <el-checkbox border
-                     
                      style="margin:5px;padding:5px 5px 5px 5px"
                      label="查看详情"
                      name="type">
@@ -56,7 +54,7 @@
 export default {
   data() {
     return {
-      checkboxBottom:['新建','删除']
+      checkboxBottom: ['新建', '删除']
     }
   },
   methods: {
@@ -71,6 +69,9 @@ export default {
 .tabHeader {
   background-color: #f5f5f5;
   padding: 10px 10px;
+  padding-left: 20px;
   border-bottom: 1px solid #a5a5a5;
+  font-size: 16px;
+  font-weight: 700;
 }
 </style>
