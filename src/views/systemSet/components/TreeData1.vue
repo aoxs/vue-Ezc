@@ -20,7 +20,7 @@
              show-checkbox
              node-key="id"
              default-expand-all
-             :default-checked-keys="checkedKeys1"
+             :default-checked-keys="checkedKeys"
              :props="defaultProps"
              @node-click="handleNodeClick">
     </el-tree>
@@ -76,7 +76,7 @@ export default {
         children: 'children',
         label: 'label'
       },
-      checkedKeys1: [4, 1, 6],
+      checkedKeys: [10, 8, 6],
 
 
     }
