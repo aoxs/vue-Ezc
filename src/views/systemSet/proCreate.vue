@@ -58,7 +58,7 @@
       <!-- 顶部搜索end -->
 
       <!-- 信息表操作按钮 -->
-      <div style="display:flex;justify-content:flex-end;margin-top:20px;margin-bottom:10px;margin-right:10px">
+      <div style="display:flex;justify-content:flex-end;margin-top:20px;margin-bottom:10px;margin-right:20px">
 
         <el-button type="primary"
                    size="small"
@@ -83,69 +83,252 @@
 
       <!-- 弹窗 -->
       <el-dialog :visible.sync="dialogProCreate"
-                 :title="dialogType==='edit'?'编辑组织结构':'新建组织结构'"
-                 width="95%">
-        <el-form :model="pro"
-                 label-width="80px"
-                 label-position="right">
-          <el-row :gutter="10">
-            <el-col :sm="8"
-                    :xs="24"
-                    :offset="0">
-              <el-form-item label="项目名称:">
-                <el-input v-model="pro.ProName"
-                          placeholder="项目名称"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :sm="8"
-                    :xs="24"
-                    :offset="0">
-              <el-form-item label="排序顺序:">
-                <el-input placeholder="排序顺序"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :sm="8"
-                    :xs="24"
-                    :offset="0">
-              <el-form-item label="项目类型:">
-                <el-input v-model="pro.ProType"
-                          placeholder="请选择"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :sm="8"
-                    :xs="24"
-                    :offset="0">
-              <el-form-item label="项目状态:">
-                <el-input v-model="pro.ProStatus"
-                          placeholder="请选择"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="24"
-                    :offset="0">
-              <el-form-item label="项目图片:">
-                <el-upload class="upload-demo"
-                           action="http://120.86.117.97:8577/upload/"
-                           :on-preview="handlePreview"
-                           :on-remove="handleRemove"
-                           :file-list="fileList"
-                           list-type="picture">
-                  <el-button size="small"
-                             type="primary">上传</el-button>
-                  <el-button style="margin-left: 10px;"
-                             size="small"
-                             type="success"
-                             @click="submitUpload">上传到服务器</el-button>
-                  <div slot="tip"
-                       class="el-upload__tip">
-                    只能上传jpg/png文件，且不超过500kb
-                  </div>
-                </el-upload>
-              </el-form-item>
-            </el-col>
-          </el-row>
+                 :title="dialogType==='edit'?'编辑项目':'新建项目'"
+                 :before-close="handleClose"
+                 width="90%"
+                 style="">
+        <div style="height:65vh;overflow: auto;padding:10px 10px;margin-bottom:5px">
+          <el-form :model="pro"
+                   label-width="110px"
+                   label-position="right"
+                   style="white-space: nowrap;">
+            <el-row :gutter="10">
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="项目名称:">
+                  <el-input v-model="pro.ProName"
+                            placeholder="项目名称"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="排序顺序:">
+                  <el-input placeholder="排序顺序"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="项目类型:">
+                  <el-input v-model="pro.ProType"
+                            placeholder="请选择"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="项目状态:">
+                  <el-input v-model="pro.ProStatus"
+                            placeholder="请选择"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24"
+                      :offset="0">
+                <el-form-item label="项目图片:">
+                  <el-upload class="upload-demo"
+                             action="http://120.86.117.97:8577/upload/"
+                             :on-preview="handlePreview"
+                             :on-remove="handleRemove"
+                             :file-list="fileList"
+                             list-type="picture">
+                    <el-button size="small"
+                               type="primary">上传</el-button>
+                    <el-button style="margin-left: 10px;"
+                               size="small"
+                               type="success"
+                               @click="submitUpload">上传到服务器</el-button>
+                    <div slot="tip"
+                         class="el-upload__tip">
+                      只能上传jpg/png文件，且不超过500kb
+                    </div>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="省份:">
+                  <el-input v-model="pro.provinces"
+                            placeholder="请选择"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="城市:">
+                  <el-input v-model="pro.city"
+                            placeholder="请选择"></el-input>
+                </el-form-item>
+              </el-col>
 
-        </el-form>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="区县:">
+                  <el-input v-model="pro.county"
+                            placeholder="请选择"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="街道:">
+                  <el-input v-model="pro.street"
+                            placeholder=""></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="坐落:">
+                  <el-input v-model="pro.located"
+                            placeholder=""></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="位置坐标:">
+                  <el-input v-model="pro.coordinates"
+                            placeholder=""></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="实施单位:">
+                  <el-input placeholder=""></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="临时指挥部:">
+                  <el-input placeholder=""></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="综合服务商:">
+                  <el-input placeholder=""></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="社区居民委员会:">
+                  <el-input placeholder=""></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="0"
+                      :offset="8"></el-col>
 
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="总户数:">
+                  <el-input v-model="pro.houseNum"
+                            placeholder=""></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="总占地面积:">
+                  <el-input v-model="pro.coversArea"
+                            placeholder="">
+                    <template slot="append">m²</template>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="总建筑面积:">
+                  <el-input v-model="pro.conArea"
+                            placeholder="">
+                    <template slot="append">m²</template>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="规划建设面积:">
+                  <el-input placeholder="">
+                    <template slot="append">m²</template>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="回迁房面积:">
+                  <el-input placeholder="">
+                    <template slot="append">m²</template>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="保障房面积:">
+                  <el-input placeholder="">
+                    <template slot="append">m²</template>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="总补偿款:">
+                  <el-input v-model="pro.compensation"
+                            placeholder="">
+                    <template slot="append">万元</template>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="安置房总数量:">
+                  <el-input v-model="pro.rehousingNum"
+                            placeholder="">
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="安置房总面积:">
+                  <el-input v-model="pro.rehousingArea"
+                            placeholder="">
+                    <template slot="append">m²</template>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24"
+                      :offset="0">
+                <!-- <div style="display: table-cell;vertical-align:middle"> -->
+
+                <el-form-item label="项目基本情况:">
+                  <tinymce v-model="pro.content"
+                           :height="300" />
+
+                </el-form-item>
+                <!-- </div> -->
+              </el-col>
+
+            </el-row>
+
+          </el-form>
+
+        </div>
         <div style="text-align:right;">
           <el-button type="info"
                      @click="dialogProCreate=false">取消</el-button>
@@ -258,6 +441,9 @@
 
 <script>
 import { deepClone } from '@/utils';
+import Tinymce from '@/components/Tinymce'
+
+
 
 const defaultRole = {
   proId: 0,
@@ -276,10 +462,14 @@ const defaultRole = {
   rehousingNum: 0,
   rehousingArea: 0,
   compensation: 0,
-  ProStatus: 0
+  ProStatus: 0,
+  street: '',
+  coordinates: '',
+  content: '',
 }
 
 export default {
+  components: { Tinymce },
   data() {
     return {
       input1: '',
@@ -311,9 +501,9 @@ export default {
       ],
       multipleSelection: [],
       tableData: [
-        { proId: 1, ProName: '水乡新城片区首期土地整备', ProType: 4, provinces: '广东省', city: '东莞市', county: '水乡', located: '广东省东莞水乡', developers: '华夏幸福基业股份有限公司', gove: '滨海湾新区管委会、虎门镇人民政府', transaction: "东莞市滨海湾新区威远岛土地整备现场指挥部", houseNum: 2000, coversArea: 1200000, conArea: 1010000, rehousingNum: 0, rehousingArea: 0, compensation: 0, ProStatus: '1' },
-        { proId: 2, ProName: '水乡新城片区首期土地整备', ProType: 1, provinces: '广东省', city: '东莞市', county: '水乡', located: '广东省东莞水乡', developers: '华夏幸福基业股份有限公司', gove: '滨海湾新区管委会、虎门镇人民政府', transaction: "东莞市滨海湾新区威远岛土地整备现场指挥部", houseNum: 2000, coversArea: 1200000, conArea: 1010000, rehousingNum: 0, rehousingArea: 0, compensation: 0, ProStatus: '5' },
-        { proId: 3, ProName: '水乡新城片区首期土地整备', ProType: 0, provinces: '广东省', city: '东莞市', county: '水乡', located: '广东省东莞水乡', developers: '华夏幸福基业股份有限公司', gove: '滨海湾新区管委会、虎门镇人民政府', transaction: "东莞市滨海湾新区威远岛土地整备现场指挥部", houseNum: 2000, coversArea: 1200000, conArea: 1010000, rehousingNum: 0, rehousingArea: 0, compensation: 0, ProStatus: '0' }
+        { proId: 1, ProName: '水乡新城片区首期土地整备', ProType: 4, provinces: '广东省', city: '东莞市', county: '水乡', located: '广东省东莞水乡', developers: '华夏幸福基业股份有限公司', gove: '滨海湾新区管委会、虎门镇人民政府', transaction: "东莞市滨海湾新区威远岛土地整备现场指挥部", houseNum: 2000, coversArea: 1200000, conArea: 1010000, rehousingNum: 0, rehousingArea: 0, compensation: 0, ProStatus: '1', content: '<i>abc</i><br><b>123</b>' },
+        { proId: 2, ProName: '水乡新城片区首期土地整备', ProType: 1, provinces: '广东省', city: '东莞市', county: '水乡', located: '广东省东莞水乡', developers: '华夏幸福基业股份有限公司', gove: '滨海湾新区管委会、虎门镇人民政府', transaction: "东莞市滨海湾新区威远岛土地整备现场指挥部", houseNum: 2000, coversArea: 1200000, conArea: 1010000, rehousingNum: 0, rehousingArea: 0, compensation: 0, ProStatus: '5', content: '<i>111</i><br><b>aaa</b>' },
+        { proId: 3, ProName: '水乡新城片区首期土地整备', ProType: 0, provinces: '广东省', city: '东莞市', county: '水乡', located: '广东省东莞水乡', developers: '华夏幸福基业股份有限公司', gove: '滨海湾新区管委会、虎门镇人民政府', transaction: "东莞市滨海湾新区威远岛土地整备现场指挥部", houseNum: 2000, coversArea: 1200000, conArea: 1010000, rehousingNum: 0, rehousingArea: 0, compensation: 0, ProStatus: '0', content: '<i>212</i><br><b>asa</b>' }
       ],
       pro: Object.assign({}, defaultRole),
       dialogType: "edit",
@@ -342,7 +532,7 @@ export default {
 
       this.multipleSelection = val;
 
-      // console.log(this.multipleSelection)
+      console.log(this.multipleSelection)
     },
     // 表格 格式化内容
     ProType(row, column) {
@@ -410,13 +600,37 @@ export default {
         this.dialogProCreate = true
         this.pro = deepClone(this.multipleSelection[0])
         console.log(this.pro)
+        console.log(this.pro.content)
 
       }
     },
     // 保存
     updataPro() {
-      this.dialogProCreate = false
-      console.log(this.pro)
+
+      if (!this.pro.ProName) {
+        this.$message({
+          type: 'error',
+          message: '项目名称不能为空!'
+        })
+      } else {
+        this.dialogProCreate = false
+        console.log(this.pro)
+        console.log(this.pro.content)
+      }
+
+
+    },
+    handleClose(done) {
+      this.$confirm("确定关闭？")
+        .then((_) => {
+          done();
+          console.log(1, done);
+          this.editDialogVisible = false;
+        })
+
+        .catch((_) => {
+          console.log(2, done);
+        });
     },
     // 删除
     proDelete() {
@@ -451,8 +665,8 @@ export default {
 
     // 图片上传
     submitUpload() {
-        this.$refs.upload.submit();
-      },
+      this.$refs.upload.submit();
+    },
     handlePreview(file) {
       console.log(file);
     },
@@ -464,4 +678,7 @@ export default {
 </script>
 
 <style scoped>
+.el-form-item {
+  margin-bottom: 5px;
+}
 </style>
