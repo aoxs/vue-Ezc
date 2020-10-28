@@ -279,4 +279,7 @@ export default {
   flex-direction: row-reverse;
   /* justify-content: flex-end; */
 }
+.el-form-item {
+  margin-bottom: 5px;
+}
 </style>

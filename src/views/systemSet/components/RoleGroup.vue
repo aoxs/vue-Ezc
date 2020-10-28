@@ -86,7 +86,7 @@ export default {
   name: 'RoleGroup',
   data() {
     return {
-      roleSearchInput: '',
+      
       roleTableData1: [
         { title: "abc1" },
         { title: "abc2" },
@@ -112,6 +112,7 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     },
+    
   }
 }
 </script>
