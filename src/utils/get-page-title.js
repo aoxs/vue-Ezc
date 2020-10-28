@@ -3,8 +3,8 @@ import defaultSettings from '@/settings'
 const title = defaultSettings.title || '英联E征拆'
 
 export default function getPageTitle(pageTitle) {
-  if (pageTitle) {
-    return `${pageTitle} - ${title}`
-  }
+  // if (pageTitle) {
+  //   return `${pageTitle} - ${title}`
+  // }
   return `${title}`
 }
