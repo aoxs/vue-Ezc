@@ -4,11 +4,12 @@
 
       <div style="display:flex">
         <!-- 树形结构框 -->
-        <user-group></user-group>
+        <user-group @childFn="parentFn"></user-group>
 
         <!-- 树形结构框end -->
 
         <div style="width:78%;padding-top:20px;white-space: nowrap;">
+          <!-- {{tableData}} -->
           <!-- 增删改查按钮 -->
           <!-- <btns /> -->
           <div style="display:flex;justify-content:flex-end ;">
@@ -17,6 +18,7 @@
               <div class="pagRight"
                    style="padding-right:20px">
                 <div style="">
+
                   <el-button type="primary"
                              size="small"
                              style=""
@@ -48,8 +50,7 @@
             </div>
             <!-- 弹窗 -->
             <el-dialog :visible.sync="dialogGroup"
-                       :title="dialogType==='edit'?'编辑组织结构':'新建组织结构'" 
-                       >
+                       :title="dialogType==='edit'?'编辑组织结构':'新建组织结构'">
               <el-form :model="group"
                        label-width="80px"
                        label-position="right">
@@ -84,7 +85,15 @@
           </div>
           <!-- 增删改查 弹窗end -->
           <!-- 组织结构表 -->
-          <el-table :data="YLData"
+          <!-- <el-button type="primary"
+                     size="default"
+                     @click="abcdd1">test1</el-button>
+          <el-button type="primary"
+                     size="default"
+                     @click="abcdd2">test2</el-button>
+                     <p>abc{{tableData}}</p> -->
+
+          <el-table :data="tableData"
                     style="width:95%;margin:0 auto;margin-top:20px;border-radius: 8px;"
                     stripe
                     border
@@ -137,15 +146,15 @@
           </el-table>
           <!-- 组织结构表end -->
           <!-- 分页 -->
-        <div class="pagRight">
-          <pagination v-show="YLData.length>=10"
-                      :total="YLData.length"
-                      :layout="layout">
+          <div class="pagRight">
+            <pagination v-show="YLData.length>=10"
+                        :total="YLData.length"
+                        :layout="layout">
 
-          </pagination>
+            </pagination>
 
-        </div>
-        <!-- 分页end -->
+          </div>
+          <!-- 分页end -->
 
         </div>
       </div>
@@ -161,7 +170,7 @@ import Pagination from '@/components/Pagination'
 
 
 const defaultGroup = {
-  
+
   children: [],
   groupName: "",
   principal: "",
@@ -183,22 +192,22 @@ export default {
           serviceContent: '谈判',
           principal: '王萧',
           tel: '13011112222',
-          children: [
-            {
-              groupName: '望牛墩指挥部',
-              serviceType: '望牛墩',
-              serviceContent: '指挥部',
-              principal: '王彬彬',
-              tel: '13022223333'
-            },
-            {
-              groupName: '洪梅指挥部',
-              serviceType: '洪梅',
-              serviceContent: '指挥部',
-              principal: '方海军',
-              tel: '13033331111'
-            },
-          ]
+        },
+      ],
+      testData: [
+        {
+          groupName: '望牛墩指挥部',
+          serviceType: '望牛墩',
+          serviceContent: '指挥部',
+          principal: '王彬彬',
+          tel: '13022223333'
+        },
+        {
+          groupName: '洪梅指挥部',
+          serviceType: '洪梅',
+          serviceContent: '指挥部',
+          principal: '方海军',
+          tel: '13033331111'
         },
       ],
       multipleSelection: [],// table 选择的信息添加到数组
@@ -206,10 +215,24 @@ export default {
       dialogType: 'add',
       dialogGroup: false,
       group: Object.assign({}, defaultGroup),
+      tableData: '',
       // groupSet: [],// 存放 点击编辑的数据
     }
   },
   methods: {
+    // test 传值
+     parentFn(payload) {
+        this.tableData = this[payload];
+      },
+    // test按钮
+    abcdd1() {
+      this.tableData = this.testData
+    },
+    abcdd2() {
+      this.tableData = this.YLData
+    },
+
+
     // 增删改 按钮
     groupAdd() {
       this.dialogType = 'add'
@@ -240,14 +263,14 @@ export default {
     // 保存
     confirmRole() {
       this.dialogGroup = false
-      
+
       console.log(this.group)
     },
 
     //增删改 按钮end
 
 
-
+    // table事件
     handleSelectionChange(val) {
       this.multipleSelection = val
       console.log(val)
@@ -256,13 +279,6 @@ export default {
       console.log(index, row);
       // this.groupSet = [];
       this.editDialogVisible = true;
-      // this.groupSet.push(
-      //   row.groupName,
-      //   row.serviceType,
-      //   row.serviceContent,
-      //   row.principal,
-      //   row.tel
-      // );
     },
     // userEupdata() {
     //   this.editDialogVisible = false;

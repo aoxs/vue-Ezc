@@ -24,7 +24,7 @@ export default {
   name: 'UserGroup',
   data() {
     return {
-      government:[
+      government: [
         {
           id: 4988,
           label: '政府部门',
@@ -33,7 +33,7 @@ export default {
           ]
         }
       ],
-      impl:[
+      impl: [
         {
           id: 4999,
           label: '实施主体',
@@ -50,10 +50,13 @@ export default {
             {
               id: 124,
               label: '英联公司',
+              table: 'YLData',
               children: [
                 {
                   id: 5123,
                   label: '谈判小组',
+                  table: 'testData',
+
                   children: [
                     {
                       id: 7654,
@@ -66,12 +69,11 @@ export default {
                   ]
                 }
               ]
-
             }
           ]
         }
       ],
-      owner:[
+      owner: [
         {
           id: 4956,
           label: '单位业主',
@@ -85,6 +87,8 @@ export default {
   methods: {
     handleNodeClick(e) {
       console.log(e.id);
+      console.log(e.table);
+      this.$emit('childFn', e.table);
     },
   }
 }
