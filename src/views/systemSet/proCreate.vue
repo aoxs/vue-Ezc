@@ -15,11 +15,13 @@
             </template>
           </el-input>
 
-          <div style="margin-left:20px">
-            项目类型:
+          <div class="selectCheck">
+            
+            <span class="check_font"
+                  style="">项目类型:</span>
             <el-select v-model="select1"
                        placeholder="请选择"
-                       style="width:130px">
+                       style="width:70%">
               <el-option v-for="item in option1"
                          :key="item.id"
                          :label="item.label"
@@ -30,11 +32,13 @@
             </el-select>
           </div>
 
-          <div style="margin-left:20px">
-            项目状态:
+          <div class="selectCheck">
+           
+            <span class="check_font"
+                  style="">项目状态:</span>
             <el-select v-model="select2"
                        placeholder="请选择"
-                       style="width:130px">
+                       style="width:70%">
               <el-option v-for="item in option2"
                          :key="item.id"
                          :label="item.label"
@@ -434,7 +438,16 @@
 
       </el-table>
       <!-- 信息表end -->
+<!-- 分页 -->
+        <div class="pagRight">
+          <pagination v-show="tableData.length>=10"
+                      :total="tableData.length"
+                      :layout="layout">
 
+          </pagination>
+
+        </div>
+        <!-- 分页end -->
     </div>
   </div>
 </template>
@@ -442,6 +455,7 @@
 <script>
 import { deepClone } from '@/utils';
 import Tinymce from '@/components/Tinymce'
+import Pagination from '@/components/Pagination'
 
 
 
@@ -469,7 +483,7 @@ const defaultRole = {
 }
 
 export default {
-  components: { Tinymce },
+  components: { Tinymce, Pagination },
   data() {
     return {
       input1: '',
@@ -677,8 +691,31 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+::v-deep .selectCheck .el-input__inner {
+    border: 0px !important;
+    border-radius: 0px;
+  }
 .el-form-item {
   margin-bottom: 5px;
+}
+.selectCheck {
+  width: 30%;
+  margin-left: 20px;
+  display: flex;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.check_font {
+  display: block;
+  width: 35%;
+  padding: 10px 10px;
+  font-size: 14px;
+  color: #909399;
+  background-color: #f5f7fa;
+  border-right: 1px solid #dcdfe6;
+  white-space: nowrap;
+  text-align: center;
 }
 </style>
