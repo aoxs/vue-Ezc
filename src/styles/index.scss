@@ -196,3 +196,7 @@ aside {
   background-color: rgb(240, 242, 245);
   position: relative;
 }
+.pagRight {
+  display: flex;
+  flex-direction: row-reverse;
+}
