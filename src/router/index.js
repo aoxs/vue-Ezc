@@ -789,7 +789,12 @@ export const asyncRoutes = [
       icon: 'eye'
     },
     children: [
-
+      {
+        path: 'list',
+        component: () => import('@/views/example/list'),
+        name: 'ArticleList',
+        meta: { title: '分页测试' }
+      },
       {
         path: 'directive',
         component: () => import('@/views/test/directive'),
