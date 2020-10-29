@@ -40,15 +40,11 @@
       <!-- 分页栏 -->
       <div style="width: 100%; padding: 5px 10px">
         <div class="pagRight">
-          <el-pagination @size-change="handleSizeChange"
-                         @current-change="handleCurrentChange"
-                         :current-page="currentPage4"
-                         :page-sizes="[5, 10, 20, 30]"
-                         :page-size="5"
-                         layout="total, sizes, prev, pager, next"
-                         :total="NewsData.length"
-                         background>
-          </el-pagination>
+          <pagination v-show="NewsData.length>=5"
+                      :total="NewsData.length"
+                      :layout="layout">
+
+          </pagination>
         </div>
       </div>
 
@@ -57,7 +53,11 @@
   </div>
 </template>
 <script>
+import Pagination from '@/components/Pagination'
+
+
 export default {
+  components: { Pagination },
   data() {
     return {
       NewsData: [
@@ -190,11 +190,11 @@ p {
 .d2 {
   padding-left: 20px;
 }
-.pagRight {
-  /* background-color: #0ff; */
+/* .pagRight {
+  background-color: #0ff;
   display: flex;
   flex-direction: row-reverse;
-}
+} */
 @media screen and (min-width: 992px) {
   .newsImg {
     width: 390px;

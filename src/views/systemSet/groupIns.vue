@@ -136,6 +136,17 @@
             </el-table-column>
           </el-table>
           <!-- 组织结构表end -->
+          <!-- 分页 -->
+        <div class="pagRight">
+          <pagination v-show="YLData.length>=10"
+                      :total="YLData.length"
+                      :layout="layout">
+
+          </pagination>
+
+        </div>
+        <!-- 分页end -->
+
         </div>
       </div>
     </div>
@@ -145,7 +156,9 @@
 <script>
 import { deepClone } from '@/utils';
 import UserGroup from './components/UserGroup'
-import btns from './components/btns'
+// import btns from './components/btns'
+import Pagination from '@/components/Pagination'
+
 
 const defaultGroup = {
   
@@ -159,7 +172,7 @@ const defaultGroup = {
 
 export default {
   name: 'groupIns',
-  components: { UserGroup, btns },
+  components: { UserGroup, Pagination },
   data() {
     return {
 
@@ -274,11 +287,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pagRight {
-  display: flex;
-  flex-direction: row-reverse;
-  /* justify-content: flex-end; */
-}
+// .pagRight {
+//   display: flex;
+//   flex-direction: row-reverse;
+//   /* justify-content: flex-end; */
+// }
 .el-form-item {
   margin-bottom: 5px;
 }

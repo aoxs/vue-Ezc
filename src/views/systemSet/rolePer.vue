@@ -97,15 +97,10 @@
             </el-table>
             <div style="width: 100%; padding: 5px 10px">
               <div class="pagRight">
-                <el-pagination @size-change="handleSizeChange"
-                               @current-change="handleCurrentChange"
-                               background
-                               :page-sizes="[5,10,30,100]"
-                               :page-size="5"
-                               layout="total,sizes, prev, pager, next"
-                               :total="roleTableData1.length"
-                               style="margin:0 2px">
-                </el-pagination>
+                <pagination v-show="roleTableData1.length>=10"  :total="roleTableData1.length" :small="true" :layout="layout" >
+
+                </pagination>
+                
               </div>
             </div>
           </div>
@@ -227,11 +222,16 @@
 
 <script>
 // import RoleGroup from './components/RoleGroup'
-import TreeData1 from './components/TreeData1'
-import TreeData2 from './components/TreeData2'
+// import TreeData1 from './components/TreeData1'
+// import TreeData2 from './components/TreeData2'
 // import TreeData3 from './components/TreeData3'
+import Pagination from '@/components/Pagination'
+
+
+
+
 export default {
-  components: { TreeData1, TreeData2 },
+  components: { Pagination },
   data() {
     return {
 
@@ -243,88 +243,12 @@ export default {
         { title: "abc4" },
         { title: "abc5" },
         { title: "abc6" },
+        { title: "abc6" },
+        { title: "abc6" },
+        { title: "abc6" },
+       
         { title: "abc7" }
       ],
-      /*
-      roleTreeData1: [
-        {
-          id: 1,
-          label: '一级 1',
-          children: [{
-            id: 4,
-            label: '二级 1-1',
-            children: [{
-              id: 9,
-              label: '三级 1-1-1'
-            }, {
-              id: 10,
-              label: '三级 1-1-2'
-            }]
-          }]
-        },
-        {
-          id: 2,
-          label: '一级 2',
-          children: [{
-            id: 5,
-            label: '二级 2-1'
-          }, {
-            id: 6,
-            label: '二级 2-2'
-          }]
-        },
-        {
-          id: 3,
-          label: '一级 3',
-          children: [{
-            id: 7,
-            label: '二级 3-1'
-          }, {
-            id: 8,
-            label: '二级 3-2'
-          }]
-        }
-      ],
-      roleTreeData2: [
-        {
-          id: 1,
-          label: '一级 1',
-          children: [{
-            id: 4,
-            label: '二级 1-1',
-            children: [{
-              id: 9,
-              label: '三级 1-1-1'
-            }, {
-              id: 10,
-              label: '三级 1-1-2'
-            }]
-          }]
-        },
-        {
-          id: 2,
-          label: '一级 2',
-          children: [{
-            id: 5,
-            label: '二级 2-1'
-          }, {
-            id: 6,
-            label: '二级 2-2'
-          }]
-        },
-        {
-          id: 3,
-          label: '一级 3',
-          children: [{
-            id: 7,
-            label: '二级 3-1'
-          }, {
-            id: 8,
-            label: '二级 3-2'
-          }]
-        }
-      ],
-      */
       roleTreeData1: [
         {
           id: 1,
@@ -376,6 +300,7 @@ export default {
       // cities: ['新增', '修改', '删除', '查看详情'],
       newRole: false,
       roleName: '',
+      layout:'total,  prev, pager, next'
     }
   },
 
@@ -483,18 +408,17 @@ export default {
 
 
 <style scoped>
-.pagRight {
-  /* background-color: #0ff; */
+/* .pagRight {
   display: flex;
 
   flex-direction: row-reverse;
-}
+} */
 .table {
   border-radius: 10px;
   border: 1px solid #dddddd;
-  padding-bottom: 40px;
+  /* padding-bottom: 40px; */
   /* padding: 5px 5px; */
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .tabHeader {
   background-color: #f5f5f5;
