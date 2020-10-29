@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
-    <div style="background-color:#fff">
+    <div style="background-color:#fff;border:1px solid #DADADA">
 
       <!-- <div style="display:flex"> -->
       <!-- 树形 组织机构 -->
@@ -14,6 +14,66 @@
                  @click="handleDownload">
         导出Excel
       </el-button> -->
+
+      <!-- 顶部搜索 -->
+      <div style="display:flex;justify-content:flex-start;background:#F5F5F5;padding:10px 20px;border-bottom:1px solid #DADADA">
+
+        <div style="width:70%;display:flex;justify-content:flex-start;">
+
+          <el-input v-model="checkUserName"
+                    placeholder="请输入名称"
+                    style="width:30%"
+                    slot="">
+            <template slot="prepend">
+              账号:
+            </template>
+          </el-input>
+
+          <div class="selectCheck">
+            <span class="check_font"
+                  style="">数据范围:</span>
+            <el-select v-model="dataSelect"
+                       placeholder="请选择"
+                       style="width:70%">
+              <el-option v-for="item in dataOption"
+                         :key="item.id"
+                         :label="item.label"
+                         :value="item.id">
+
+              </el-option>
+
+            </el-select>
+          </div>
+
+          <div style=""
+               class="selectCheck">
+
+            <span class="check_font">所属机构:</span>
+            <el-select v-model="groupInsSelect"
+                       placeholder="请选择"
+                       style="width:70%">
+              <el-option v-for="item in groupInsOption"
+                         :key="item.id"
+                         :label="item.label"
+                         :value="item.id"></el-option>
+            </el-select>
+          </div>
+
+        </div>
+        <div>
+          <el-button type="info"
+                     size="small"
+                     plain
+                     @click="changeClick"><i class="el-icon-search" />查询</el-button>
+          <el-button type="info"
+                     size="small"
+                     plain
+                     @click="resetClick"><i class="el-icon-refresh" />重置</el-button>
+
+        </div>
+      </div>
+      <!-- 顶部搜索end -->
+
       <div style="width:100%;padding-top:20px;padding-bottom:20px;white-space: nowrap; ">
         <!-- 按钮 -->
         <div style=" padding: 5px 10px">
@@ -101,7 +161,7 @@
               <el-select v-model="role.role"
                          value-key=""
                          placeholder="请选择用户角色">
-                <el-option v-for="item in options"
+                <el-option v-for="item in userNameOptions"
                            :key="item.value"
                            :label="item.label"
                            :value="item.value">
@@ -200,6 +260,16 @@
           </el-table-column>
         </el-table>
         <!-- 表格end -->
+        <!-- 分页 -->
+        <div class="pagRight">
+          <pagination v-show="tableData.length>=10"
+                      :total="tableData.length"
+                      :layout="layout">
+
+          </pagination>
+
+        </div>
+        <!-- 分页end -->
       </div>
       <!-- </div> -->
     </div>
@@ -208,8 +278,10 @@
 
 <script>
 import { deepClone } from '@/utils';
-import btns from './components/btns'
-import UserGroup from './components/UserGroup'
+// import btns from './components/btns'
+// import UserGroup from './components/UserGroup'
+import Pagination from '@/components/Pagination'
+
 
 const defaultRole = {
   PId: '',
@@ -225,9 +297,42 @@ const defaultRole = {
 
 export default {
   name: 'userSys',
-  components: { btns, UserGroup },
+  components: {  Pagination },
   data() {
     return {
+      checkUserName: '',
+      dataSelect: '',
+      groupInsSelect: '',
+      dataOption: [
+        {
+          id: '1',
+          label: '滨海湾新区威远岛土地整备'
+        }, {
+          id: '2',
+          label: '水乡新城片区首期土地整备'
+        }, {
+          id: '3',
+          label: '黄江项目'
+        }, {
+          id: '4',
+          label: '公明轨道13号线及沿线(含车辆段)项目'
+        }
+      ],
+      groupInsOption: [
+        {
+          id: '3',
+          label: '政府部门'
+        }, {
+          id: '4',
+          label: '实施主体'
+        }, {
+          id: '5',
+          label: '全程咨询'
+        }, {
+          id: '6',
+          label: '单位业主'
+        }
+      ],
       tableData: [
         { PId: 1, loginName: "汤姆", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: "xxx分组", tel: "13035707258", role: "管理员", isEnable: 1 },
         { PId: 2, loginName: "杰瑞", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: "xxx分组", tel: "13035707258", role: "游客", isEnable: 0 },
@@ -255,6 +360,21 @@ export default {
     this.fetchData()
   },
   methods: {
+    // 查询/重置 按钮
+    changeClick() {
+      console.log(this.checkUserName)
+      console.log(this.dataSelect)
+      console.log(this.groupInsSelect)
+      this.$alert('开发中', "提示", {
+        confirmButtonText: '确认',
+        type: 'info'
+      })
+    },
+    resetClick() {
+      this.checkUserName = ''
+      this.dataSelect = ''
+      this.groupInsSelect = ''
+    },
     // 增删改查按钮
     groupAdd() {
       this.dialogType = 'add'
@@ -262,7 +382,7 @@ export default {
       this.role = {}
     },
     groupEdit(scope) {
-     console.log(scope.row);
+      console.log(scope.row);
       // this.clickUserRes = [];
       this.dialogType = 'edit'
       this.dialogVisible = true
@@ -420,13 +540,36 @@ export default {
 };
 </script>
 
-<style scoped>
-.pagRight {
-  display: flex;
-  flex-direction: row-reverse;
-  /* justify-content: flex-end; */
+
+<style lang="scss" scoped >
+::v-deep .selectCheck .el-input__inner {
+  border: 0px !important;
+  border-radius: 0px;
 }
+// .pagRight {
+//   display: flex;
+//   flex-direction: row-reverse;
+// }
 .el-form-item {
   margin-bottom: 5px;
+}
+.selectCheck {
+  width: 30%;
+  margin-left: 20px;
+  display: flex;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.check_font {
+  display: block;
+  width: 35%;
+  padding: 10px 10px;
+  font-size: 14px;
+  color: #909399;
+  background-color: #f5f7fa;
+  border-right: 1px solid #dcdfe6;
+  white-space: nowrap;
+  text-align: center;
 }
 </style>
