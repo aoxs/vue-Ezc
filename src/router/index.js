@@ -800,7 +800,7 @@ export const asyncRoutes = [
         component: () => import('@/views/test/directive'),
         name: 'directivePermission',
         meta: {
-          title: '权限设置  (完成)',
+          title: '权限测试',
           roles: all // or you can only set roles in sub nav
         }
       },
