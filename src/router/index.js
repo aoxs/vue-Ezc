@@ -414,17 +414,41 @@ export const constantRoutes = [
       //   meta: { title: '新建项目' }
       // },
       {
-        path: 'tempConfig',
-        component: () => import('@/views/proMang/tempConfig'),
-        name: 'tempConfig',
-        meta: { title: '模板配置' }
+        path: 'planPro',
+        component: () => import('@/views/proMang/planPro'),
+        name: 'planPro',
+        meta: { title: '项目计划进度' }
       },
       {
-        path: 'perMang',
-        component: () => import('@/views/proMang/perMang'),
-        name: 'perMang',
-        meta: { title: '权限管理' }
+        path: 'proGroupManage',
+        component: () => import('@/views/proMang/proGroupManage'),
+        name: 'proGroupManage',
+        meta: { title: '项目组织机构管理' }
       },
+      {
+        path: 'proGroupMember',
+        component: () => import('@/views/proMang/proGroupMember'),
+        name: 'proGroupMember',
+        meta: { title: '项目组织机构成员' }
+      },
+      {
+        path: 'proTeamPer',
+        component: () => import('@/views/proMang/proTeamPer'),
+        name: 'proTeamPer',
+        meta: { title: '查看项目组权限' }
+      },
+      // {
+      //   path: 'tempConfig',
+      //   component: () => import('@/views/proMang/tempConfig'),
+      //   name: 'tempConfig',
+      //   meta: { title: '模板配置' }
+      // },
+      // {
+      //   path: 'perMang',
+      //   component: () => import('@/views/proMang/perMang'),
+      //   name: 'perMang',
+      //   meta: { title: '权限管理' }
+      // },
 
     ]
   },
