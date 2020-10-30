@@ -31,7 +31,7 @@ export default {
           children: [
             {}
           ]
-        }
+        },
       ],
       impl: [
         {
@@ -40,12 +40,12 @@ export default {
           children: [
             {}
           ]
-        }
+        },
       ],
       consulting: [
         {
           id: 3,
-          label: '全程咨询',
+          label: '服务机构',
           children: [
             {
               id: 124,
@@ -71,7 +71,7 @@ export default {
               ]
             }
           ]
-        }
+        },
       ],
       owner: [
         {
@@ -80,7 +80,7 @@ export default {
           children: [
             {}
           ]
-        }
+        },
       ],
     }
   },

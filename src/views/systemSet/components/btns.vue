@@ -36,7 +36,9 @@
     </div>
     <!-- 弹窗 -->
     <el-dialog :visible.sync="dialogVisible"
-               :title="dialogType==='edit'?'编辑组织结构':'新建组织结构'">
+               :title="dialogType==='edit'?'编辑组织结构':'新建组织结构'"
+                 top="10px"
+               >
       <!-- <el-form :model="multipleSelection"
                label-width="80px"
                label-position="left">

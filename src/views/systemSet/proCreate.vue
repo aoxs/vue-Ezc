@@ -16,7 +16,7 @@
           </el-input>
 
           <div class="selectCheck">
-            
+
             <span class="check_font"
                   style="">项目类型:</span>
             <el-select v-model="select1"
@@ -33,7 +33,7 @@
           </div>
 
           <div class="selectCheck">
-           
+
             <span class="check_font"
                   style="">项目状态:</span>
             <el-select v-model="select2"
@@ -68,7 +68,7 @@
                    size="small"
                    @click="createPro">
           <i class="el-icon-circle-plus" />
-          新增
+          新建
         </el-button>
         <el-button type="primary"
                    size="small"
@@ -79,7 +79,8 @@
         <el-button type="primary"
                    size="small"
                    @click="proDelete">
-          <i class="el-icon-error" />
+          <i class="el-icon-delete-solid" />
+
           删除
         </el-button>
       </div>
@@ -90,7 +91,8 @@
                  :title="dialogType==='edit'?'编辑项目':'新建项目'"
                  :before-close="handleClose"
                  width="90%"
-                 style="">
+                 style=""
+                 top="10px">
         <div style="height:65vh;overflow: auto;padding:10px 10px;margin-bottom:5px">
           <el-form :model="pro"
                    label-width="110px"
@@ -438,16 +440,16 @@
 
       </el-table>
       <!-- 信息表end -->
-<!-- 分页 -->
-        <div class="pagRight">
-          <pagination v-show="tableData.length>=10"
-                      :total="tableData.length"
-                      :layout="layout">
+      <!-- 分页 -->
+      <div class="pagRight">
+        <pagination v-show="tableData.length>=10"
+                    :total="tableData.length"
+                    :layout="layout">
 
-          </pagination>
+        </pagination>
 
-        </div>
-        <!-- 分页end -->
+      </div>
+      <!-- 分页end -->
     </div>
   </div>
 </template>
@@ -693,9 +695,9 @@ export default {
 
 <style lang="scss" scoped>
 ::v-deep .selectCheck .el-input__inner {
-    border: 0px !important;
-    border-radius: 0px;
-  }
+  border: 0px !important;
+  border-radius: 0px;
+}
 .el-form-item {
   margin-bottom: 5px;
 }

@@ -23,7 +23,8 @@
         <!-- 数据范围 弹窗 -->
         <el-dialog :visible.sync="dialogVisible"
                    title="选择项目范围"
-                   :before-close="handleClose">
+                   :before-close="handleClose"
+                   top="10px">
 
           <div style="text-align:right;">
             <el-button type="info"
@@ -43,21 +44,18 @@
                 @selection-change="handleSelectionChange">
         <el-table-column type="selection"
                          width="55" />
-        <el-table-column 
-                         prop="loginName"
+        <el-table-column prop="loginName"
                          label="用户名称"
                          width=""
                          sortable
                          show-overflow-tooltip />
 
-        <el-table-column 
-                         prop="userName"
+        <el-table-column prop="userName"
                          label="真实姓名"
                          width=""
                          sortable
                          show-overflow-tooltip />
-        <el-table-column 
-                         prop="groupName"
+        <el-table-column prop="groupName"
                          label="组织机构"
                          width=""
                          sortable

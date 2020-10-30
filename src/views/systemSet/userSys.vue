@@ -31,7 +31,7 @@
 
           <div class="selectCheck">
             <span class="check_font"
-                  style="">数据范围:</span>
+                  style="">所属项目:</span>
             <el-select v-model="dataSelect"
                        placeholder="请选择"
                        style="width:70%">
@@ -105,7 +105,7 @@
                          size="small"
                          @click="proScopeClick">
                 <i class="el-icon-thumb" />
-                数据范围
+                项目范围
               </el-button>
               <!-- <el-button type="primary"
                      size="small"
@@ -120,7 +120,8 @@
         <el-dialog :visible.sync="dialogVisible"
                    :title="dialogType==='edit'?'编辑用户':'新建用户'"
                    width="50%"
-                   :before-close="handleClose">
+                   :before-close="handleClose"
+                   top="10px">
           <el-form :model="role"
                    label-width="80px"
                    label-position="right">
@@ -133,16 +134,16 @@
               <el-input v-model="role.userName"
                         placeholder="真实姓名"></el-input>
             </el-form-item>
-            <el-form-item label="登录密码:">
+            <el-form-item label="登录密码:" >
               <el-input v-model="role.password"
                         show-password
-                        placeholder="重置登录密码"></el-input>
+                        placeholder="设置登录密码"></el-input>
             </el-form-item>
-            <el-form-item label="所属机构:">
-              <el-input v-model="role.groupName"
-                        placeholder="所属机构"></el-input>
+            <el-form-item label="联系电话:">
+              <el-input v-model="role.tel"
+                        placeholder="联系电话"></el-input>
             </el-form-item>
-            <el-form-item label="数据范围:">
+            <el-form-item label="所属项目:">
               <div style="width:30%">
                 <el-checkbox-group v-model="role.proScope">
                   <el-checkbox v-for="city in role.proScope"
@@ -151,11 +152,33 @@
                                style="display:block;">{{city}}</el-checkbox>
                 </el-checkbox-group>
               </div>
-
             </el-form-item>
-            <el-form-item label="联系电话:">
-              <el-input v-model="role.tel"
-                        placeholder="联系电话"></el-input>
+            <el-form-item label="所属机构:">
+              <!-- <el-input v-model="role.groupName"
+                        placeholder="所属机构"></el-input> -->
+              <!-- <el-select v-model="role.groupName"
+                         value-key=""
+                         placeholder="所属机构">
+                <el-option v-for="item in userNameOptions"
+                           :key="item.value"
+                           :label="item.label"
+                           :value="item.value">
+                </el-option>
+              </el-select> -->
+              <el-cascader :v-model="dialogType=='add'? role.groupName : role.groupName.id"
+                           :options="testData"
+                           ref="casGroup"
+                           :props="{ checkStrictly: true , expandTrigger: 'hover'}"
+                           @change="handleChange"
+                           :show-all-levels="false"
+                           clearable></el-cascader>
+              <!-- <el-tree ref="tree"
+                       @check-change="handleCheck"
+                       :data="testData"
+                       node-key="id"
+                       show-checkbox
+                       :check-strictly="true">
+              </el-tree> -->
             </el-form-item>
             <el-form-item label="角色:">
               <el-select v-model="role.role"
@@ -186,10 +209,11 @@
           </div>
         </el-dialog>
 
-        <!-- 数据范围 弹窗 -->
+        <!-- 所属项目 弹窗 -->
         <el-dialog :visible.sync="dialogData"
-                   title="选择项目范围"
-                   :before-close="handleClose">
+                   title="选择所属项目"
+                   :before-close="handleClose"
+                   top="10px">
 
           <div style="text-align:right;">
             <el-button type="info"
@@ -215,11 +239,11 @@
                            label="名称"
                            width="" />
           <el-table-column prop="proScope"
-                           label="数据范围"
+                           label="所属项目"
                            width=""
                            :formatter="dataStateFormat"
                            show-overflow-tooltip />
-          <el-table-column prop="groupName"
+          <el-table-column prop="groupName.content"
                            label="所属机构"
                            width=""
                            show-overflow-tooltip />
@@ -297,7 +321,7 @@ const defaultRole = {
 
 export default {
   name: 'userSys',
-  components: {  Pagination },
+  components: { Pagination },
   data() {
     return {
       checkUserName: '',
@@ -327,26 +351,78 @@ export default {
           label: '实施主体'
         }, {
           id: '5',
-          label: '全程咨询'
+          label: '服务机构'
         }, {
           id: '6',
           label: '单位业主'
         }
       ],
       tableData: [
-        { PId: 1, loginName: "汤姆", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: "xxx分组", tel: "13035707258", role: "管理员", isEnable: 1 },
-        { PId: 2, loginName: "杰瑞", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: "xxx分组", tel: "13035707258", role: "游客", isEnable: 0 },
-        { PId: 3, loginName: "泰菲", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: "xxx分组", tel: "13035707258", role: "管理员", isEnable: 1 },
-        { PId: 4, loginName: "布奇", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: "xxx分组", tel: "13035707258", role: "管理员", isEnable: 0 },
-        { PId: 5, loginName: "斯派", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: "xxx分组", tel: "13035707258", role: "管理员", isEnable: 0 },
-        { PId: 6, loginName: "泰克", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: "xxx分组", tel: "13035707258", role: "管理员", isEnable: 1 },
+        { PId: 1, loginName: "汤姆", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: { id: [4999], content: '实施主体' }, tel: "13035707258", role: "管理员", isEnable: 1 },
+        { PId: 2, loginName: "杰瑞", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: { id: [3, 124, 5123, 7654], content: '望牛墩指挥部' }, tel: "13035707258", role: "游客", isEnable: 0 },
+        { PId: 3, loginName: "泰菲", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: { id: [3, 124, 5123,], content: '谈判小组' }, tel: "13035707258", role: "管理员", isEnable: 1 },
+        { PId: 4, loginName: "布奇", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: { id: [3, 124, 5123, 245], content: '洪梅指挥部' }, tel: "13035707258", role: "管理员", isEnable: 0 },
+        { PId: 5, loginName: "斯派", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: { id: [3, 124, 5123, 245], content: '洪梅指挥部' }, tel: "13035707258", role: "管理员", isEnable: 0 },
+        { PId: 6, loginName: "泰克", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: { id: [3, 124, 5123, 7654], content: '望牛墩指挥部' }, tel: "13035707258", role: "管理员", isEnable: 1 },
       ],
-      list: null,
-      listLoading: true,
-      downloadLoading: false,
-      filename: "",
-      autoWidth: true,
-      bookType: "xlsx",
+      testData: [
+        {
+          value: 4988,
+          label: '政府部门',
+          children: [
+            {}
+          ]
+        },
+        {
+          value: 4999,
+          label: '实施主体',
+          children: [
+            {}
+          ]
+        },
+        {
+          value: 3,
+          label: '服务机构',
+          children: [
+            {
+              value: 124,
+              label: '英联公司',
+              table: 'YLData',
+              children: [
+                {
+                  value: 5123,
+                  label: '谈判小组',
+                  table: 'testData',
+
+                  children: [
+                    {
+                      value: 7654,
+                      label: '望牛墩指挥部',
+                    },
+                    {
+                      value: 245,
+                      label: '洪梅指挥部',
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          value: 4956,
+          label: '单位业主',
+          children: [
+            {}
+          ]
+        },
+      ],
+      // list: null,
+      // listLoading: true,
+      // downloadLoading: false,
+      // filename: "",
+      // autoWidth: true,
+      // bookType: "xlsx",
       dialogData: false,
       centerDialogVisible: false,
       multipleSelection: [],
@@ -357,9 +433,15 @@ export default {
     };
   },
   created() {
-    this.fetchData()
+    // this.fetchData()
   },
   methods: {
+    // 级联选择事件
+    handleChange() {
+      //选择所属机构后，修改role中的数据
+      this.role.groupName.content = this.$refs['casGroup'].getCheckedNodes()[0].label
+
+    },
     // 查询/重置 按钮
     changeClick() {
       console.log(this.checkUserName)
@@ -461,13 +543,13 @@ export default {
     dataStateFormat(row, column) {
       return row.proScope.join('，')
     },
-    fetchData() {
-      this.listLoading = true;
-      fetchList().then((response) => {
-        this.list = response.data.items;
-        this.listLoading = false;
-      });
-    },
+    // fetchData() {
+    //   this.listLoading = true;
+    //   fetchList().then((response) => {
+    //     this.list = response.data.items;
+    //     this.listLoading = false;
+    //   });
+    // },
     // 导出excel表格
     // handleDownload() {
     //   this.downloadLoading = true;

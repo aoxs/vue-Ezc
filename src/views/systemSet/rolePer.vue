@@ -32,7 +32,8 @@
                   <el-button type="primary"
                              size="small"
                              @click="roleCreate">
-                    <i class="el-icon-plus" />
+                    <i class="el-icon-edit-outline" />
+
                     新建
                   </el-button>
                   <el-button type="danger"
@@ -49,7 +50,8 @@
             <el-dialog title="新建角色"
                        :visible.sync="newRole"
                        width="30%"
-                       :before-close="handleClose">
+                       :before-close="handleClose"
+                       top="10px">
               <span></span>
               <el-input v-model="roleName"
                         placeholder="请输入角色名称">
@@ -97,10 +99,13 @@
             </el-table>
             <div style="width: 100%; padding: 5px 10px">
               <div class="pagRight">
-                <pagination v-show="roleTableData1.length>=10"  :total="roleTableData1.length" :small="true" :layout="layout" >
+                <pagination v-show="roleTableData1.length>=10"
+                            :total="roleTableData1.length"
+                            :small="true"
+                            :layout="layout">
 
                 </pagination>
-                
+
               </div>
             </div>
           </div>
@@ -235,7 +240,7 @@ export default {
   data() {
     return {
 
-      radioId:'',
+      radioId: '',
       roleTableData1: [
         { title: "abc1" },
         { title: "abc2" },
@@ -246,7 +251,7 @@ export default {
         { title: "abc6" },
         { title: "abc6" },
         { title: "abc6" },
-       
+
         { title: "abc7" }
       ],
       roleTreeData1: [
@@ -300,7 +305,7 @@ export default {
       // cities: ['新增', '修改', '删除', '查看详情'],
       newRole: false,
       roleName: '',
-      layout:'total,  prev, pager, next'
+      layout: 'total,  prev, pager, next'
     }
   },
 
@@ -342,19 +347,19 @@ export default {
     },
     delCreate() {
       console.log('删除角色')
-      
-      if(!this.radioId){
+
+      if (!this.radioId) {
         this.$alert('未选中项目', "提示", {
           confirmButtonText: '确认',
           type: 'info'
         })
-      }else{
+      } else {
         console.log(this.radioId)
         this.radioId = ''
         this.$message({
-              type: 'success',
-              message: '删除成功!'
-            })
+          type: 'success',
+          message: '删除成功!'
+        })
       }
     },
     // roleNameCheck() {
@@ -378,10 +383,10 @@ export default {
     determine() {
       // 点击确定按钮获取所有被选中的tree节点
       console.log(this.$refs.tree.getCheckedKeys().concat(this.$refs.tree.getHalfCheckedKeys()))
-       this.$message({
-              type: 'success',
-              message: '设置成功!'
-            })
+      this.$message({
+        type: 'success',
+        message: '设置成功!'
+      })
     },
     // handleCheckChange(data, checked, indeterminate) {
     //   console.log(data.id, checked);
@@ -394,9 +399,9 @@ export default {
     onSubmit() {
       console.log(this.checkboxBottom)
       this.$message({
-              type: 'success',
-              message: '设置成功!'
-            })
+        type: 'success',
+        message: '设置成功!'
+      })
     },
   },
 
@@ -428,7 +433,7 @@ export default {
   font-size: 16px;
   font-weight: 700;
 }
-.el-pager li{
+.el-pager li {
   margin: 0 2px !important;
   padding: 0 0 !important;
 }

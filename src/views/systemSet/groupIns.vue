@@ -23,9 +23,8 @@
                              size="small"
                              style=""
                              @click="groupAdd">
-                    <i class="el-icon-plus"
-                       style="font-weight:1000;" />
-                    新增
+                    <i class="el-icon-circle-plus" />
+                    新建
                   </el-button>
                   <!-- <el-button type="primary"
                size="small"
@@ -50,7 +49,8 @@
             </div>
             <!-- 弹窗 -->
             <el-dialog :visible.sync="dialogGroup"
-                       :title="dialogType==='edit'?'编辑组织结构':'新建组织结构'">
+                       :title="dialogType==='edit'?'编辑组织结构':'新建组织结构'"
+                       top="10px">
               <el-form :model="group"
                        label-width="80px"
                        label-position="right">
@@ -221,9 +221,9 @@ export default {
   },
   methods: {
     // test 传值
-     parentFn(payload) {
-        this.tableData = this[payload];
-      },
+    parentFn(payload) {
+      this.tableData = this[payload];
+    },
     // test按钮
     abcdd1() {
       this.tableData = this.testData
