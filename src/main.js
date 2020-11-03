@@ -20,6 +20,10 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 
+import axios from 'axios'
+axios.defaults.baseURL = 'http://120.86.117.97:8579/api'
+Vue.prototype.axios = axios;
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api

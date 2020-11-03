@@ -11,7 +11,7 @@
         <h3 class="title">英联E征拆信息管理系统</h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item>
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
@@ -26,7 +26,7 @@
       </el-form-item>
 
       <el-tooltip v-model="capsTooltip"
-                  content="Caps lock is On"
+                  content="大写已锁定"
                   placement="right"
                   manual>
         <el-form-item prop="password">
@@ -72,53 +72,57 @@
       </div> -->
     </el-form>
 
-    <el-dialog title="Or connect with"
+    <!-- <el-dialog title="Or connect with"
                :visible.sync="showDialog">
       Can not be simulated on local, so please combine you own business simulation! ! !
       <br>
       <br>
       <br>
       <social-sign />
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
 <script>
 import { validUsername } from '@/utils/validate'
-import SocialSign from './components/SocialSignin'
+// import SocialSign from './components/SocialSignin'
 
 export default {
   name: 'Login',
-  components: { SocialSign },
+  // components: { SocialSign },
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
-      } else {
-        callback()
-      }
-    }
+    // const validateUsername = (rule, value, callback) => {
+    //   console.log('validUsername(value)',validUsername(value))
+    //   console.log('rule',rule)
+    //   console.log('value',value)
+    //   console.log('callback',callback)
+    //   if (!validUsername(value)) {
+    //     callback(new Error('请输入正确用户名'))
+    //   } else {
+    //     callback()
+    //   }
+    // }
 
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
-      } else {
-        callback()
-      }
-    }
+    // const validatePassword = (rule, value, callback) => {
+    //   if (value.length < 6) {
+    //     callback(new Error('密码不能少于6位'))
+    //   } else {
+    //     callback()
+    //   }
+    // }
     return {
       loginForm: {
-        username: 'admin',
-        password: '000000'
+        username: '',
+        password: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        // username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        // password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
       capsTooltip: false,
       loading: false,
-      showDialog: false,
+      // showDialog: false,
       redirect: undefined,
       otherQuery: {}
     }
@@ -139,18 +143,22 @@ export default {
     // window.addEventListener('storage', this.afterQRScan)
   },
   mounted() {
+    // console.log(this.capsTooltip)
+
     //加载页面获取username input焦点
-    if (this.loginForm.username === '') {
-      this.$refs.username.focus()
-    } else if (this.loginForm.password === '') {
-      this.$refs.password.focus()
-    }
+    // if (this.loginForm.username === '') {
+    //   this.$refs.username.focus()
+    // } else if (this.loginForm.password === '') {
+    //   this.$refs.password.focus()
+    // }
   },
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
+
     checkCapslock(e) {
+      // console.log(e)
       const { key } = e
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
     },
@@ -165,26 +173,42 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-              this.loading = false
+
+      this.axios.get('/WYDApi/LogIn?UserName=' + this.loginForm.username + '&Password=' + this.loginForm.password)
+
+        .then((res) => {
+
+          console.log(res)
+          console.log(res.data)
+          if (!res.data) {
+            this.$message.error('账号或密码错误')
+          } else {
+            this.$refs.loginForm.validate(valid => {
+              if (valid) {
+                this.loading = true
+                this.$store.dispatch('user/login', this.loginForm)
+                  .then(() => {
+                    this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+                    this.loading = false
+                  })
+                  .catch(() => {
+                    this.loading = false
+                  })
+              } else {
+                console.log('error submit!!')
+                return false
+              }
             })
-            .catch(() => {
-              this.loading = false
-            })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+          }
+
+
+
+        })
+
     },
     getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {
-        
+
         if (cur !== 'redirect') {
           acc[cur] = query[cur]
         }
