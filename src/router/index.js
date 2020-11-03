@@ -131,7 +131,7 @@ export const constantRoutes = [
         path: 'proInfo',
         component: () => import('@/views/prodyn/proInfo'),
         name: 'proInfo',
-        meta: { title: '项目资料' }
+        meta: { title: '会议纪要' }
       },
 
 
@@ -813,6 +813,12 @@ export const asyncRoutes = [
       icon: 'eye'
     },
     children: [
+      {
+        path: 'login-test',
+        component: () => import('@/views/test/login-test'),
+        name: 'login-test',
+        meta:{title: 'Login'}
+      },
       {
         path: 'list',
         component: () => import('@/views/example/list'),

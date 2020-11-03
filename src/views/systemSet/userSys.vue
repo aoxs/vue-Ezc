@@ -165,7 +165,7 @@
                            :value="item.value">
                 </el-option>
               </el-select> -->
-              <el-cascader :v-model="dialogType=='add'? role.groupName : role.groupName.id"
+              <el-cascader v-model="role.groupName.id"
                            :options="testData"
                            ref="casGroup"
                            :props="{ checkStrictly: true , expandTrigger: 'hover'}"
@@ -308,9 +308,9 @@ import Pagination from '@/components/Pagination'
 
 
 const defaultRole = {
-  PId: '',
-  groupName: "",
-  isEnable: '',
+  PId: 0,
+  groupName: {id:[4988],content:''},
+  isEnable: 0,
   loginName: '',
   proScope: [],
   role: "",
@@ -459,6 +459,7 @@ export default {
     },
     // 增删改查按钮
     groupAdd() {
+      console.log(this.role);
       this.dialogType = 'add'
       this.dialogVisible = true
       this.role = {}

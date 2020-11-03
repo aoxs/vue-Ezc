@@ -123,33 +123,50 @@
                 </el-form-item>
               </el-col>
               <el-col :sm="8"
+                      :xs="24">
+                <el-row :gutter="20">
+                  <el-col :span="24"
+                          
+                          :offset="0">
+                    <el-form-item label="项目状态:">
+                      <el-input v-model="pro.ProStatus"
+                                placeholder="请选择"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="24"
+                          :offset="0">
+                    <el-form-item label="项目图片:">
+                      <el-upload class="upload-demo"
+                                 action="http://120.86.117.97:8577/upload/"
+                                 :on-preview="handlePreview"
+                                 :on-remove="handleRemove"
+                                 :file-list="fileList"
+                                 list-type="picture">
+                        <el-button size="small"
+                                   type="primary">上传</el-button>
+                        <el-button style="margin-left: 10px;"
+                                   size="small"
+                                   type="success"
+                                   @click="submitUpload">上传到服务器</el-button>
+                        <div slot="tip"
+                             class="el-upload__tip">
+                          只能上传jpg/png文件，且不超过500kb
+                        </div>
+                      </el-upload>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+
+              </el-col>
+
+             
+              <el-col :sm="16"
                       :xs="24"
                       :offset="0">
-                <el-form-item label="项目状态:">
-                  <el-input v-model="pro.ProStatus"
-                            placeholder="请选择"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="24"
-                      :offset="0">
-                <el-form-item label="项目图片:">
-                  <el-upload class="upload-demo"
-                             action="http://120.86.117.97:8577/upload/"
-                             :on-preview="handlePreview"
-                             :on-remove="handleRemove"
-                             :file-list="fileList"
-                             list-type="picture">
-                    <el-button size="small"
-                               type="primary">上传</el-button>
-                    <el-button style="margin-left: 10px;"
-                               size="small"
-                               type="success"
-                               @click="submitUpload">上传到服务器</el-button>
-                    <div slot="tip"
-                         class="el-upload__tip">
-                      只能上传jpg/png文件，且不超过500kb
-                    </div>
-                  </el-upload>
+                <el-form-item label="节点配置:">
+                  <!-- <el-input v-model="pro.ProStatus"
+                            placeholder="请选择"></el-input> -->
+                  <prog />
                 </el-form-item>
               </el-col>
               <el-col :sm="8"
@@ -458,7 +475,7 @@
 import { deepClone } from '@/utils';
 import Tinymce from '@/components/Tinymce'
 import Pagination from '@/components/Pagination'
-
+import Prog from './components/prog'
 
 
 const defaultRole = {
@@ -479,13 +496,15 @@ const defaultRole = {
   rehousingArea: 0,
   compensation: 0,
   ProStatus: 0,
+  codeConfig: '',
   street: '',
   coordinates: '',
   content: '',
 }
 
 export default {
-  components: { Tinymce, Pagination },
+
+  components: { Tinymce, Pagination, Prog },
   data() {
     return {
       input1: '',

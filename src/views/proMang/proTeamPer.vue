@@ -1,15 +1,25 @@
 <template>
-  <div class="dashboard-editor-container">
-    <div style="background-color: #fff">
-    </div>
+<div class="dashboard-editor-container">
+  <div style="background-color: #fff">
   </div>
+</div>
 </template>
 
 <script>
 export default {
+  data(){
+    return{
 
+    }
+  },
+  mounted(){
+
+  },
+  methods: {
+
+  },
 }
-</script>
+ </script>
 <style lang="scss" scoped>
 
-</style>
+ </style>
