@@ -6,7 +6,8 @@
 
         <div style="width:70%;display:flex;justify-content:flex-start;">
 
-          <el-input v-model="input1"
+          <el-input v-model="proNameValue"
+                    clearable
                     placeholder="请输入名称"
                     style="width:30%"
                     slot="">
@@ -19,13 +20,14 @@
 
             <span class="check_font"
                   style="">项目类型:</span>
-            <el-select v-model="select1"
+            <el-select v-model="proTypeListValue"
+                       clearable
                        placeholder="请选择"
                        style="width:70%">
-              <el-option v-for="item in option1"
-                         :key="item.id"
-                         :label="item.label"
-                         :value="item.id">
+              <el-option v-for="item in proTypeList"
+                         :key="item.ID"
+                         :label="item.Name"
+                         :value="item.Code">
 
               </el-option>
 
@@ -36,27 +38,25 @@
 
             <span class="check_font"
                   style="">项目状态:</span>
-            <el-select v-model="select2"
+            <el-select v-model="proStatusListValue"
+                       clearable
                        placeholder="请选择"
                        style="width:70%">
-              <el-option v-for="item in option2"
-                         :key="item.id"
-                         :label="item.label"
-                         :value="item.id"></el-option>
+              <el-option v-for="item in proStatusList"
+                         :key="item.ID"
+                         :label="item.Name"
+                         :value="item.Code"></el-option>
             </el-select>
           </div>
 
         </div>
         <div>
-          <el-button type="info"
-                     size="small"
+          <el-button size="small"
                      plain
                      @click="changeClick"><i class="el-icon-search" />查询</el-button>
-          <el-button type="info"
-                     size="small"
+          <el-button size="small"
                      plain
                      @click="resetClick"><i class="el-icon-refresh" />重置</el-button>
-
         </div>
       </div>
       <!-- 顶部搜索end -->
@@ -103,7 +103,7 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="项目名称:">
-                  <el-input v-model="pro.ProName"
+                  <el-input v-model="pro.Project_Name"
                             placeholder="项目名称"></el-input>
                 </el-form-item>
               </el-col>
@@ -118,7 +118,7 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="项目类型:">
-                  <el-input v-model="pro.ProType"
+                  <el-input v-model="pro.Project_Type"
                             placeholder="请选择"></el-input>
                 </el-form-item>
               </el-col>
@@ -126,10 +126,9 @@
                       :xs="24">
                 <el-row :gutter="20">
                   <el-col :span="24"
-                          
                           :offset="0">
                     <el-form-item label="项目状态:">
-                      <el-input v-model="pro.ProStatus"
+                      <el-input v-model="pro.Status"
                                 placeholder="请选择"></el-input>
                     </el-form-item>
                   </el-col>
@@ -159,7 +158,6 @@
 
               </el-col>
 
-             
               <el-col :sm="16"
                       :xs="24"
                       :offset="0">
@@ -173,7 +171,7 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="省份:">
-                  <el-input v-model="pro.provinces"
+                  <el-input v-model="pro.Province_ID"
                             placeholder="请选择"></el-input>
                 </el-form-item>
               </el-col>
@@ -181,7 +179,7 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="城市:">
-                  <el-input v-model="pro.city"
+                  <el-input v-model="pro.City_ID"
                             placeholder="请选择"></el-input>
                 </el-form-item>
               </el-col>
@@ -190,7 +188,7 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="区县:">
-                  <el-input v-model="pro.county"
+                  <el-input v-model="pro.Area_ID"
                             placeholder="请选择"></el-input>
                 </el-form-item>
               </el-col>
@@ -198,7 +196,7 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="街道:">
-                  <el-input v-model="pro.street"
+                  <el-input v-model="pro.Street"
                             placeholder=""></el-input>
                 </el-form-item>
               </el-col>
@@ -206,7 +204,7 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="坐落:">
-                  <el-input v-model="pro.located"
+                  <el-input v-model="pro.Address"
                             placeholder=""></el-input>
                 </el-form-item>
               </el-col>
@@ -214,7 +212,23 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="位置坐标:">
-                  <el-input v-model="pro.coordinates"
+                  <el-input v-model="pro.Position_Marker"
+                            placeholder=""></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="开发商:">
+                  <el-input v-model="pro.Developer"
+                            placeholder=""></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="征收事务中心:">
+                  <el-input v-model="pro.Expropriation"
                             placeholder=""></el-input>
                 </el-form-item>
               </el-col>
@@ -222,17 +236,12 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="实施单位:">
-                  <el-input placeholder=""></el-input>
+                  <el-input v-model="pro.ImplementUnit"
+                            placeholder=""></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :sm="8"
-                      :xs="24"
-                      :offset="0">
-                <el-form-item label="临时指挥部:">
-                  <el-input placeholder=""></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :sm="8"
+
+              <!-- <el-col :sm="8"
                       :xs="24"
                       :offset="0">
                 <el-form-item label="综合服务商:">
@@ -245,7 +254,7 @@
                 <el-form-item label="社区居民委员会:">
                   <el-input placeholder=""></el-input>
                 </el-form-item>
-              </el-col>
+              </el-col> -->
               <el-col :sm="8"
                       :xs="0"
                       :offset="8"></el-col>
@@ -254,7 +263,7 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="总户数:">
-                  <el-input v-model="pro.houseNum"
+                  <el-input v-model="pro.Total_Household_Count"
                             placeholder=""></el-input>
                 </el-form-item>
               </el-col>
@@ -262,7 +271,7 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="总占地面积:">
-                  <el-input v-model="pro.coversArea"
+                  <el-input v-model="pro.Total_Land_Area"
                             placeholder="">
                     <template slot="append">m²</template>
                   </el-input>
@@ -272,18 +281,26 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="总建筑面积:">
-                  <el-input v-model="pro.conArea"
+                  <el-input v-model="pro.Total_Constructure_Area"
                             placeholder="">
                     <template slot="append">m²</template>
                   </el-input>
                 </el-form-item>
               </el-col>
-
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="现状容积率:">
+                  <el-input v-model="pro.CurrentPlotRatio"
+                            placeholder=""></el-input>
+                </el-form-item>
+              </el-col>
               <el-col :sm="8"
                       :xs="24"
                       :offset="0">
                 <el-form-item label="规划建设面积:">
-                  <el-input placeholder="">
+                  <el-input v-model="pro.PlanConstructionArea"
+                            placeholder="">
                     <template slot="append">m²</template>
                   </el-input>
                 </el-form-item>
@@ -292,7 +309,8 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="回迁房面积:">
-                  <el-input placeholder="">
+                  <el-input v-model="pro.MoveBackHouseArea"
+                            placeholder="">
                     <template slot="append">m²</template>
                   </el-input>
                 </el-form-item>
@@ -301,7 +319,8 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="保障房面积:">
-                  <el-input placeholder="">
+                  <el-input v-model="pro.SafeguardHouseArea"
+                            placeholder="">
                     <template slot="append">m²</template>
                   </el-input>
                 </el-form-item>
@@ -310,7 +329,7 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="总补偿款:">
-                  <el-input v-model="pro.compensation"
+                  <el-input v-model="pro.Total_Compensation_Price"
                             placeholder="">
                     <template slot="append">万元</template>
                   </el-input>
@@ -320,7 +339,7 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="安置房总数量:">
-                  <el-input v-model="pro.rehousingNum"
+                  <el-input v-model="pro.Total_Arrange_Room_Count"
                             placeholder="">
                   </el-input>
                 </el-form-item>
@@ -329,7 +348,7 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="安置房总面积:">
-                  <el-input v-model="pro.rehousingArea"
+                  <el-input v-model="pro.Total_Arrange_Room_Area"
                             placeholder="">
                     <template slot="append">m²</template>
                   </el-input>
@@ -340,8 +359,9 @@
                 <!-- <div style="display: table-cell;vertical-align:middle"> -->
 
                 <el-form-item label="项目基本情况:">
-                  <tinymce v-model="pro.content"
-                           :height="300" />
+                  <tinymce v-model="pro.Description"
+                           :height="300"
+                           v-if="dialogProCreate" />
 
                 </el-form-item>
                 <!-- </div> -->
@@ -354,7 +374,7 @@
         </div>
         <div style="text-align:right;">
           <el-button type="info"
-                     @click="dialogProCreate=false">取消</el-button>
+                     @click="dialogProCreate=false;">取消</el-button>
           <el-button type="primary"
                      @click="updataPro">保存</el-button>
         </div>
@@ -363,9 +383,9 @@
       <!-- 弹窗end -->
 
       <!-- 信息表 -->
-      <el-table :data="tableData"
+      <el-table :data="InsProject"
                 ref="multipleTable"
-                style="margin:0 auto;width:98%"
+                style="margin:10px auto;width:98%"
                 tooltip-effect="dark"
                 @selection-change="handleSelectionChange"
                 border
@@ -380,75 +400,83 @@
                          width="65"
                          align="center">
         </el-table-column> -->
-        <el-table-column prop="ProName"
+        <el-table-column prop="Project_Name"
                          label="项目名称"
                          width="">
         </el-table-column>
-        <el-table-column prop="ProType"
+        <el-table-column prop="Project_Type"
                          label="项目类型"
                          align="center"
                          width=""
-                         :formatter="ProType">
+                         :formatter="Project_Type">
         </el-table-column>
-        <el-table-column prop="provinces"
+        <el-table-column prop="Province_ID"
                          label="省份"
+                         align="center"
                          width="">
         </el-table-column>
-        <el-table-column prop="city"
+        <el-table-column prop="City_ID"
                          label="城市"
+                         align="center"
                          width="">
         </el-table-column>
-        <el-table-column prop="county"
+        <el-table-column prop="Area_ID"
                          label="区县"
+                         align="center"
                          width="">
         </el-table-column>
-        <el-table-column prop="located"
+        <el-table-column prop="Address"
                          label="坐落"
                          width="">
         </el-table-column>
-        <el-table-column prop="developers"
+        <el-table-column prop="Street"
+                         label="街道"
+                         width="">
+        </el-table-column>
+        <el-table-column prop="Developer"
                          label="开发商"
                          width="">
         </el-table-column>
-        <el-table-column prop="gove"
+        <!-- <el-table-column prop=""
                          label="政府"
                          width="">
-        </el-table-column>
-        <el-table-column prop="transaction"
+        </el-table-column> -->
+        <el-table-column prop="Expropriation"
                          label="征收事务中心"
                          width="">
         </el-table-column>
-        <el-table-column prop="houseNum"
+        <el-table-column prop="Total_Household_Count"
                          label="总户数"
                          align="center"
                          width="">
         </el-table-column>
-        <el-table-column prop="coversArea"
+        <el-table-column prop="Total_Land_Area"
                          label="总占地面积(m²)"
                          align="center"
-                         width="">
+                         width=""
+                         show-overflow-tooltip>
         </el-table-column>
-        <el-table-column prop="conArea"
+        <el-table-column prop="Total_Constructure_Area"
                          label="总建筑面积(m²)"
                          align="center"
                          width="">
         </el-table-column>
-        <el-table-column prop="rehousingNum"
+        <el-table-column prop="Total_Arrange_Room_Count"
                          label="安置房总数量(套)"
                          align="center"
                          width="">
         </el-table-column>
-        <el-table-column prop="rehousingArea"
+        <el-table-column prop="Total_Arrange_Room_Area"
                          label="安置房总面积(m²)"
                          align="center"
                          width="">
         </el-table-column>
-        <el-table-column prop="compensation"
+        <el-table-column prop="Total_Compensation_Price"
                          label="总补偿款(万元)"
                          align="center"
                          width="">
         </el-table-column>
-        <el-table-column prop="ProStatus"
+        <el-table-column prop="Status"
                          label="项目状态"
                          align="center"
                          width=""
@@ -458,14 +486,12 @@
       </el-table>
       <!-- 信息表end -->
       <!-- 分页 -->
-      <div class="pagRight">
-        <pagination v-show="tableData.length>=10"
-                    :total="tableData.length"
+      <!-- <div class="pagRight">
+        <pagination v-show="InsProject.length>=10"
+                    :total="InsProject.length"
                     :layout="layout">
-
         </pagination>
-
-      </div>
+      </div> -->
       <!-- 分页end -->
     </div>
   </div>
@@ -479,27 +505,42 @@ import Prog from './components/prog'
 
 
 const defaultRole = {
-  proId: 0,
-  ProName: '',
-  ProType: 0,
-  provinces: '',
-  city: '',
-  county: '',
-  located: '',
-  developers: '',
-  gove: '',
-  transaction: "",
-  houseNum: 0,
-  coversArea: 0,
-  conArea: 0,
-  rehousingNum: 0,
-  rehousingArea: 0,
-  compensation: 0,
-  ProStatus: 0,
-  codeConfig: '',
-  street: '',
-  coordinates: '',
-  content: '',
+  "Address": "",
+  "Area_ID": 0,
+  "BelongTo": "",
+  "City_ID": 0,
+  "Create_Date": "",
+  "Create_User_ID": 0,
+  "Create_User_Name": "",
+  "CurrentPlotRatio": 0,
+  "Description": "",
+  "Developer": "",
+  "Expropriation": "",
+  "Government": "",
+  "ImplementUnit": "",
+  "Map_Img_Url": "",
+  "Map_Pro_Url": "",
+  "Modify_Date": "",
+  "Modify_User_ID": 0,
+  "Modify_User_Name": "",
+  "MoveBackHouseArea": 0,
+  "PlanConstructionArea": 0,
+  "PlanPlotRatio": 0,
+  "Position_Marker": "",
+  "Project_ID": 0,
+  "Project_Name": "",
+  "Project_Type": 0,
+  "Province_ID": 0,
+  "SafeguardHouseArea": 0,
+  "SortIndex": 0,
+  "Status": 0,
+  "Street": "",
+  "Total_Arrange_Room_Area": 0,
+  "Total_Arrange_Room_Count": 0,
+  "Total_Compensation_Price": 0,
+  "Total_Constructure_Area": 0,
+  "Total_Household_Count": 0,
+  "Total_Land_Area": 0,
 }
 
 export default {
@@ -507,33 +548,33 @@ export default {
   components: { Tinymce, Pagination, Prog },
   data() {
     return {
-      input1: '',
-      select1: '',
-      select2: '',
-      option1: [
-        {
-          id: '1',
-          label: '城市更新'
-        }, {
-          id: '2',
-          label: '土地整备'
-        }, {
-          id: '3',
-          label: '房屋征收'
-        }
-      ],
-      option2: [
-        {
-          id: '3',
-          label: '前期'
-        }, {
-          id: '4',
-          label: '中期'
-        }, {
-          id: '5',
-          label: '后期'
-        }
-      ],
+      proNameValue: '',
+      proTypeListValue: '',
+      proStatusListValue: '',
+      // option1: [
+      //   {
+      //     id: '1',
+      //     label: '城市更新'
+      //   }, {
+      //     id: '2',
+      //     label: '土地整备'
+      //   }, {
+      //     id: '3',
+      //     label: '房屋征收'
+      //   }
+      // ],
+      // option2: [
+      //   {
+      //     id: '3',
+      //     label: '前期'
+      //   }, {
+      //     id: '4',
+      //     label: '中期'
+      //   }, {
+      //     id: '5',
+      //     label: '后期'
+      //   }
+      // ],
       multipleSelection: [],
       tableData: [
         { proId: 1, ProName: '水乡新城片区首期土地整备', ProType: 4, provinces: '广东省', city: '东莞市', county: '水乡', located: '广东省东莞水乡', developers: '华夏幸福基业股份有限公司', gove: '滨海湾新区管委会、虎门镇人民政府', transaction: "东莞市滨海湾新区威远岛土地整备现场指挥部", houseNum: 2000, coversArea: 1200000, conArea: 1010000, rehousingNum: 0, rehousingArea: 0, compensation: 0, ProStatus: '1', content: '<i>abc</i><br><b>123</b>' },
@@ -544,23 +585,94 @@ export default {
       dialogType: "edit",
       dialogProCreate: false,
       fileList: [],
+      proTypeList: [],
+      proStatusList: [],
+      InsProject: [],
     }
   },
   methods: {
+    // 加载表数据
+    getTable() {
+      this.InsProject = []
+      this.axios({
+        method: "post",
+        url: "/WYDApi/queryProject",
+        data: {
+          "ProjectName": "",
+          "ProjectType": "0",
+          "ProjectStatus": "0"
+        }
+      })
+        // .post('/WYDApi/queryProject',this.qs.stringify(obj))
+        .then((res) => {
+          console.log(res.data)
+          console.log(res.data.length)
+          this.InsProject = res.data
+
+        })
+    },
+
     // 查询/重置 按钮
     changeClick() {
-      console.log(this.input1)
-      console.log(this.select1)
-      console.log(this.select2)
-      this.$alert('开发中', "提示", {
-        confirmButtonText: '确认',
-        type: 'info'
+      // this.$alert('开发中', "提示", {
+      //   confirmButtonText: '确认',
+      //   type: 'info'
+      // })
+      // let obj = {
+      //   "ProjectName": this.proNameValue,
+      //   "ProjectType": this.proTypeListValue,
+      //   "ProjectStatus": this.proStatusListValue
+      // }
+      // if (this.proNameValue == '' && this.proTypeListValue == '' && this.proStatusListValue == '') {
+
+      // }
+      console.log(this.proNameValue)
+      console.log(this.proTypeListValue)
+      console.log(this.proStatusListValue)
+
+      var proN = this.proNameValue
+      var proT = this.proTypeListValue
+      var proS = this.proStatusListValue
+      if (this.proNameValue == '') {
+        var proN = ""
+      }
+      if (this.proTypeListValue == '') {
+        var proT = "0"
+      }
+      if (this.proStatusListValue == '') {
+        var proS = "0"
+      }
+
+      this.InsProject = []
+      this.axios({
+        method: "post",
+        url: "/WYDApi/queryProject",
+        data: {
+          "ProjectName": proN,
+          "ProjectType": proT,
+          "ProjectStatus": proS
+        }
       })
+        // .post('/WYDApi/queryProject',this.qs.stringify(obj))
+        .then((res) => {
+          console.log(res.data)
+          if (res.data.length == 0) {
+            this.InsProject = []
+          } else {
+            this.InsProject = res.data
+          }
+        })
+      // .cath((Error) => {
+      //   console.log(Error)
+      // })
+
+
     },
     resetClick() {
-      this.input1 = ''
-      this.select1 = ''
-      this.select2 = ''
+      this.proNameValue = ''
+      this.proTypeListValue = ''
+      this.proStatusListValue = ''
+      this.getTable()
     },
     // 勾选
     handleSelectionChange(val) {
@@ -570,37 +682,37 @@ export default {
       console.log(this.multipleSelection)
     },
     // 表格 格式化内容
-    ProType(row, column) {
-      if (row.ProType == 1) {
+    Project_Type(row, column) {
+      if (row.Project_Type == 1) {
         return '房屋征收'
-      } else if (row.ProType == 2) {
+      } else if (row.Project_Type == 2) {
         return '城市更新'
-      } else if (row.ProType == 3) {
+      } else if (row.Project_Type == 3) {
         return '土地整备'
-      } else if (row.ProType == 4) {
+      } else if (row.Project_Type == 4) {
         return '棚户区改造'
-      } else if (row.ProType == 5) {
+      } else if (row.Project_Type == 5) {
         return '其它'
       } else {
         return '-'
       }
     },
     ProStatus(row, column) {
-      if (row.ProStatus == 1) {
+      if (row.Status == 1) {
         return '前期阶段'
-      } else if (row.ProType == 2) {
+      } else if (row.Status == 2) {
         return '确权阶段'
-      } else if (row.ProType == 3) {
+      } else if (row.Status == 3) {
         return '签约阶段'
-      } else if (row.ProType == 4) {
+      } else if (row.Status == 4) {
         return '移交房屋阶段'
-      } else if (row.ProType == 5) {
+      } else if (row.Status == 5) {
         return '拆除阶段'
-      } else if (row.ProType == 6) {
+      } else if (row.Status == 6) {
         return '产权注销阶段'
-      } else if (row.ProType == 7) {
+      } else if (row.Status == 7) {
         return '档案整理阶段'
-      } else if (row.ProType == 8) {
+      } else if (row.Status == 8) {
         return '已完成'
       } else {
         return '-'
@@ -609,7 +721,8 @@ export default {
 
     // 增删改按钮
     createPro() {
-      this.pro = {}
+      this.pro = Object.assign({}, defaultRole)
+      console.log(this.pro)
       this.dialogProCreate = true
 
       this.dialogType = "add"
@@ -620,6 +733,7 @@ export default {
     },
     // 编辑
     editPro() {
+
       if (this.multipleSelection.length == 0) {
         this.$alert('未选中项目', "提示", {
           confirmButtonText: '确认',
@@ -635,22 +749,52 @@ export default {
         this.dialogProCreate = true
         this.pro = deepClone(this.multipleSelection[0])
         console.log(this.pro)
-        console.log(this.pro.content)
+        console.log(this.pro.Description)
 
       }
     },
     // 保存
     updataPro() {
+      var d = new Date();
+      var year = d.getFullYear();
+      var month = d.getMonth() + 1;
+      month = month < 10 ? '0' + month : month;
+      var date = d.getDate();
+      date = date < 10 ? '0' + date : date;
+      var hours = d.getHours();
+      var minutes = d.getMinutes();
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var seconds = d.getSeconds();
+      seconds = seconds < 10 ? '0' + seconds : seconds;
+      if (!this.pro.Create_Date) {
+        this.pro.Create_Date = year + '-' + month + '-' + date + 'T' + hours + ':' + minutes + ':' + seconds
+        this.pro.Modify_Date = year + '-' + month + '-' + date + 'T' + hours + ':' + minutes + ':' + seconds
+      } else {
+        this.pro.Modify_Date = year + '-' + month + '-' + date + 'T' + hours + ':' + minutes + ':' + seconds
+      }
 
-      if (!this.pro.ProName) {
+
+      if (!this.pro.Project_Name) {
         this.$message({
           type: 'error',
           message: '项目名称不能为空!'
         })
       } else {
+        this.axios.post("/WYDApi/InsProject", this.pro)
+          .then((res) => {
+            this.$message({
+              type: 'success',
+              message: '编辑成功。'
+            })
+            this.getTable()
+          })
+
+
+
+
         this.dialogProCreate = false
         console.log(this.pro)
-        console.log(this.pro.content)
+        this.pro = []
       }
 
 
@@ -670,7 +814,12 @@ export default {
     // 删除
     proDelete() {
       if (this.multipleSelection.length == 0) {
-        this.$confirm('未选中项目', "提示", {
+        this.$alert('未选中项目', "删除", {
+          confirmButtonText: '确认',
+          type: 'info'
+        })
+      } else if (this.multipleSelection.length > 1) {
+        this.$alert('最多只能同时执行一条', "删除", {
           confirmButtonText: '确认',
           type: 'info'
         })
@@ -681,19 +830,32 @@ export default {
           type: 'warning'
         })
           .then(() => {
-            // console.log(this.multipleSelection[0].proId)
-            let j = this.multipleSelection.length
-            for (var i = 0; i < j; i++) {
-              let id = this.multipleSelection[i].proId
-              let _tableData = this.tableData.find(x => x.proId == id)
-              console.log(_tableData)
-              this.tableData.splice(this.tableData.indexOf(_tableData), 1)
-            }
+            console.log(this.multipleSelection[0].ID)
+            var delId = this.multipleSelection[0].ID
+            this.axios.get("/WYDApi/delProject?Id=" + delId)
+              .then((res) => {
+                if (res.data.code == 1) {
+                  this.$message({
+                    type: 'success',
+                    message: '删除成功。'
+                  })
+                } else {
+                  this.$message({
+                    type: 'error',
+                    message: '删除失败!'
+                  })
+                }
+                this.getTable()
+              })
+            // let j = this.multipleSelection.length
+            // for (var i = 0; i < j; i++) {
+            //   let id = this.multipleSelection[i].proId
+            //   let _InsProject = this.InsProject.find(x => x.proId == id)
+            //   console.log(_InsProject)
+            //   this.InsProject.splice(this.InsProject.indexOf(_InsProject), 1)
+            // }
             // this.rolesList.splice($index, 1)
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            })
+
           })
       }
     },
@@ -708,7 +870,21 @@ export default {
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
-  }
+  },
+  mounted() {
+    // 筛查：项目类型
+    this.axios.get('/WYDApi/ProjectTS?code=BUSINESS_PROJECT_TYPE').then((res) => {
+      // console.log(res.data.list)
+      this.proTypeList = res.data.list
+    });
+    // 筛查：项目状态
+    this.axios.get('/WYDApi/ProjectTS?code=BUSINESS_PROJECT_STATUS').then((res) => {
+      // console.log(res.data.list)
+      this.proStatusList = res.data.list
+    });
+    // 请求表数据
+    this.getTable()
+  },
 }
 </script>
 
