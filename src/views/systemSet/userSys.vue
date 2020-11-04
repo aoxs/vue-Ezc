@@ -86,7 +86,7 @@
                          @click="groupAdd">
                 <i class="el-icon-plus"
                    style="font-weight:1000;" />
-                新增
+                新建
               </el-button>
 
               <!-- <el-button type="primary"
@@ -118,7 +118,7 @@
         </div>
         <!-- 增改 弹窗 -->
         <el-dialog :visible.sync="dialogVisible"
-                   :title="dialogType==='edit'?'编辑用户':'新建用户'"
+                   title="编辑用户"
                    width="50%"
                    :before-close="handleClose"
                    top="10px">
@@ -134,7 +134,7 @@
               <el-input v-model="role.userName"
                         placeholder="真实姓名"></el-input>
             </el-form-item>
-            <el-form-item label="登录密码:" >
+            <el-form-item label="登录密码:">
               <el-input v-model="role.password"
                         show-password
                         placeholder="设置登录密码"></el-input>
@@ -208,6 +208,99 @@
                        @click="confirmRole">保存</el-button>
           </div>
         </el-dialog>
+        <el-dialog :visible.sync="dialogVisible2"
+                   title="新建用户"
+                   width="50%"
+                   :before-close="handleClose"
+                   top="10px">
+          <el-form :model="role"
+                   label-width="80px"
+                   label-position="right">
+            <el-form-item label="登录名:">
+              <el-input v-model="role.loginName"
+                        placeholder="登录名"></el-input>
+
+            </el-form-item>
+            <el-form-item label="真实姓名:">
+              <el-input v-model="role.userName"
+                        placeholder="真实姓名"></el-input>
+            </el-form-item>
+            <el-form-item label="登录密码:">
+              <el-input v-model="role.password"
+                        show-password
+                        placeholder="设置登录密码"></el-input>
+            </el-form-item>
+            <el-form-item label="联系电话:">
+              <el-input v-model="role.tel"
+                        placeholder="联系电话"></el-input>
+            </el-form-item>
+            <el-form-item label="所属项目:">
+              <div style="width:30%">
+                <el-checkbox-group v-model="role.proScope">
+                  <el-checkbox v-for="city in role.proScope"
+                               :label="city"
+                               :key="city"
+                               style="display:block;">{{city}}</el-checkbox>
+                </el-checkbox-group>
+              </div>
+            </el-form-item>
+            <el-form-item label="所属机构:">
+              <!-- <el-input v-model="role.groupName"
+                        placeholder="所属机构"></el-input> -->
+              <!-- <el-select v-model="role.groupName"
+                         value-key=""
+                         placeholder="所属机构">
+                <el-option v-for="item in userNameOptions"
+                           :key="item.value"
+                           :label="item.label"
+                           :value="item.value">
+                </el-option>
+              </el-select> -->
+              <el-cascader v-model="role.groupName"
+                           :options="testData"
+                           ref="casGroup"
+                           :props="{ checkStrictly: true , expandTrigger: 'hover'}"
+                           @change="handleChange"
+                           :show-all-levels="false"
+                           clearable></el-cascader>
+              <!-- <el-tree ref="tree"
+                       @check-change="handleCheck"
+                       :data="testData"
+                       node-key="id"
+                       show-checkbox
+                       :check-strictly="true">
+              </el-tree> -->
+            </el-form-item>
+            <el-form-item label="角色:">
+              <el-select v-model="role.role"
+                         value-key=""
+                         placeholder="请选择用户角色">
+                <el-option v-for="item in userNameOptions"
+                           :key="item.value"
+                           :label="item.label"
+                           :value="item.value">
+                </el-option>
+              </el-select>
+
+            </el-form-item>
+            <el-form-item label="是否启用:">
+              <el-radio-group v-model="role.isEnable">
+                <el-radio :label="0">禁用</el-radio>
+                <el-radio :label="1">启用</el-radio>
+              </el-radio-group>
+
+            </el-form-item>
+
+          </el-form>
+          <div style="text-align:right;">
+            <el-button type="info"
+                       @click="dialogVisible2=false">取消</el-button>
+            <el-button type="primary"
+                       @click="confirmRole">保存</el-button>
+          </div>
+        </el-dialog>
+
+        <!-- 增改 弹窗end -->
 
         <!-- 所属项目 弹窗 -->
         <el-dialog :visible.sync="dialogData"
@@ -309,7 +402,7 @@ import Pagination from '@/components/Pagination'
 
 const defaultRole = {
   PId: 0,
-  groupName: {id:[4988],content:''},
+  groupName: { id: [4988], content: '' },
   isEnable: 0,
   loginName: '',
   proScope: [],
@@ -428,6 +521,7 @@ export default {
       multipleSelection: [],
       clickUserRes: [],
       dialogVisible: false,
+      dialogVisible2: false,
       dialogType: 'add',
       role: Object.assign({}, defaultRole),
     };
@@ -460,9 +554,8 @@ export default {
     // 增删改查按钮
     groupAdd() {
       console.log(this.role);
-      this.dialogType = 'add'
-      this.dialogVisible = true
-      this.role = {}
+      this.dialogVisible2 = true
+      this.role=Object.assign({}, defaultRole)
     },
     groupEdit(scope) {
       console.log(scope.row);
@@ -475,6 +568,11 @@ export default {
     confirmRole() {
       console.log(this.role)
       this.dialogVisible = false
+      this.dialogVisible2 = false
+
+      // 最后重置this.role
+      this.role=Object.assign({}, defaultRole)
+
     },
     // 删除
     userDel() {
