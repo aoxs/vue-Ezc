@@ -74,7 +74,7 @@
       </div>
       <!-- 顶部搜索end -->
 
-      <div style="width:100%;padding-top:20px;padding-bottom:20px;white-space: nowrap; ">
+      <div style="width:100%;padding-top:10px;padding-bottom:20px;white-space: nowrap; ">
         <!-- 按钮 -->
         <div style=" padding: 5px 10px">
           <div class="pagRight"
@@ -88,13 +88,6 @@
                    style="font-weight:1000;" />
                 新建
               </el-button>
-
-              <!-- <el-button type="primary"
-               size="small"
-               @click="groupEdit">
-      <i class="el-icon-edit" />
-      编辑
-    </el-button> -->
               <el-button type="primary"
                          size="small"
                          @click="userDel">
@@ -107,12 +100,6 @@
                 <i class="el-icon-thumb" />
                 项目范围
               </el-button>
-              <!-- <el-button type="primary"
-                     size="small"
-                     @click="groupCheck">
-            <i class="el-icon-tickets" />
-            查看详情
-          </el-button> -->
             </div>
           </div>
         </div>
@@ -154,17 +141,6 @@
               </div>
             </el-form-item>
             <el-form-item label="所属机构:">
-              <!-- <el-input v-model="role.groupName"
-                        placeholder="所属机构"></el-input> -->
-              <!-- <el-select v-model="role.groupName"
-                         value-key=""
-                         placeholder="所属机构">
-                <el-option v-for="item in userNameOptions"
-                           :key="item.value"
-                           :label="item.label"
-                           :value="item.value">
-                </el-option>
-              </el-select> -->
               <el-cascader v-model="role.groupName.id"
                            :options="testData"
                            ref="casGroup"
@@ -172,13 +148,6 @@
                            @change="handleChange"
                            :show-all-levels="false"
                            clearable></el-cascader>
-              <!-- <el-tree ref="tree"
-                       @check-change="handleCheck"
-                       :data="testData"
-                       node-key="id"
-                       show-checkbox
-                       :check-strictly="true">
-              </el-tree> -->
             </el-form-item>
             <el-form-item label="角色:">
               <el-select v-model="role.role"
@@ -197,9 +166,7 @@
                 <el-radio :label="0">禁用</el-radio>
                 <el-radio :label="1">启用</el-radio>
               </el-radio-group>
-
             </el-form-item>
-
           </el-form>
           <div style="text-align:right;">
             <el-button type="info"
@@ -245,17 +212,6 @@
               </div>
             </el-form-item>
             <el-form-item label="所属机构:">
-              <!-- <el-input v-model="role.groupName"
-                        placeholder="所属机构"></el-input> -->
-              <!-- <el-select v-model="role.groupName"
-                         value-key=""
-                         placeholder="所属机构">
-                <el-option v-for="item in userNameOptions"
-                           :key="item.value"
-                           :label="item.label"
-                           :value="item.value">
-                </el-option>
-              </el-select> -->
               <el-cascader v-model="role.groupName"
                            :options="testData"
                            ref="casGroup"
@@ -263,13 +219,6 @@
                            @change="handleChange"
                            :show-all-levels="false"
                            clearable></el-cascader>
-              <!-- <el-tree ref="tree"
-                       @check-change="handleCheck"
-                       :data="testData"
-                       node-key="id"
-                       show-checkbox
-                       :check-strictly="true">
-              </el-tree> -->
             </el-form-item>
             <el-form-item label="角色:">
               <el-select v-model="role.role"
@@ -317,34 +266,37 @@
         </el-dialog>
         <!-- 按钮end -->
         <!-- 表格 -->
-        <el-table :data="tableData"
-                  style="width: 95%;margin:0 auto;margin-top:20px;border-radius: 8px;"
+        <el-table :data="userTableList"
+                  style="width: 95%;margin:0 auto;margin-top:10px;border-radius: 8px;"
                   stripe
                   border
                   tooltip-effect="dark"
                   @selection-change="handleSelectionChange">
           <el-table-column type="selection"
                            width="55" />
-          <el-table-column prop="loginName"
+          <el-table-column prop="UserName"
                            label="登录名"
                            width="" />
-          <el-table-column prop="userName"
+          <el-table-column prop="RealName"
                            label="名称"
                            width="" />
           <el-table-column prop="proScope"
                            label="所属项目"
                            width=""
-                           :formatter="dataStateFormat"
                            show-overflow-tooltip />
+          <!-- <所属项目> 内容格式化，临时注释 -->
+          <!-- :formatter="dataStateFormat" -->
           <el-table-column prop="groupName.content"
                            label="所属机构"
                            width=""
                            show-overflow-tooltip />
 
-          <el-table-column prop="tel"
+          <el-table-column prop="Tel"
                            label="联系电话"
                            width=""
-                           show-overflow-tooltip />
+                           show-overflow-tooltip 
+                           align="center"
+                          :formatter="TelFormat"/>
           <el-table-column align="center"
                            prop="role"
                            label="角色"
@@ -361,26 +313,14 @@
             <div slot-scope="scope">
               <el-button size="mini"
                          @click="groupEdit(scope)">编辑</el-button>
-              <!-- <el-dialog title="提示"
-                         :visible.sync="centerDialogVisible"
-                         width="80%"
-                         :before-close="handleClose">
-                <span>点击编辑用户</span>
-                <p>登录名为{{ clickUserRes[0] }}</p>
-                <span slot="footer">
-                  <el-button @click="userEupdata()">取消</el-button>
-                  <el-button type="primary"
-                             @click="userEback()">确认</el-button>
-                </span>
-              </el-dialog> -->
             </div>
           </el-table-column>
         </el-table>
         <!-- 表格end -->
         <!-- 分页 -->
         <div class="pagRight">
-          <pagination v-show="tableData.length>=10"
-                      :total="tableData.length"
+          <pagination v-show="userTableList.length>=10"
+                      :total="userTableList.length"
                       :layout="layout">
 
           </pagination>
@@ -524,12 +464,32 @@ export default {
       dialogVisible2: false,
       dialogType: 'add',
       role: Object.assign({}, defaultRole),
+      userTableList: [],
     };
   },
   created() {
     // this.fetchData()
   },
   methods: {
+    // 加载用户表
+    getUserList() {
+      this.userTableList = []
+      this.axios({
+        method: "post",
+        url: "/UserQuery",
+        data: {
+          "UersName": "",
+          "ProjectId": "0",
+          "mechanismId": "0"
+        }
+      })
+        // .post('/queryProject',this.qs.stringify(obj))
+        .then((res) => {
+          console.log(888, res.data)
+          this.userTableList = res.data.list
+        })
+    },
+
     // 级联选择事件
     handleChange() {
       //选择所属机构后，修改role中的数据
@@ -555,7 +515,7 @@ export default {
     groupAdd() {
       console.log(this.role);
       this.dialogVisible2 = true
-      this.role=Object.assign({}, defaultRole)
+      this.role = Object.assign({}, defaultRole)
     },
     groupEdit(scope) {
       console.log(scope.row);
@@ -571,7 +531,7 @@ export default {
       this.dialogVisible2 = false
 
       // 最后重置this.role
-      this.role=Object.assign({}, defaultRole)
+      this.role = Object.assign({}, defaultRole)
 
     },
     // 删除
@@ -632,6 +592,7 @@ export default {
     },
     // 增删改查按钮end
 
+    // table内容格式化
     stateFormat(row, column) {
       if (row.isEnable == 0) {
         return '禁用'
@@ -639,9 +600,15 @@ export default {
         return '启用'
       }
     },
-    dataStateFormat(row, column) {
-      return row.proScope.join('，')
+    // dataStateFormat(row, column) {
+    //   return row.proScope.join('，')
+    // },
+    TelFormat(row,column){
+      if(row.Tel == null){
+        return '-'
+      }
     },
+
     // fetchData() {
     //   this.listLoading = true;
     //   fetchList().then((response) => {
@@ -717,6 +684,9 @@ export default {
           console.log(2, done);
         });
     },
+  },
+  mounted() {
+    this.getUserList()
   },
 };
 </script>

@@ -174,7 +174,7 @@ export default {
     },
     handleLogin() {
 
-      this.axios.get('/WYDApi/LogIn?UserName=' + this.loginForm.username + '&Password=' + this.loginForm.password)
+      this.axios.get('/LogIn?UserName=' + this.loginForm.username + '&Password=' + this.loginForm.password)
 
         .then((res) => {
 

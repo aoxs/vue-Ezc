@@ -54,11 +54,14 @@
                        top="10px">
               <span></span>
               <el-input v-model="roleName"
-                        placeholder="请输入角色名称">
+                        placeholder="请输入角色名称"
+                        @focus="focusRole"
+                        @blur="blurRole">
                 <template slot="prepend">角色名称:</template>
 
               </el-input>
-
+              <p>*只能包含字母、数字、中文和()</p>
+             
               <span slot="footer">
                 <el-button @click="roleCreateBack">取消</el-button>
                 <el-button type="primary"
@@ -78,7 +81,7 @@
                          size="default"
                          @click="">查询</el-button>
             </div> -->
-            <el-table :data="roleTableData1"
+            <el-table :data="roleList"
                       border
                       stripe
                       style="margin:10px auto;width:90%"
@@ -88,19 +91,19 @@
               <el-table-column label
                                width="35">
                 <template slot-scope="scope">
-                  <el-radio :label="scope.row.title"
+                  <el-radio :label="scope.row.ID"
                             v-model="radioId"></el-radio>
                 </template>
               </el-table-column>
-              <el-table-column prop="title"
+              <el-table-column prop="Role_Name"
                                label="角色名称"
                                width="">
               </el-table-column>
             </el-table>
             <div style="width: 100%; padding: 5px 10px">
               <div class="pagRight">
-                <pagination v-show="roleTableData1.length>=10"
-                            :total="roleTableData1.length"
+                <pagination v-show="roleList.length>=10"
+                            :total="roleList.length"
                             :small="true"
                             :layout="layout">
 
@@ -239,8 +242,12 @@ export default {
   components: { Pagination },
   data() {
     return {
-
+      roleList: [],
       radioId: '',
+      focusprompt: false,
+      blurprompt: false,
+      
+      roleInput: 0,
       roleTableData1: [
         { title: "abc1" },
         { title: "abc2" },
@@ -310,75 +317,140 @@ export default {
   },
 
   methods: {
+    // 获取角色列表
+    getRoleList() {
+      this.axios.get("/Roles")
+        .then((res) => {
+          console.log(res.data)
+          this.roleList = res.data
+        })
+    },
+
     // 创建角色
     roleCreate() {
       // console.log('新建角色')
       this.newRole = true;
       console.log(this.roleName)
-
     },
+
+    // 获取/失去焦点
+    focusRole() {
+      
+    },
+    blurRole() {
+      var regex = /^[\u4e00-\u9fa50-9A-Za-z\(\)、\（\）]+$/;
+      var result = regex.test(this.roleName);
+      if (result == false) {
+        this.roleInput = 0
+      } else {
+        this.roleInput = 1
+      }
+    },
+
     // 保存
     roleCreateUp() {
-      console.log(this.roleName)
-      this.newRole = false
-      this.roleName = ''
-      console.log(this.roleName)
+      if (!this.roleName) {
+        // this.$alert("请填写角色名称！")
+        this.$alert('请填写角色名称！', "提示", {
+          confirmButtonText: '关闭',
+          type: 'warning'
+        })
+
+      } else {
+        // var regex = /^[\u4e00-\u9fa50-9A-Za-z\(\)、\（\）]+$/;
+        // var result = regex.test(this.roleName);
+        if (this.roleInput == 0) {
+          this.$alert('请正确填写角色名称！', "提示", {
+            confirmButtonText: '关闭',
+            type: 'warning'
+          })
+        } else {
+          this.axios.get("/RotlesIns?rotuleName=" + this.roleName)
+            .then((res) => {
+              if (res.data.code == 1) {
+                this.$message({
+                  type: 'success',
+                  message: '添加成功'
+                })
+                this.getRoleList()
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: '添加失败，请刷新页面后重试'
+                })
+              }
+            })
+          this.newRole = false
+          this.roleName = ''
+        }
+
+      }
     },
     // 取消
     roleCreateBack() {
-      console.log(this.roleName)
       this.newRole = false
       this.roleName = ''
-      console.log(this.roleName)
-
     },
     // 关闭
     handleClose(done) {
       this.$confirm("确定关闭？")
         .then((_) => {
           done();
-          console.log(1, done)
           this.centerDialogVisible = false;
         })
-
         .catch((_) => {
-          console.log(2, done);
         });
     },
+    // 删除角色
     delCreate() {
-      console.log('删除角色')
-
       if (!this.radioId) {
         this.$alert('未选中项目', "提示", {
           confirmButtonText: '确认',
           type: 'info'
         })
       } else {
-        console.log(this.radioId)
-        this.radioId = ''
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
+        this.$confirm('确认删除 \'', '警告', {
+          confirmButtonText: '确认',
+          cancelButtonText: '取消',
+          type: 'warning'
         })
+          .then(() => {
+            this.axios.get("/RolesDelete?RouteId=" + this.radioId)
+              .then((res) => {
+                if (res.data.code == 1) {
+                  this.$message({
+                    type: 'success',
+                    message: '删除成功。'
+                  })
+                  this.radioId = ''
+                  this.getRoleList()
+                } else {
+                  this.$message({
+                    type: 'error',
+                    message: '删除失败，请刷新页面后重试！'
+                  })
+                }
+
+              })
+          })
       }
     },
-    // roleNameCheck() {
-    //   console.log(this.roleSearchInput)
-    // },
 
     // 角色选择事件
     rowClick(row) {
-      this.radioId = row.title
-      console.log(row.title)
+      this.radioId = row.ID
+      console.log(this.radioId)
+
     },
-    // 每页条数
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-    },
-    // 翻页事件
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-    },
+    // // 每页条数
+    // handleSizeChange(val) {
+    //   console.log(`每页 ${val} 条`);
+    // },
+    // // 翻页事件
+    // handleCurrentChange(val) {
+    //   console.log(`当前页: ${val}`);
+    // },
+
     // 功能模块
     determine() {
       // 点击确定按钮获取所有被选中的tree节点
@@ -388,11 +460,16 @@ export default {
         message: '设置成功!'
       })
     },
+
     // handleCheckChange(data, checked, indeterminate) {
     //   console.log(data.id, checked);
     // },
-    handleNodeClick() {
+
+    handleNodeClick(node, data, value) {
       // 点击后treedata3中 切换请求地址，请求对应按钮权限
+      console.log(node)
+      console.log(node.id, node.label)
+
     },
 
     // 按钮权限
@@ -403,9 +480,16 @@ export default {
         message: '设置成功!'
       })
     },
+
+
   },
 
   mounted() {
+    // 获取角色列表
+    this.getRoleList()
+
+
+
 
   }
 }
@@ -423,7 +507,7 @@ export default {
   border: 1px solid #dddddd;
   /* padding-bottom: 40px; */
   /* padding: 5px 5px; */
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 .tabHeader {
   background-color: #f5f5f5;

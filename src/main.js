@@ -25,7 +25,7 @@ import qs from 'qs'
 Vue.prototype.qs = qs;
 
 import axios from 'axios'
-axios.defaults.baseURL = 'http://120.86.117.97:8579/api'
+axios.defaults.baseURL = 'http://120.86.117.97:8579/api/WYDApi'
 Vue.prototype.axios = axios;
 
 /**

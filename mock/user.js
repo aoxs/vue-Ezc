@@ -5,7 +5,10 @@ const tokens = {
   },
   editor: {
     token: 'editor-token'
-  }
+  },
+  "wnd-01": {
+    token: 'wnd-01-token'
+  },
 }
 
 const users = {
@@ -20,6 +23,12 @@ const users = {
     introduction: 'I am an editor',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Normal Editor'
+  },
+  'wnd-01-token': {
+    roles: ['wnd-01'],
+    introduction: 'I am an wnd-01',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    name: 'Normal wnd-01'
   }
 }
 

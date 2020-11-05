@@ -596,19 +596,16 @@ export default {
       this.InsProject = []
       this.axios({
         method: "post",
-        url: "/WYDApi/queryProject",
+        url: "/queryProject",
         data: {
           "ProjectName": "",
           "ProjectType": "0",
           "ProjectStatus": "0"
         }
       })
-        // .post('/WYDApi/queryProject',this.qs.stringify(obj))
+        // .post('/queryProject',this.qs.stringify(obj))
         .then((res) => {
-          console.log(res.data)
-          console.log(res.data.length)
           this.InsProject = res.data
-
         })
     },
 
@@ -646,14 +643,14 @@ export default {
       this.InsProject = []
       this.axios({
         method: "post",
-        url: "/WYDApi/queryProject",
+        url: "/queryProject",
         data: {
           "ProjectName": proN,
           "ProjectType": proT,
           "ProjectStatus": proS
         }
       })
-        // .post('/WYDApi/queryProject',this.qs.stringify(obj))
+        // .post('/queryProject',this.qs.stringify(obj))
         .then((res) => {
           console.log(res.data)
           if (res.data.length == 0) {
@@ -780,7 +777,7 @@ export default {
           message: '项目名称不能为空!'
         })
       } else {
-        this.axios.post("/WYDApi/InsProject", this.pro)
+        this.axios.post("/InsProject", this.pro)
           .then((res) => {
             this.$message({
               type: 'success',
@@ -832,7 +829,7 @@ export default {
           .then(() => {
             console.log(this.multipleSelection[0].ID)
             var delId = this.multipleSelection[0].ID
-            this.axios.get("/WYDApi/delProject?Id=" + delId)
+            this.axios.get("/delProject?Id=" + delId)
               .then((res) => {
                 if (res.data.code == 1) {
                   this.$message({
@@ -873,12 +870,12 @@ export default {
   },
   mounted() {
     // 筛查：项目类型
-    this.axios.get('/WYDApi/ProjectTS?code=BUSINESS_PROJECT_TYPE').then((res) => {
+    this.axios.get('/ProjectTS?code=BUSINESS_PROJECT_TYPE').then((res) => {
       // console.log(res.data.list)
       this.proTypeList = res.data.list
     });
     // 筛查：项目状态
-    this.axios.get('/WYDApi/ProjectTS?code=BUSINESS_PROJECT_STATUS').then((res) => {
+    this.axios.get('/ProjectTS?code=BUSINESS_PROJECT_STATUS').then((res) => {
       // console.log(res.data.list)
       this.proStatusList = res.data.list
     });
