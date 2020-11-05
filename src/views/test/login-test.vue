@@ -1,5 +1,6 @@
 <template>
   <div style="width:40%;margin:0 auto;margin-top: 50px">
+    <textarea name="" id="" cols="30" rows="10" disabled></textarea>
 
     <el-form :model="ruleForm"
              status-icon
