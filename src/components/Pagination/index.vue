@@ -32,7 +32,7 @@ export default {
     },
     limit: {
       type: Number,
-      default: 5
+      default: 10
     },
     pageSizes: {
       type: Array,
@@ -100,6 +100,7 @@ export default {
 .pagination-container {
   background: #fff;
   padding: 32px 16px;
+  margin-top: 0px !important;
 }
 .pagination-container.hidden {
   display: none;
