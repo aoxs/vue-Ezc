@@ -529,7 +529,7 @@ export const asyncRoutes = [
         path: 'groupIns',
         component: () => import('@/views/systemSet/groupIns'),
         name: 'groupIns',
-        meta: { title: '组织结构' }
+        meta: { title: '组织机构' }
       },
       {
         path: 'rolePer',
