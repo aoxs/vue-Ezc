@@ -61,7 +61,7 @@
 
               </el-input>
               <p>*只能包含字母、数字、中文和()</p>
-             
+
               <span slot="footer">
                 <el-button @click="roleCreateBack">取消</el-button>
                 <el-button type="primary"
@@ -136,16 +136,15 @@
               </div>
             </el-header>
 
-            <el-tree :data="roleTreeData1"
+            <el-tree :data="funTree"
                      ref="tree"
                      show-checkbox
-                     node-key="id"
+                     node-key="Id"
+                     :expand-on-click-node="false"
                      default-expand-all
-                     :default-checked-keys="checkedKeys"
                      :props="defaultProps"
                      @node-click="handleNodeClick">
             </el-tree>
-
           </div>
         </el-col>
         <!-- 功能模块end -->
@@ -171,7 +170,8 @@
                     <p style="padding: 0;margin: 0;line-height: 36px;">按钮权限</p>
                     <el-button type="primary"
                                size="small"
-                               @click="onSubmit">
+                               @click="onSubmit"
+                               :disabled="buttomcheckbox?false:true">
                       <i class="el-icon-check" />
                       确定
                     </el-button>
@@ -181,10 +181,11 @@
               <el-form-item style="margin:0px;padding:0px;">
                 <el-checkbox-group size="small"
                                    v-model="checkboxBottom"
-                                   style="padding:10px;">
+                                   style="padding:10px;"
+                                   v-if="buttomcheckbox">
                   <el-checkbox border
                                style="margin:5px;padding:5px 5px 5px 5px"
-                               label="新建"
+                               label="新增"
                                name="type">
                   </el-checkbox>
                   <el-checkbox border
@@ -244,9 +245,13 @@ export default {
     return {
       roleList: [],
       radioId: '',
+      contRadio: '',
       focusprompt: false,
       blurprompt: false,
-      
+      funTree: [],
+      checkedKeys: [],
+      checkboxBottom: [],
+      buttomcheckbox: false,
       roleInput: 0,
       roleTableData1: [
         { title: "abc1" },
@@ -300,14 +305,14 @@ export default {
           }]
         }
       ],
-      checkedKeys: [10, 8, 6],
+      
 
       defaultProps: {
         children: 'children',
-        label: 'label'
+        label: 'lable'
       },
 
-      checkboxBottom: ['新建', '删除'],
+      
       // checkboxBottom: ['上海'],
       // cities: ['新增', '修改', '删除', '查看详情'],
       newRole: false,
@@ -335,7 +340,7 @@ export default {
 
     // 获取/失去焦点
     focusRole() {
-      
+
     },
     blurRole() {
       var regex = /^[\u4e00-\u9fa50-9A-Za-z\(\)、\（\）]+$/;
@@ -436,12 +441,36 @@ export default {
       }
     },
 
-    // 角色选择事件
+    // 获取功能模块tree
+    getTree() {
+      this.axios('/FunctionModule')
+        .then((res) => {
+          console.log(res.data)
+          this.funTree = res.data
+        })
+    },
+
+    // 角色选择事件，选择角色后更新功能模块treeData
     rowClick(row) {
-      this.radioId = row.ID
-      console.log(this.radioId)
+
+      if (this.contRadio != row.ID) {
+        this.radioId = row.ID
+        console.log(this.radioId)
+        this.checkedKeys = []
+        this.axios.get("/ModuleFunction?RouteId=" + this.radioId)
+          .then((res) => {
+            // console.log(res)
+            // this.checkedKeys = res.data
+            this.$refs.tree.setCheckedKeys(res.data);
+          })
+        this.contRadio = row.ID
+      } else {
+        return
+      }
 
     },
+
+
     // // 每页条数
     // handleSizeChange(val) {
     //   console.log(`每页 ${val} 条`);
@@ -453,12 +482,24 @@ export default {
 
     // 功能模块
     determine() {
+      // console.log(JSON.parse(JSON.stringify(this.checkedKeys)))
+
+      // console.log(this.$refs.tree.getCheckedKeys().concat(this.$refs.tree.getHalfCheckedKeys()))
       // 点击确定按钮获取所有被选中的tree节点
+      // if (this.checkedKeys == this.$refs.tree.getCheckedKeys().concat(this.$refs.tree.getHalfCheckedKeys())) {
+      //   this.$message({
+      //     type: 'error',
+      //     message: '没有改动，不允许上传!'
+      //   })
+      // } else {
       console.log(this.$refs.tree.getCheckedKeys().concat(this.$refs.tree.getHalfCheckedKeys()))
+
       this.$message({
-        type: 'success',
-        message: '设置成功!'
+        type: 'warning',
+        message: '上传功能待更新!'
       })
+      // }
+
     },
 
     // handleCheckChange(data, checked, indeterminate) {
@@ -466,18 +507,28 @@ export default {
     // },
 
     handleNodeClick(node, data, value) {
-      // 点击后treedata3中 切换请求地址，请求对应按钮权限
-      console.log(node)
-      console.log(node.id, node.label)
-
+      // 点击funTree子节点  请求对应按钮权限
+      console.log(node.Id)
+      console.log(this.radioId)
+      this.axios.get('GetButtonPermissions?RoleId=' + this.radioId + '&ModuleId=' + node.Id)
+        .then((res) => {
+          console.log(res.data)
+          if(res.data.length > 0){
+            this.buttomcheckbox = true
+            this.checkboxBottom = res.data
+          }else{
+            this.buttomcheckbox = false
+          }
+          // this.checkboxBottom = res.data
+        })
     },
 
     // 按钮权限
     onSubmit() {
       console.log(this.checkboxBottom)
       this.$message({
-        type: 'success',
-        message: '设置成功!'
+        type: 'warning',
+        message: '上传功能待更新!'
       })
     },
 
@@ -487,8 +538,8 @@ export default {
   mounted() {
     // 获取角色列表
     this.getRoleList()
-
-
+    // 获取功能模块tree
+    this.getTree()
 
 
   }

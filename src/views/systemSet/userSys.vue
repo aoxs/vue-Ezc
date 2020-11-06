@@ -133,10 +133,10 @@
             <el-form-item label="所属项目:">
               <div style="width:30%">
                 <el-checkbox-group v-model="role.proScope">
-                  <el-checkbox v-for="city in role.proScope"
-                               :label="city"
-                               :key="city"
-                               style="display:block;">{{city}}</el-checkbox>
+                  <el-checkbox v-for="city in dataOption"
+                               :label="city.id"
+                               :key="city.id"
+                               style="display:block;">{{city.label}}</el-checkbox>
                 </el-checkbox-group>
               </div>
             </el-form-item>
@@ -204,10 +204,10 @@
             <el-form-item label="所属项目:">
               <div style="width:30%">
                 <el-checkbox-group v-model="role.proScope">
-                  <el-checkbox v-for="city in role.proScope"
-                               :label="city"
-                               :key="city"
-                               style="display:block;">{{city}}</el-checkbox>
+                  <el-checkbox v-for="city in dataOption"
+                               :label="city.id"
+                               :key="city.id"
+                               style="display:block;">{{city.label}}</el-checkbox>
                 </el-checkbox-group>
               </div>
             </el-form-item>
@@ -294,9 +294,9 @@
           <el-table-column prop="Tel"
                            label="联系电话"
                            width=""
-                           show-overflow-tooltip 
+                           show-overflow-tooltip
                            align="center"
-                          :formatter="TelFormat"/>
+                           :formatter="TelFormat" />
           <el-table-column align="center"
                            prop="role"
                            label="角色"
@@ -360,6 +360,7 @@ export default {
       checkUserName: '',
       dataSelect: '',
       groupInsSelect: '',
+      
       dataOption: [
         {
           id: '1',
@@ -398,6 +399,9 @@ export default {
         { PId: 5, loginName: "斯派", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: { id: [3, 124, 5123, 245], content: '洪梅指挥部' }, tel: "13035707258", role: "管理员", isEnable: 0 },
         { PId: 6, loginName: "泰克", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: { id: [3, 124, 5123, 7654], content: '望牛墩指挥部' }, tel: "13035707258", role: "管理员", isEnable: 1 },
       ],
+      // abc:[
+      //   { "PId": "6", "loginName": "泰克", "userName": '张三', "proScope": "['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目']", "groupName": "{ id: [3, 124, 5123, 7654], content: '望牛墩指挥部' }", "tel": "13035707258", "role": "管理员", "isEnable": "1" },
+      // ],
       testData: [
         {
           value: 4988,
@@ -594,7 +598,7 @@ export default {
 
     // table内容格式化
     stateFormat(row, column) {
-      if (row.isEnable == 0) {
+      if (row.Is_Enable == 0) {
         return '禁用'
       } else {
         return '启用'
@@ -603,8 +607,9 @@ export default {
     // dataStateFormat(row, column) {
     //   return row.proScope.join('，')
     // },
-    TelFormat(row,column){
-      if(row.Tel == null){
+    // 如果为空格式化为-
+    TelFormat(row, column) {
+      if (row.Tel == null) {
         return '-'
       }
     },
