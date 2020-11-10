@@ -142,13 +142,22 @@ export const constantRoutes = [
     path: '/proMap',
     component: Layout,
     // redirect: '/index',
+    name: 'proMap',
+    meta: { title: '项目地图', icon: 'international', affix: true },
+
     children: [
       {
-        path: 'proMap',
-        component: () => import('@/views/proMap/index'),
-        name: 'proMap',
-        meta: { title: '项目地图', icon: 'international', affix: true }
-      }
+        path: '3DMap',
+        component: () => import('@/views/proMap/3DMap'),
+        name: '3DMap',
+        meta: { title: '三维地图' }
+      },
+      {
+        path: 'gaodeMap',
+        component: () => import('@/views/proMap/gaodeMap'),
+        name: 'gaodeMap',
+        meta: { title: '2D地图' }
+      },
     ]
   },
   {
@@ -407,42 +416,49 @@ export const constantRoutes = [
       icon: 'tree'
     },
     children: [
+      {
+        path: 'contact',
+        component: () => import('@/views/proMang/contact'),
+        name: 'contact',
+        meta: { title: '通讯录' }
+      },
+      {
+        path: 'tempConfig',
+        component: () => import('@/views/proMang/tempConfig'),
+        name: 'tempConfig',
+        meta: { title: '模板配置' }
+      },
       // {
       //   path: 'proCreate',
       //   component: () => import('@/views/proMang/proCreate'),
       //   name: 'proCreate',
       //   meta: { title: '新建项目' }
       // },
-      {
-        path: 'planPro',
-        component: () => import('@/views/proMang/planPro'),
-        name: 'planPro',
-        meta: { title: '项目计划进度' }
-      },
-      {
-        path: 'proGroupManage',
-        component: () => import('@/views/proMang/proGroupManage'),
-        name: 'proGroupManage',
-        meta: { title: '项目组织机构管理' }
-      },
-      {
-        path: 'proGroupMember',
-        component: () => import('@/views/proMang/proGroupMember'),
-        name: 'proGroupMember',
-        meta: { title: '项目组织机构成员' }
-      },
-      {
-        path: 'proTeamPer',
-        component: () => import('@/views/proMang/proTeamPer'),
-        name: 'proTeamPer',
-        meta: { title: '查看项目组权限' }
-      },
       // {
-      //   path: 'tempConfig',
-      //   component: () => import('@/views/proMang/tempConfig'),
-      //   name: 'tempConfig',
-      //   meta: { title: '模板配置' }
+      //   path: 'planPro',
+      //   component: () => import('@/views/proMang/planPro'),
+      //   name: 'planPro',
+      //   meta: { title: '项目计划进度' }
       // },
+      // {
+      //   path: 'proGroupManage',
+      //   component: () => import('@/views/proMang/proGroupManage'),
+      //   name: 'proGroupManage',
+      //   meta: { title: '项目组织机构管理' }
+      // },
+      // {
+      //   path: 'proGroupMember',
+      //   component: () => import('@/views/proMang/proGroupMember'),
+      //   name: 'proGroupMember',
+      //   meta: { title: '项目组织机构成员' }
+      // },
+      // {
+      //   path: 'proTeamPer',
+      //   component: () => import('@/views/proMang/proTeamPer'),
+      //   name: 'proTeamPer',
+      //   meta: { title: '查看项目组权限' }
+      // },
+
       // {
       //   path: 'perMang',
       //   component: () => import('@/views/proMang/perMang'),
@@ -817,7 +833,7 @@ export const asyncRoutes = [
         path: 'login-test',
         component: () => import('@/views/test/login-test'),
         name: 'login-test',
-        meta:{title: 'Login'}
+        meta: { title: 'Login' }
       },
       {
         path: 'list',

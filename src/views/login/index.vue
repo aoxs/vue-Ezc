@@ -173,6 +173,7 @@ export default {
       })
     },
     handleLogin() {
+      this.loading = true
 
       this.axios.get('/LogIn?UserName=' + this.loginForm.username + '&Password=' + this.loginForm.password)
 
@@ -185,7 +186,6 @@ export default {
           } else {
             this.$refs.loginForm.validate(valid => {
               if (valid) {
-                this.loading = true
                 this.$store.dispatch('user/login', this.loginForm)
                   .then(() => {
                     this.$router.push({ path: this.redirect || '/', query: this.otherQuery })

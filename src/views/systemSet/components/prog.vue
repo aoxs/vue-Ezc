@@ -22,11 +22,13 @@
              class="proLi">
           <div class="proBig">
             <div class="proDiv"
-                 style="">
+                 style=""
+                 @click="abclick(i.pro,i.pid)">
               <el-progress type="circle"
                            :percentage="i.pro"
                            :status="i.pro == 100 ? 'success' : 'exception'"
-                           width="40" />
+                           width="40"
+                           style="z-index:-1" />
               <!-- <p class="p2">{{ i.date }}</p> -->
               <p class="p1">{{ i.title }}</p>
 
@@ -39,13 +41,13 @@
           <!-- <div class="proBig"> -->
           <div class="pjTdiv"
                style="">
-            
-              <el-progress type="circle"
-                           :percentage="porjectT.pro"
-                           :status="porjectT.pro == 100 ? 'success' : 'exception'"
-                           :color="porjectT.pro == 100 ? '' : '#f00'"
-                           width="40" />
-            
+
+            <el-progress type="circle"
+                         :percentage="porjectT.pro"
+                         :status="porjectT.pro == 100 ? 'success' : 'exception'"
+                         :color="porjectT.pro == 100 ? '' : '#f00'"
+                         width="40" />
+
             <p class="p1">{{ porjectT.title }}</p>
 
             <!-- <p class="p2">{{ porjectT.date }}</p> -->
@@ -147,7 +149,7 @@ export default {
     return {
       porjectT: {
         title: "总进度",
-        pro: "0",
+        pro: "100",
         date: "2020/07/01 - 2020/07/31",
       },
       projectPro: [
@@ -158,43 +160,43 @@ export default {
           date: "2020/07/01 - 2020/07/31",
         },
         {
-          pid: "1",
+          pid: "2",
           title: "测绘",
           pro: "100",
           date: "2020/07/01 - 2020/07/31",
         },
         {
-          pid: "2",
+          pid: "3",
           title: "评估",
           pro: "0",
           date: "2020/07/01 - 2020/07/31",
         },
         {
-          pid: "3",
+          pid: "4",
           title: "确权",
           pro: "0",
           date: "2020/07/01 - 2020/07/31",
         },
         {
-          pid: "3",
+          pid: "5",
           title: "签约",
           pro: "0",
           date: "2020/07/01 - 2020/07/31",
         },
         {
-          pid: "3",
+          pid: "6",
           title: "付款",
           pro: "0",
           date: "2020/07/01 - 2020/07/31",
         },
         {
-          pid: "3",
+          pid: "7",
           title: "房屋移交",
           pro: "0",
           date: "2020/07/01 - 2020/07/31",
         },
         {
-          pid: "3",
+          pid: "8",
           title: "产权注销",
           pro: "0",
           date: "2020/07/01 - 2020/07/31",
@@ -204,14 +206,18 @@ export default {
       ],
     };
   },
-  mounted() { },
+  mounted() {
+
+  },
   methods: {
     // fromat(percentage) {
     //   return percentage == 100 ? ' ' : ' '
     // }
-    abc(e){
-     
+
+    abclick(pro, id) {
+      console.log(pro,id)
     }
+
   },
 };
 </script>
@@ -265,7 +271,7 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   /* background-color: #fff; */
-  padding: 10px 20px;
+  padding: 10px 10px;
   text-align: center;
 }
 .proLi {
@@ -281,13 +287,18 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: rgba(255, 255, 0, 0.1);
+  z-index: 2;
+}
+.proDiv:hover {
+  cursor: pointer;
 }
 .pjTdiv {
   width: 40px;
   display: flex;
-  
   flex-direction: column;
   align-items: center;
+  background-color: rgba(255, 255, 0, 0.3);
 }
 .proBig {
   width: 100%;

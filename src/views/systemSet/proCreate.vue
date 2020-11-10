@@ -107,55 +107,68 @@
                             placeholder="项目名称"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :sm="8"
+              <!-- <el-col :sm="8"
                       :xs="24"
                       :offset="0">
                 <el-form-item label="排序顺序:">
                   <el-input placeholder="排序顺序"></el-input>
                 </el-form-item>
-              </el-col>
+              </el-col> -->
               <el-col :sm="8"
                       :xs="24"
                       :offset="0">
                 <el-form-item label="项目类型:">
-                  <el-input v-model="pro.Project_Type"
-                            placeholder="请选择"></el-input>
+                  <!-- <el-input v-model="pro.Project_Type"
+                            placeholder="请选择"></el-input> -->
+                  <el-select v-model="pro.Project_Type"
+                             style="width:100%">
+                    <el-option v-for="item in proTypeList"
+                               :key="item.ID"
+                               :label="item.Name"
+                               :value="item.ID">
+                    </el-option>
+                  </el-select>
                 </el-form-item>
               </el-col>
               <el-col :sm="8"
                       :xs="24">
-                <el-row :gutter="20">
-                  <el-col :span="24"
-                          :offset="0">
-                    <el-form-item label="项目状态:">
-                      <el-input v-model="pro.Status"
-                                placeholder="请选择"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="24"
-                          :offset="0">
-                    <el-form-item label="项目图片:">
-                      <el-upload class="upload-demo"
-                                 action="http://120.86.117.97:8577/upload/"
-                                 :on-preview="handlePreview"
-                                 :on-remove="handleRemove"
-                                 :file-list="fileList"
-                                 list-type="picture">
-                        <el-button size="small"
-                                   type="primary">上传</el-button>
-                        <el-button style="margin-left: 10px;"
-                                   size="small"
-                                   type="success"
-                                   @click="submitUpload">上传到服务器</el-button>
-                        <div slot="tip"
-                             class="el-upload__tip">
-                          只能上传jpg/png文件，且不超过500kb
-                        </div>
-                      </el-upload>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
 
+                <el-form-item label="项目状态:">
+                  <!-- <el-input v-model="pro.Status"
+                                placeholder="请选择"></el-input> -->
+                  <el-select v-model="pro.Status"
+                             style="width:100%">
+                    <el-option v-for="item in proStatusList"
+                               :key="item.Code"
+                               :label="item.Name"
+                               :value="item.Code">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :sm="8"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="项目图片:">
+                  <el-upload class="upload-demo"
+                             action=""
+                             :on-preview="handlePreview"
+                             :on-remove="handleRemove"
+                             :file-list="fileList"
+                             list-type="picture">
+                    <el-button size="small"
+                               type="primary">上传</el-button>
+                    <el-button style="margin-left: 10px;"
+                               size="small"
+                               type="success"
+                               @click="submitUpload">上传到服务器</el-button>
+                    <div slot="tip"
+                         class="el-upload__tip">
+                      只能上传jpg/png文件，且不超过500kb
+                      <!-- 字段名 Map_Img_Url -->
+                    </div>
+                  </el-upload>
+                </el-form-item>
               </el-col>
 
               <el-col :sm="16"
@@ -164,10 +177,33 @@
                 <el-form-item label="节点配置:">
                   <!-- <el-input v-model="pro.ProStatus"
                             placeholder="请选择"></el-input> -->
-                  <prog />
+                  <!-- <prog /> -->
+                  <el-select v-model="proProStatus"
+                             value-key=""
+                             multiple
+                             style="width:100%"
+                             placeholder="请选择节点配置">
+                    <el-option v-for="item in codeConfig"
+                               :key="item.id"
+                               :label="item.label"
+                               :value="item.id">
+                    </el-option>
+                  </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :sm="8"
+              <el-col :sm="24"
+                      :xs="24"
+                      :offset="0">
+                <el-form-item label="地区选择:">
+                  <v-distpicker :province="pro.Province_ID"
+                                :city="City_ID"
+                                :area="pro.Area_ID"
+                                @selected="regionSelect"></v-distpicker>
+                </el-form-item>
+
+              </el-col>
+
+              <!-- <el-col :sm="8"
                       :xs="24"
                       :offset="0">
                 <el-form-item label="省份:">
@@ -191,7 +227,8 @@
                   <el-input v-model="pro.Area_ID"
                             placeholder="请选择"></el-input>
                 </el-form-item>
-              </el-col>
+              </el-col> -->
+
               <el-col :sm="8"
                       :xs="24"
                       :offset="0">
@@ -410,6 +447,12 @@
                          width=""
                          :formatter="Project_Type">
         </el-table-column>
+        <el-table-column prop="Status"
+                         label="项目状态"
+                         align="center"
+                         width=""
+                         :formatter="ProStatus">
+        </el-table-column>
         <el-table-column prop="Province_ID"
                          label="省份"
                          align="center"
@@ -476,12 +519,6 @@
                          align="center"
                          width="">
         </el-table-column>
-        <el-table-column prop="Status"
-                         label="项目状态"
-                         align="center"
-                         width=""
-                         :formatter="ProStatus">
-        </el-table-column>
 
       </el-table>
       <!-- 信息表end -->
@@ -502,55 +539,84 @@ import { deepClone } from '@/utils';
 import Tinymce from '@/components/Tinymce'
 import Pagination from '@/components/Pagination'
 import Prog from './components/prog'
+import VDistpicker from 'v-distpicker'
 
 
 const defaultRole = {
-  "Address": "",
-  "Area_ID": 0,
-  "BelongTo": "",
-  "City_ID": 0,
-  "Create_Date": "",
-  "Create_User_ID": 0,
-  "Create_User_Name": "",
-  "CurrentPlotRatio": 0,
-  "Description": "",
-  "Developer": "",
-  "Expropriation": "",
-  "Government": "",
-  "ImplementUnit": "",
-  "Map_Img_Url": "",
-  "Map_Pro_Url": "",
-  "Modify_Date": "",
-  "Modify_User_ID": 0,
-  "Modify_User_Name": "",
-  "MoveBackHouseArea": 0,
-  "PlanConstructionArea": 0,
-  "PlanPlotRatio": 0,
-  "Position_Marker": "",
-  "Project_ID": 0,
-  "Project_Name": "",
-  "Project_Type": 0,
-  "Province_ID": 0,
-  "SafeguardHouseArea": 0,
-  "SortIndex": 0,
-  "Status": 0,
-  "Street": "",
-  "Total_Arrange_Room_Area": 0,
-  "Total_Arrange_Room_Count": 0,
-  "Total_Compensation_Price": 0,
-  "Total_Constructure_Area": 0,
-  "Total_Household_Count": 0,
-  "Total_Land_Area": 0,
+  // "Address": "",
+  // "Area_ID": 0,
+  // "BelongTo": "",
+  // "City_ID": 0,
+  // "Create_Date": "",
+  // "Create_User_ID": 0,
+  // "Create_User_Name": "",
+  // "CurrentPlotRatio": 0,
+  // "Description": "",
+  // "Developer": "",
+  // "Expropriation": "",
+  // "Government": "",
+  // "ImplementUnit": "",
+  // "Map_Img_Url": "",
+  // "Map_Pro_Url": "",
+  // "Modify_Date": "",
+  // "Modify_User_ID": 0,
+  // "Modify_User_Name": "",
+  // "MoveBackHouseArea": 0,
+  // "PlanConstructionArea": 0,
+  // "PlanPlotRatio": 0,
+  // "Position_Marker": "",
+  // "Project_ID": 0,
+  // "Project_Name": "",
+  // "Project_Type": 0,
+  // "Province_ID": 0,
+  // "SafeguardHouseArea": 0,
+  // "SortIndex": 0,
+  // "Status": 0,
+  // "Street": "",
+  // "Total_Arrange_Room_Area": 0,
+  // "Total_Arrange_Room_Count": 0,
+  // "Total_Compensation_Price": 0,
+  // "Total_Constructure_Area": 0,
+  // "Total_Household_Count": 0,
+  // "Total_Land_Area": 0,
 }
 
 export default {
 
-  components: { Tinymce, Pagination, Prog },
+  components: { Tinymce, Pagination, Prog, VDistpicker },
   data() {
     return {
       proNameValue: '',
       proTypeListValue: '',
       proStatusListValue: '',
+      proProStatus:[1,2,3],
+      codeConfig:[
+        {
+          id:1,
+          label:"权属申报",
+        },{
+          id:2,
+          label:"测绘",
+        },{
+          id:3,
+          label:"评估",
+        },{
+          id:4,
+          label:"确权",
+        },{
+          id:5,
+          label:"签约",
+        },{
+          id:6,
+          label:"付款",
+        },{
+          id:7,
+          label:"房屋移交",
+        },{
+          id:8,
+          label:"产权注销",
+        }
+      ],
       // option1: [
       //   {
       //     id: '1',
@@ -591,6 +657,15 @@ export default {
     }
   },
   methods: {
+    // 地区选择
+    regionSelect(data) {
+      console.log(data)
+      this.pro.Province_ID = data.province.value
+      this.pro.City_ID = data.city.value
+      this.pro.Area_ID = data.area.value
+    },
+
+
     // 加载表数据
     getTable() {
       this.InsProject = []
@@ -746,12 +821,13 @@ export default {
         this.dialogProCreate = true
         this.pro = deepClone(this.multipleSelection[0])
         console.log(this.pro)
-        console.log(this.pro.Description)
+
 
       }
     },
     // 保存
     updataPro() {
+      console.log(this.pro.Province_ID)
       var d = new Date();
       var year = d.getFullYear();
       var month = d.getMonth() + 1;

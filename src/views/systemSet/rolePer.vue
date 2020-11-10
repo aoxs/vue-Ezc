@@ -185,7 +185,7 @@
                                    v-if="buttomcheckbox">
                   <el-checkbox border
                                style="margin:5px;padding:5px 5px 5px 5px"
-                               label="新增"
+                               label="新建"
                                name="type">
                   </el-checkbox>
                   <el-checkbox border
@@ -305,14 +305,14 @@ export default {
           }]
         }
       ],
-      
+
 
       defaultProps: {
         children: 'children',
         label: 'lable'
       },
 
-      
+
       // checkboxBottom: ['上海'],
       // cities: ['新增', '修改', '删除', '查看详情'],
       newRole: false,
@@ -492,8 +492,19 @@ export default {
       //     message: '没有改动，不允许上传!'
       //   })
       // } else {
-      console.log(this.$refs.tree.getCheckedKeys().concat(this.$refs.tree.getHalfCheckedKeys()))
+      console.log(this.radioId, this.$refs.tree.getCheckedKeys().concat(this.$refs.tree.getHalfCheckedKeys()))
+      var Meunfun = this.$refs.tree.getCheckedKeys().concat(this.$refs.tree.getHalfCheckedKeys())
 
+      console.log(Meunfun)
+      this.axios({
+        method: "post",
+        url: "/MeunFunction?RoleId=" + this.radioId,
+        data: { Meunfun }
+      })
+        // .post('/queryProject',this.qs.stringify(obj))
+        .then((res) => {
+          console.log(res.data)
+        })
       this.$message({
         type: 'warning',
         message: '上传功能待更新!'
@@ -513,10 +524,10 @@ export default {
       this.axios.get('GetButtonPermissions?RoleId=' + this.radioId + '&ModuleId=' + node.Id)
         .then((res) => {
           console.log(res.data)
-          if(res.data.length > 0){
+          if (res.data.length > 0) {
             this.buttomcheckbox = true
             this.checkboxBottom = res.data
-          }else{
+          } else {
             this.buttomcheckbox = false
           }
           // this.checkboxBottom = res.data
