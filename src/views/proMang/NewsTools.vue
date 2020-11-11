@@ -112,7 +112,7 @@
                            show-overflow-tooltip />
           <el-table-column align="center" v-if="editDisable">
             <div slot-scope="scope">
-              <router-link :to="'/ProTools/editNews/' + scope.row.NewsId">
+              <router-link :to="'/proMang/editNews/' + scope.row.NewsId">
                 <el-button size="mini"
                            @click="handleEdit(scope.$index, scope.row)" >
                            <i class="el-icon-edit-outline" />
@@ -241,7 +241,7 @@ export default {
     },
     
     createBtn() { 
-      this.$router.push("/ProTools/createnews");
+      this.$router.push("/proMang/createnews");
     },
     delBtn() { },
     checkBtn() { },

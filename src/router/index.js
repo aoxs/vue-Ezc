@@ -373,32 +373,19 @@ export const constantRoutes = [
       icon: 'bug'
     },
     children: [
-      {
-        path: 'NewsTools',
-        component: () => import('@/views/ProTools/NewsTools'),
-        name: 'NewsTools',
-        meta: { title: '新闻管理' }
-      },
+      // {
+      //   path: 'NewsTools',
+      //   component: () => import('@/views/ProTools/NewsTools'),
+      //   name: 'NewsTools',
+      //   meta: { title: '新闻管理' }
+      // },
       // {
       //   path: 'index',
       //   component: () => import('@/views/ProTools/index'),
       //   name: 'fileMang',
       //   meta: { title: '档案管理' }
       // },
-      {
-        path: 'createnews',
-        component: () => import('@/views/ProTools/createnews'),
-        name: 'CreateNews',
-        meta: { title: '新建新闻', noCache: true, activeMenu: '/ProTools/NewsTools' },
-        hidden: true
-      },
-      {
-        path: 'editNews/:id(\\d+)',
-        component: () => import('@/views/ProTools/editNews'),
-        name: 'EditNews',
-        meta: { title: '新闻编辑', noCache: true, activeMenu: '/ProTools/NewsTools' },
-        hidden: true
-      },
+     
       {
         path: 'relevantData',
         component: () => import('@/views/ProTools/relevantData'),
@@ -427,6 +414,26 @@ export const constantRoutes = [
         component: () => import('@/views/proMang/tempConfig'),
         name: 'tempConfig',
         meta: { title: '模板配置' }
+      },
+      {
+        path: 'NewsTools',
+        component: () => import('@/views/proMang/NewsTools'),
+        name: 'NewsTools',
+        meta: { title: '新闻管理' }
+      },
+      {
+        path: 'createnews',
+        component: () => import('@/views/proMang/createnews'),
+        name: 'CreateNews',
+        meta: { title: '新建新闻', noCache: true, activeMenu: '/proMang/NewsTools' },
+        hidden: true
+      },
+      {
+        path: 'editNews/:id(\\d+)',
+        component: () => import('@/views/proMang/editNews'),
+        name: 'EditNews',
+        meta: { title: '新闻编辑', noCache: true, activeMenu: '/proMang/NewsTools' },
+        hidden: true
       },
       // {
       //   path: 'proCreate',

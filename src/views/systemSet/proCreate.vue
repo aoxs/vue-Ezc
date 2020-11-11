@@ -123,9 +123,9 @@
                   <el-select v-model="pro.Project_Type"
                              style="width:100%">
                     <el-option v-for="item in proTypeList"
-                               :key="item.ID"
+                               :key="item.Code"
                                :label="item.Name"
-                               :value="item.ID">
+                               :value="item.Code">
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -839,11 +839,12 @@ export default {
       minutes = minutes < 10 ? '0' + minutes : minutes;
       var seconds = d.getSeconds();
       seconds = seconds < 10 ? '0' + seconds : seconds;
+      var Milliseconds =  d.getMilliseconds();
       if (!this.pro.Create_Date) {
-        this.pro.Create_Date = year + '-' + month + '-' + date + 'T' + hours + ':' + minutes + ':' + seconds
-        this.pro.Modify_Date = year + '-' + month + '-' + date + 'T' + hours + ':' + minutes + ':' + seconds
+        this.pro.Create_Date = year + '-' + month + '-' + date + 'T' + hours + ':' + minutes + ':' + seconds + '.' + Milliseconds
+        this.pro.Modify_Date = year + '-' + month + '-' + date + 'T' + hours + ':' + minutes + ':' + seconds + '.' + Milliseconds
       } else {
-        this.pro.Modify_Date = year + '-' + month + '-' + date + 'T' + hours + ':' + minutes + ':' + seconds
+        this.pro.Modify_Date = year + '-' + month + '-' + date + 'T' + hours + ':' + minutes + ':' + seconds + '.' + Milliseconds
       }
 
 

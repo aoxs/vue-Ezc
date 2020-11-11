@@ -2,10 +2,10 @@
   <div>
     <div style=""
          class="groupTree">
-      <el-tree :data="government"
+      <el-tree :data="treeList"
                :expand-on-click-node="false"
                @node-click="handleNodeClick"></el-tree>
-      <el-tree :data="impl"
+      <!-- <el-tree :data="impl"
                :expand-on-click-node="false"
                @node-click="handleNodeClick"></el-tree>
       <el-tree :data="consulting"
@@ -13,7 +13,7 @@
                @node-click="handleNodeClick"></el-tree>
       <el-tree :data="owner"
                :expand-on-click-node="false"
-               @node-click="handleNodeClick"></el-tree>
+               @node-click="handleNodeClick"></el-tree> -->
     </div>
   </div>
 
@@ -24,6 +24,8 @@ export default {
   name: 'UserGroup',
   data() {
     return {
+      treeList: [],
+      tableData:[],
       government: [
         {
           id: 4988,
@@ -84,11 +86,23 @@ export default {
       ],
     }
   },
+  mounted() {
+    this.axios.get("/Sqlsysorg")
+      .then((res) => {
+        this.treeList = res.data
+      })
+  },
   methods: {
     handleNodeClick(e) {
       console.log(e.id);
-      console.log(e.table);
-      this.$emit('childFn', e.table);
+      console.log(e.label);
+      this.axios.get("SelectSys_org?Id=" + e.id)
+        .then((res) => {
+          console.log(res.data)
+          this.tableData = res.data
+          this.$emit('childFn', this.tableData);
+        })
+      
     },
   }
 }

@@ -3,8 +3,16 @@
     <div style="background-color: #fff">
 
       <div style="display:flex">
+
         <!-- 树形结构框 -->
-        <user-group @childFn="parentFn"></user-group>
+        <!-- <user-group @childFn="parentFn"></user-group> -->
+        <div style=""
+             class="groupTree">
+          <el-tree :data="treeList"
+                   default-expand-all
+                   :expand-on-click-node="false"
+                   @node-click="handleNodeClick"></el-tree>
+        </div>
 
         <!-- 树形结构框end -->
 
@@ -55,23 +63,23 @@
                        label-width="80px"
                        label-position="right">
                 <el-form-item label="机构名称:">
-                  <el-input v-model="group.groupName"
+                  <el-input v-model="group.Org_Name"
                             placeholder="机构名称"></el-input>
                 </el-form-item>
                 <el-form-item label="服务类型:">
-                  <el-input v-model="group.serviceType"
+                  <el-input v-model="group.Org_Type"
                             placeholder="服务类型"></el-input>
                 </el-form-item>
                 <el-form-item label="服务内容:">
-                  <el-input v-model="group.serviceContent"
+                  <el-input v-model="group.Description"
                             placeholder="服务内容"></el-input>
                 </el-form-item>
                 <el-form-item label="负责人:">
-                  <el-input v-model="group.principal"
+                  <el-input v-model="group.Manager"
                             placeholder="负责人姓名"></el-input>
                 </el-form-item>
                 <el-form-item label="联系电话:">
-                  <el-input v-model="group.tel"
+                  <el-input v-model="group.Tel"
                             placeholder="联系电话"></el-input>
                 </el-form-item>
               </el-form>
@@ -101,27 +109,27 @@
                     @selection-change="handleSelectionChange">
             <el-table-column type="selection"
                              width="55" />
-            <el-table-column prop="groupName"
+            <el-table-column prop="Org_Name"
                              label="机构名称"
                              width=""
                              sortable
                              show-overflow-tooltip />
-            <el-table-column prop="serviceType"
+            <el-table-column prop="Org_Type"
                              label="服务类型"
                              width=""
                              sortable
                              show-overflow-tooltip />
-            <el-table-column prop="serviceContent"
+            <el-table-column prop="Description"
                              label="服务内容"
                              width=""
                              sortable
                              show-overflow-tooltip />
-            <el-table-column prop="principal"
+            <el-table-column prop="Manager"
                              label="负责人"
                              width=""
                              sortable
                              show-overflow-tooltip />
-            <el-table-column prop="tel"
+            <el-table-column prop="Tel"
                              label="联系电话"
                              width=""
                              show-overflow-tooltip />
@@ -164,27 +172,28 @@
 
 <script>
 import { deepClone } from '@/utils';
-import UserGroup from './components/UserGroup'
+// import UserGroup from './components/UserGroup'
 // import btns from './components/btns'
 import Pagination from '@/components/Pagination'
 
 
 const defaultGroup = {
 
-  children: [],
-  groupName: "",
-  principal: "",
-  serviceContent: "",
-  serviceType: "",
-  tel: "",
+
+  Org_Name: "",
+  Manager: "",
+  Description: "",
+  Org_Type: "",
+  Tel: "",
 }
 
 export default {
   name: 'groupIns',
-  components: { UserGroup, Pagination },
+  components: { Pagination },
   data() {
     return {
-
+      treeList: [],
+      tableData: [],
       YLData: [
         {
           groupName: '谈判小组',
@@ -194,44 +203,54 @@ export default {
           tel: '13011112222',
         },
       ],
-      testData: [
-        {
-          groupName: '望牛墩指挥部',
-          serviceType: '望牛墩',
-          serviceContent: '指挥部',
-          principal: '王彬彬',
-          tel: '13022223333'
-        },
-        {
-          groupName: '洪梅指挥部',
-          serviceType: '洪梅',
-          serviceContent: '指挥部',
-          principal: '方海军',
-          tel: '13033331111'
-        },
-      ],
+      // testData: [
+      //   {
+      //     groupName: '望牛墩指挥部',
+      //     serviceType: '望牛墩',
+      //     serviceContent: '指挥部',
+      //     principal: '王彬彬',
+      //     tel: '13022223333'
+      //   },
+      //   {
+      //     groupName: '洪梅指挥部',
+      //     serviceType: '洪梅',
+      //     serviceContent: '指挥部',
+      //     principal: '方海军',
+      //     tel: '13033331111'
+      //   },
+      // ],
       multipleSelection: [],// table 选择的信息添加到数组
       editDialogVisible: false,
       dialogType: 'add',
       dialogGroup: false,
       group: Object.assign({}, defaultGroup),
       tableData: '',
+      treeID: '',
       // groupSet: [],// 存放 点击编辑的数据
     }
   },
   methods: {
-    // test 传值
-    parentFn(payload) {
-      this.tableData = this[payload];
-    },
-    // test按钮
-    abcdd1() {
-      this.tableData = this.testData
-    },
-    abcdd2() {
-      this.tableData = this.YLData
+    // 获取树形列表
+    getTreeList() {
+      this.axios.get("/Sqlsysorg")
+        .then((res) => {
+          this.treeList = res.data
+        })
     },
 
+    // 点击树形获取表格
+    handleNodeClick(e) {
+      this.treeID = e.id
+      console.log(e.id);
+      console.log(e.label);
+      this.axios.get("SelectSys_org?Id=" + e.id)
+        .then((res) => {
+          console.log(res.data)
+          this.tableData = res.data
+
+        })
+
+    },
 
     // 增删改 按钮
     groupAdd() {
@@ -247,8 +266,14 @@ export default {
 
     },
     groupDel() {
-      if (this.multipleSelection.length == 0) {
-        this.$confirm('未选中项目', "提示", {
+      var groupRO = this.multipleSelection
+      if (groupRO.length == 0) {
+        this.$alert('未选中项目', "提示", {
+          confirmButtonText: '确认',
+          type: 'info'
+        })
+      } else if (groupRO.length > 1) {
+        this.$alert('只能同时操作一条数据', "提示", {
           confirmButtonText: '确认',
           type: 'info'
         })
@@ -258,13 +283,62 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         })
+          .then(() => {
+            console.log(groupRO[0].ID)
+            this.axios.post("/DelSysorg?id=" + groupRO[0].ID)
+              .then((res) => {
+                console.log(res.data)
+                if (res.data.code == 1) {
+                  this.$message({
+                    type: 'success',
+                    message: "删除成功。"
+                  })
+                  this.axios.get("SelectSys_org?Id=" + this.treeID)
+                    .then((res) => {
+                      console.log(res.data)
+                      this.tableData = res.data
+
+                    })
+
+                  this.getTreeList()
+                } else {
+                  this.$message({
+                    type: 'error',
+                    message: "删除失败。"
+                  })
+                }
+              })
+          })
       }
     },
+
     // 保存
     confirmRole() {
       this.dialogGroup = false
 
       console.log(this.group)
+      this.axios({
+        method: "post",
+        url: "/Sysorgend",
+        data: {
+          "ID":this.group.ID,
+          "Parent_ID": this.treeID,
+          "Org_Name": this.group.Org_Name,
+          "Org_Type": this.group.Org_Type,
+          "Manager": this.group.Manager,
+          "Description": this.group.Description,
+          "Tel": this.group.Tel
+        }
+      })
+        // .post('/queryProject',this.qs.stringify(obj))
+        .then((res) => {
+          this.axios.get("SelectSys_org?Id=" + this.treeID)
+            .then((res) => {
+              console.log(res.data)
+              this.tableData = res.data
+            })
+          this.getTreeList()
+        })
     },
 
     //增删改 按钮end
@@ -298,7 +372,10 @@ export default {
           console.log(2, done);
         });
     },
-  }
+  },
+  mounted() {
+    this.getTreeList()
+  },
 }
 </script>
 
@@ -310,5 +387,12 @@ export default {
 // }
 .el-form-item {
   margin-bottom: 5px;
+}
+.groupTree {
+  width: 190px;
+  height: 530px;
+  border-right: 2px solid #f0f2f5;
+  padding: 10px;
+  padding-top: 20px;
 }
 </style>
