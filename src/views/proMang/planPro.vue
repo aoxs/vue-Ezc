@@ -68,7 +68,7 @@
                    size="small"
                    @click="createPro">
           <i class="el-icon-circle-plus" />
-          新增
+          新建
         </el-button>
         <el-button type="primary"
                    size="small"

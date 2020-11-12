@@ -105,6 +105,7 @@
             </div>
           </div>
         </div>
+        <!-- 按钮end -->
         <!-- 增改 弹窗 -->
 
         <el-dialog :visible.sync="dialogVisible"
@@ -120,12 +121,12 @@
                         placeholder="登录名"></el-input>
 
             </el-form-item>
-            <el-form-item label="真实姓名:">
-              <el-input v-model="role.RealName"
-                        placeholder="真实姓名"></el-input>
+            <el-form-item label="名称:">
+              <el-input v-model="role.Name"
+                        placeholder="名称"></el-input>
             </el-form-item>
             <el-form-item label="登录密码:">
-              <el-input v-model="role.password"
+              <el-input v-model="role.Password"
                         show-password
                         placeholder="设置登录密码"></el-input>
             </el-form-item>
@@ -134,7 +135,7 @@
                         placeholder="联系电话"></el-input>
             </el-form-item>
             <el-form-item label="所属项目:">
-              <el-select v-model="role.proScope"
+              <el-select v-model="role.proScope.id"
                          multiple
                          placeholder="请选择"
                          style="width:100%">
@@ -185,7 +186,7 @@
 
             </el-form-item>
             <el-form-item label="是否启用:">
-              <el-radio-group v-model="role.Is_Enable">
+              <el-radio-group v-model="role.IsEnd">
                 <el-radio :label="0">禁用</el-radio>
                 <el-radio :label="1">启用</el-radio>
               </el-radio-group>
@@ -203,20 +204,6 @@
 
         <!-- 增改 弹窗end -->
 
-        <!-- 所属项目 弹窗 -->
-        <el-dialog :visible.sync="dialogData"
-                   title="选择所属项目"
-                   :before-close="handleClose"
-                   top="10px">
-
-          <div style="text-align:right;">
-            <el-button type="info"
-                       @click="proFback">取消</el-button>
-            <el-button type="primary"
-                       @click="proFupdata">保存</el-button>
-          </div>
-        </el-dialog>
-        <!-- 按钮end -->
         <!-- 表格 -->
         <el-table :data="userTableList"
                   style="width: 95%;margin:0 auto;margin-top:10px;border-radius: 8px;"
@@ -229,16 +216,17 @@
           <el-table-column prop="UserName"
                            label="登录名"
                            width="" />
-          <el-table-column prop="RealName"
+          <el-table-column prop="Name"
                            label="名称"
                            width="" />
-          <el-table-column prop="proScope"
+          <el-table-column prop="proScope.label"
                            label="所属项目"
                            width=""
-                           show-overflow-tooltip />
+                           show-overflow-tooltip
+                           :formatter="dataStateFormat" />
           <!-- <所属项目> 内容格式化，临时注释 -->
           <!-- :formatter="dataStateFormat" -->
-          <el-table-column prop="groupName.content"
+          <el-table-column prop="groupName"
                            label="所属机构"
                            width=""
                            show-overflow-tooltip />
@@ -247,8 +235,7 @@
                            label="联系电话"
                            width=""
                            show-overflow-tooltip
-                           align="center"
-                           :formatter="TelFormat" />
+                           align="center" />
           <el-table-column align="center"
                            prop="role"
                            label="角色"
@@ -256,7 +243,7 @@
                            width=""
                            show-overflow-tooltip />
           <el-table-column align="center"
-                           prop="isEnable"
+                           prop="IsEnd"
                            label="是否启用"
                            show-overflow-tooltip
                            :formatter="stateFormat" />
@@ -292,14 +279,14 @@ import Pagination from '@/components/Pagination'
 
 
 const defaultRole = {
-  Org_Name: '',
-  Is_Enable: '',
+  IsEnd: '',
   UserName: '',
-  proScope: [],
-  role: "",
-  Tel: "",
-  RealName: "",
+  Name: "",
   Password: "",
+  Tel: "",
+  proScope: [],
+  groupName: "",
+  role: "",
 }
 
 export default {
@@ -419,7 +406,20 @@ export default {
       dialogVisible: false,
       dialogType: 'add',
       role: Object.assign({}, defaultRole),
-      userTableList: [],
+      userTableList: [
+        // {
+        //   "UserName": "Admin",
+        //   "Name": "管理员",
+        //   "Tel": "13035707258",
+        //   "IsEnd": 0,
+        //   "proScope": {
+        //     id: [134, 137, 136],
+        //     label: ["水乡新城片区首期土地整备", "果林项目", "黄江项目"]
+        //   },
+        //   "groupName": "实施主体",
+        //   "role": "系统管理员"
+        // },
+      ],
     };
   },
   created() {
@@ -440,8 +440,8 @@ export default {
       })
         // .post('/queryProject',this.qs.stringify(obj))
         .then((res) => {
-
-          this.userTableList = res.data.list
+          console.log(res.data)
+          this.userTableList = res.data.data
         })
     },
 
@@ -504,10 +504,20 @@ export default {
     },
     // 保存
     confirmRole() {
-      console.log(this.role)
-      this.dialogVisible = false
-      this.dialogVisible = false
 
+      this.role.proScope = this.role.proScope.id
+      console.log(this.role)
+      this.axios.post('/UserEnd', this.role)
+        .then((res) => {
+          console.log(res.data)
+          this.getUserList()
+
+        })
+
+
+
+
+      this.dialogVisible = false
       // 最后重置this.role
       this.role = Object.assign({}, defaultRole)
 
@@ -532,7 +542,7 @@ export default {
         })
           .then(() => {
             // console.log(this.multipleSelection[0].ID)
-            var delID = this.multipleSelection[0].ID
+            var delID = this.multipleSelection[0].Id
             this.axios.get("/DelUser?Userid=" + delID)
               .then((res) => {
                 this.getUserList()
@@ -586,35 +596,29 @@ export default {
     //     this.dialogData = true
     //   }
     // },
-    proFupdata() {
-      // 保存按钮
-      this.dialogData = false;
-    },
-    proFback() {
-      // 取消按钮
-      this.dialogData = false;
-    },
+
     // 增删改查按钮end
 
     // table内容格式化
     stateFormat(row, column) {
-      if (row.Is_Enable == 1) {
+      if (row.IsEnd == 1) {
         return '启用'
-      } else if(row.Is_Enable == 0){
+      } else if (row.IsEnd == 0) {
         return '禁用'
       } else {
         return '未设置'
       }
     },
-    // dataStateFormat(row, column) {
-    //   return row.proScope.join('，')
-    // },
-    // 如果为空格式化为-
-    TelFormat(row, column) {
-      if (row.Tel == null) {
-        return '-'
-      }
+    dataStateFormat(row, column) {
+
+      return row.proScope.label.join('，')
     },
+    // 如果为空格式化为-
+    // TelFormat(row, column) {
+    //   if (row.Tel == null) {
+    //     return '-'
+    //   }
+    // },
 
     // fetchData() {
     //   this.listLoading = true;
@@ -657,7 +661,7 @@ export default {
 
     handleSelectionChange(val) {
       this.multipleSelection = val;
-      //   console.log(val)
+        console.log(val)
     },
     handleEdit(scope) {
       console.log(scope.row);
@@ -699,6 +703,7 @@ export default {
     // 所属项目
     this.axios.get("/ProjectQuery")
       .then((res) => {
+        console.log(11111, res.data)
         this.dataOption = res.data
       })
 

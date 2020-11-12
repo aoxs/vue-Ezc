@@ -196,7 +196,7 @@
                       :offset="0">
                 <el-form-item label="地区选择:">
                   <v-distpicker :province="pro.Province_ID"
-                                :city="City_ID"
+                                :city="pro.City_ID"
                                 :area="pro.Area_ID"
                                 @selected="regionSelect"></v-distpicker>
                 </el-form-item>
@@ -502,22 +502,26 @@
         <el-table-column prop="Total_Constructure_Area"
                          label="总建筑面积(m²)"
                          align="center"
-                         width="">
+                         width=""
+                         show-overflow-tooltip>
         </el-table-column>
         <el-table-column prop="Total_Arrange_Room_Count"
                          label="安置房总数量(套)"
                          align="center"
-                         width="">
+                         width=""
+                         show-overflow-tooltip>
         </el-table-column>
         <el-table-column prop="Total_Arrange_Room_Area"
                          label="安置房总面积(m²)"
                          align="center"
-                         width="">
+                         width=""
+                         show-overflow-tooltip>
         </el-table-column>
         <el-table-column prop="Total_Compensation_Price"
                          label="总补偿款(万元)"
                          align="center"
-                         width="">
+                         width=""
+                         show-overflow-tooltip>
         </el-table-column>
 
       </el-table>
@@ -589,32 +593,32 @@ export default {
       proNameValue: '',
       proTypeListValue: '',
       proStatusListValue: '',
-      proProStatus:[1,2,3],
-      codeConfig:[
+      proProStatus: [1, 2, 3],
+      codeConfig: [
         {
-          id:1,
-          label:"权属申报",
-        },{
-          id:2,
-          label:"测绘",
-        },{
-          id:3,
-          label:"评估",
-        },{
-          id:4,
-          label:"确权",
-        },{
-          id:5,
-          label:"签约",
-        },{
-          id:6,
-          label:"付款",
-        },{
-          id:7,
-          label:"房屋移交",
-        },{
-          id:8,
-          label:"产权注销",
+          id: 1,
+          label: "权属申报",
+        }, {
+          id: 2,
+          label: "测绘",
+        }, {
+          id: 3,
+          label: "评估",
+        }, {
+          id: 4,
+          label: "确权",
+        }, {
+          id: 5,
+          label: "签约",
+        }, {
+          id: 6,
+          label: "付款",
+        }, {
+          id: 7,
+          label: "房屋移交",
+        }, {
+          id: 8,
+          label: "产权注销",
         }
       ],
       // option1: [
@@ -659,7 +663,7 @@ export default {
   methods: {
     // 地区选择
     regionSelect(data) {
-      console.log(data)
+      console.log(data,1111)
       this.pro.Province_ID = data.province.value
       this.pro.City_ID = data.city.value
       this.pro.Area_ID = data.area.value
@@ -839,7 +843,7 @@ export default {
       minutes = minutes < 10 ? '0' + minutes : minutes;
       var seconds = d.getSeconds();
       seconds = seconds < 10 ? '0' + seconds : seconds;
-      var Milliseconds =  d.getMilliseconds();
+      var Milliseconds = d.getMilliseconds();
       if (!this.pro.Create_Date) {
         this.pro.Create_Date = year + '-' + month + '-' + date + 'T' + hours + ':' + minutes + ':' + seconds + '.' + Milliseconds
         this.pro.Modify_Date = year + '-' + month + '-' + date + 'T' + hours + ':' + minutes + ':' + seconds + '.' + Milliseconds
@@ -847,42 +851,35 @@ export default {
         this.pro.Modify_Date = year + '-' + month + '-' + date + 'T' + hours + ':' + minutes + ':' + seconds + '.' + Milliseconds
       }
 
-
       if (!this.pro.Project_Name) {
         this.$message({
           type: 'error',
           message: '项目名称不能为空!'
         })
       } else {
+        console.log(this.pro)
         this.axios.post("/InsProject", this.pro)
           .then((res) => {
+            console.log(res.data)
             this.$message({
               type: 'success',
               message: '编辑成功。'
             })
             this.getTable()
           })
-
-
-
-
         this.dialogProCreate = false
-        console.log(this.pro)
+        
         this.pro = []
       }
-
-
     },
     handleClose(done) {
       this.$confirm("确定关闭？")
         .then((_) => {
           done();
-          console.log(1, done);
           this.editDialogVisible = false;
         })
-
         .catch((_) => {
-          console.log(2, done);
+
         });
     },
     // 删除

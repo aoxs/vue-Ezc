@@ -142,6 +142,7 @@
                      node-key="Id"
                      :expand-on-click-node="false"
                      default-expand-all
+                     highlight-current
                      :props="defaultProps"
                      @node-click="handleNodeClick">
             </el-tree>
@@ -182,10 +183,10 @@
                 <el-checkbox-group size="small"
                                    v-model="checkboxBottom"
                                    style="padding:10px;"
-                                   v-if="buttomcheckbox">
+                                   :disabled="buttomcheckbox?false:true">
                   <el-checkbox border
                                style="margin:5px;padding:5px 5px 5px 5px"
-                               label="新建"
+                               label="新增"
                                name="type">
                   </el-checkbox>
                   <el-checkbox border
@@ -245,6 +246,8 @@ export default {
     return {
       roleList: [],
       radioId: '',
+      radioName: '',
+      funModelId: '',
       contRadio: '',
       focusprompt: false,
       blurprompt: false,
@@ -253,59 +256,58 @@ export default {
       checkboxBottom: [],
       buttomcheckbox: false,
       roleInput: 0,
-      roleTableData1: [
-        { title: "abc1" },
-        { title: "abc2" },
-        { title: "abc3" },
-        { title: "abc4" },
-        { title: "abc5" },
-        { title: "abc6" },
-        { title: "abc6" },
-        { title: "abc6" },
-        { title: "abc6" },
+      // roleTableData1: [
+      //   { title: "abc1" },
+      //   { title: "abc2" },
+      //   { title: "abc3" },
+      //   { title: "abc4" },
+      //   { title: "abc5" },
+      //   { title: "abc6" },
+      //   { title: "abc6" },
+      //   { title: "abc6" },
+      //   { title: "abc6" },
 
-        { title: "abc7" }
-      ],
-      roleTreeData1: [
-        {
-          id: 1,
-          label: '一级 1',
-          children: [{
-            id: 4,
-            label: '二级 1-1',
-            children: [{
-              id: 9,
-              label: '三级 1-1-1'
-            }, {
-              id: 10,
-              label: '三级 1-1-2'
-            }]
-          }]
-        },
-        {
-          id: 2,
-          label: '一级 2',
-          children: [{
-            id: 5,
-            label: '二级 2-1'
-          }, {
-            id: 6,
-            label: '二级 2-2'
-          }]
-        },
-        {
-          id: 3,
-          label: '一级 3',
-          children: [{
-            id: 7,
-            label: '二级 3-1'
-          }, {
-            id: 8,
-            label: '二级 3-2'
-          }]
-        }
-      ],
-
+      //   { title: "abc7" }
+      // ],
+      // roleTreeData1: [
+      //   {
+      //     id: 1,
+      //     label: '一级 1',
+      //     children: [{
+      //       id: 4,
+      //       label: '二级 1-1',
+      //       children: [{
+      //         id: 9,
+      //         label: '三级 1-1-1'
+      //       }, {
+      //         id: 10,
+      //         label: '三级 1-1-2'
+      //       }]
+      //     }]
+      //   },
+      //   {
+      //     id: 2,
+      //     label: '一级 2',
+      //     children: [{
+      //       id: 5,
+      //       label: '二级 2-1'
+      //     }, {
+      //       id: 6,
+      //       label: '二级 2-2'
+      //     }]
+      //   },
+      //   {
+      //     id: 3,
+      //     label: '一级 3',
+      //     children: [{
+      //       id: 7,
+      //       label: '二级 3-1'
+      //     }, {
+      //       id: 8,
+      //       label: '二级 3-2'
+      //     }]
+      //   }
+      // ],
 
       defaultProps: {
         children: 'children',
@@ -337,7 +339,41 @@ export default {
       this.newRole = true;
       console.log(this.roleName)
     },
+    // 删除角色
+    delCreate() {
+      if (!this.radioId) {
+        this.$alert('未选中项目', "提示", {
+          confirmButtonText: '确认',
+          type: 'info'
+        })
+      } else {
+        this.$confirm('确认删除 \'' + this.radioName + '\' 吗？', '警告', {
+          confirmButtonText: '确认',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+          .then(() => {
+            this.axios.get("/RolesDelete?RouteId=" + this.radioId)
+              .then((res) => {
+                if (res.data.code == 1) {
+                  this.$message({
+                    type: 'success',
+                    message: '删除成功。'
+                  })
+                  this.$refs.tree.setCheckedKeys([])
+                  this.radioId = ''
+                  this.getRoleList()
+                } else {
+                  this.$message({
+                    type: 'error',
+                    message: '删除失败，请刷新页面后重试！'
+                  })
+                }
 
+              })
+          })
+      }
+    },
     // 获取/失去焦点
     focusRole() {
 
@@ -406,40 +442,7 @@ export default {
         .catch((_) => {
         });
     },
-    // 删除角色
-    delCreate() {
-      if (!this.radioId) {
-        this.$alert('未选中项目', "提示", {
-          confirmButtonText: '确认',
-          type: 'info'
-        })
-      } else {
-        this.$confirm('确认删除 \'', '警告', {
-          confirmButtonText: '确认',
-          cancelButtonText: '取消',
-          type: 'warning'
-        })
-          .then(() => {
-            this.axios.get("/RolesDelete?RouteId=" + this.radioId)
-              .then((res) => {
-                if (res.data.code == 1) {
-                  this.$message({
-                    type: 'success',
-                    message: '删除成功。'
-                  })
-                  this.radioId = ''
-                  this.getRoleList()
-                } else {
-                  this.$message({
-                    type: 'error',
-                    message: '删除失败，请刷新页面后重试！'
-                  })
-                }
 
-              })
-          })
-      }
-    },
 
     // 获取功能模块tree
     getTree() {
@@ -452,18 +455,19 @@ export default {
 
     // 角色选择事件，选择角色后更新功能模块treeData
     rowClick(row) {
-
+      this.radioName = row.Role_Name
       if (this.contRadio != row.ID) {
         this.radioId = row.ID
         console.log(this.radioId)
         this.checkedKeys = []
         this.axios.get("/ModuleFunction?RouteId=" + this.radioId)
           .then((res) => {
-            // console.log(res)
             // this.checkedKeys = res.data
             this.$refs.tree.setCheckedKeys(res.data);
           })
         this.contRadio = row.ID
+        this.checkboxBottom = []
+        this.buttomcheckbox = false
       } else {
         return
       }
@@ -480,7 +484,7 @@ export default {
     //   console.log(`当前页: ${val}`);
     // },
 
-    // 功能模块
+    // 功能模块上传
     determine() {
       // console.log(JSON.parse(JSON.stringify(this.checkedKeys)))
 
@@ -498,17 +502,30 @@ export default {
       console.log(Meunfun)
       this.axios({
         method: "post",
-        url: "/MeunFunction?RoleId=" + this.radioId,
-        data: { Meunfun }
+        url: "/MeunFunction",
+        data: {
+          "Role_ID": this.radioId,
+          "ModuleIdsum": Meunfun
+        }
       })
         // .post('/queryProject',this.qs.stringify(obj))
         .then((res) => {
           console.log(res.data)
+          if (res.data.code == 1) {
+            this.$message({
+              type: 'success',
+              message: '上传成功。'
+            })
+          } else {
+            this.$message({
+              type: 'error',
+              message: '上传失败!'
+            })
+          }
+
+
         })
-      this.$message({
-        type: 'warning',
-        message: '上传功能待更新!'
-      })
+
       // }
 
     },
@@ -520,6 +537,7 @@ export default {
     handleNodeClick(node, data, value) {
       // 点击funTree子节点  请求对应按钮权限
       console.log(node.Id)
+      this.funModelId = node.Id
       console.log(this.radioId)
       this.axios.get('GetButtonPermissions?RoleId=' + this.radioId + '&ModuleId=' + node.Id)
         .then((res) => {
@@ -528,6 +546,7 @@ export default {
             this.buttomcheckbox = true
             this.checkboxBottom = res.data
           } else {
+            this.checkboxBottom = []
             this.buttomcheckbox = false
           }
           // this.checkboxBottom = res.data
@@ -537,10 +556,30 @@ export default {
     // 按钮权限
     onSubmit() {
       console.log(this.checkboxBottom)
-      this.$message({
-        type: 'warning',
-        message: '上传功能待更新!'
+
+      this.axios({
+        method: "post",
+        url: "/ButtonPermissions",
+        data: {
+          "RoleId": this.radioId,
+          "ModuleId": this.funModelId,
+          "ButtonId": this.checkboxBottom
+        }
       })
+        .then((res) => {
+          console.log(res.data)
+          if (res.data.code == 1) {
+            this.$message({
+              type: 'success',
+              message: '上传成功。'
+            })
+          } else {
+            this.$message({
+              type: 'error',
+              message: '上传失败!'
+            })
+          }
+        })
     },
 
 

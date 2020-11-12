@@ -11,7 +11,7 @@
                      @click="groupAdd">
             <i class="el-icon-plus"
                style="font-weight:1000;" />
-            新增
+            新建
           </el-button>
           <!-- <el-button type="primary"
                size="small"

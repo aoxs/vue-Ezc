@@ -364,36 +364,36 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/ProTools',
-    component: Layout,
-    name: 'ProTools',
-    meta: {
-      title: '工具箱',
-      icon: 'bug'
-    },
-    children: [
-      // {
-      //   path: 'NewsTools',
-      //   component: () => import('@/views/ProTools/NewsTools'),
-      //   name: 'NewsTools',
-      //   meta: { title: '新闻管理' }
-      // },
-      // {
-      //   path: 'index',
-      //   component: () => import('@/views/ProTools/index'),
-      //   name: 'fileMang',
-      //   meta: { title: '档案管理' }
-      // },
+  // {
+  //   path: '/ProTools',
+  //   component: Layout,
+  //   name: 'ProTools',
+  //   meta: {
+  //     title: '工具箱',
+  //     icon: 'bug'
+  //   },
+  //   children: [
+  //     // {
+  //     //   path: 'NewsTools',
+  //     //   component: () => import('@/views/ProTools/NewsTools'),
+  //     //   name: 'NewsTools',
+  //     //   meta: { title: '新闻管理' }
+  //     // },
+  //     // {
+  //     //   path: 'index',
+  //     //   component: () => import('@/views/ProTools/index'),
+  //     //   name: 'fileMang',
+  //     //   meta: { title: '档案管理' }
+  //     // },
      
-      {
-        path: 'relevantData',
-        component: () => import('@/views/ProTools/relevantData'),
-        name: 'relevantData',
-        meta: { title: '相关资料' }
-      },
-    ]
-  },
+  //     {
+  //       path: 'relevantData',
+  //       component: () => import('@/views/ProTools/relevantData'),
+  //       name: 'relevantData',
+  //       meta: { title: '相关资料' }
+  //     },
+  //   ]
+  // },
   {
     path: '/proMang',
     component: Layout,
@@ -836,6 +836,18 @@ export const asyncRoutes = [
       icon: 'eye'
     },
     children: [
+      {
+        path: 'goozi',
+        component: () => import('@/views/test/goozi'),
+        name: 'goozi',
+        meta: { title: '钩子测试' }
+      },
+      {
+        path: 'upload',
+        component: () => import('@/views/test/upload'),
+        name: 'upload',
+        meta: { title: 'upload' }
+      },
       {
         path: 'login-test',
         component: () => import('@/views/test/login-test'),

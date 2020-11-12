@@ -11,7 +11,23 @@
           <el-tree :data="treeList"
                    default-expand-all
                    :expand-on-click-node="false"
-                   @node-click="handleNodeClick"></el-tree>
+                   @node-click="handleNodeClick"
+                   highlight-current>
+            <div class="showname"
+                 slot-scope="{ node, data }">
+              <span>
+                {{node.label}}
+              </span>
+            </div>
+            <!-- 
+            <span class="custom-tree-node"
+                  slot-scope="{ node,data }">
+              <span>{{ node.label }}</span>
+              <span >
+                {{data.pid}}
+              </span>
+            </span> -->
+          </el-tree>
         </div>
 
         <!-- 树形结构框end -->
@@ -57,6 +73,7 @@
             </div>
             <!-- 弹窗 -->
             <el-dialog :visible.sync="dialogGroup"
+                       :before-close="handleClose"
                        :title="dialogType==='edit'?'编辑组织结构':'新建组织结构'"
                        top="10px">
               <el-form :model="group"
@@ -234,6 +251,7 @@ export default {
     getTreeList() {
       this.axios.get("/Sqlsysorg")
         .then((res) => {
+
           this.treeList = res.data
         })
     },
@@ -254,9 +272,17 @@ export default {
 
     // 增删改 按钮
     groupAdd() {
-      this.dialogType = 'add'
-      this.dialogGroup = true
-      this.group = {}
+      if (!this.treeID) {
+        this.$alert('父级项目节点', "提示", {
+          confirmButtonText: '确认',
+          type: 'info'
+        })
+      } else {
+        this.dialogType = 'add'
+        this.dialogGroup = true
+        this.group = {}
+      }
+
     },
     groupEdit(scope) {
       console.log(scope.row)
@@ -321,7 +347,7 @@ export default {
         method: "post",
         url: "/Sysorgend",
         data: {
-          "ID":this.group.ID,
+          "ID": this.group.ID,
           "Parent_ID": this.treeID,
           "Org_Name": this.group.Org_Name,
           "Org_Type": this.group.Org_Type,
@@ -389,10 +415,26 @@ export default {
   margin-bottom: 5px;
 }
 .groupTree {
-  width: 190px;
+  width: 230px;
   height: 530px;
   border-right: 2px solid #f0f2f5;
   padding: 10px;
   padding-top: 20px;
 }
+.custom-tree-node {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  padding-right: 8px;
+}
+.showname{
+    width: 170px;//外部容器的宽度
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    font-size: 14px;
+  }
 </style>
