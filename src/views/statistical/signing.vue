@@ -7,7 +7,7 @@
         <div>已签约：xx/xx</div>
         <div>占比：50%</div>
       </div>
-    <el-button type="primary" size="default" @click="aaa">确定</el-button>
+    <!-- <el-button type="primary" size="default" @click="aaa">确定</el-button> -->
     
     
     </div>
@@ -17,6 +17,7 @@
 export default {
   data() {
     return {
+      Server_Date: '',
       nowDate: "", // 当前日期
     };
   },
@@ -24,15 +25,14 @@ export default {
     aaa(){
       var dd = new Date();
       console.log(dd)
-      console.log(this.nowDate)
     },
     currentTime() {
       setInterval(this.formatDate, 100);
     },
     formatDate() {
 
-      let date = new Date();
-      
+     
+      let date = new Date()
       let year = date.getFullYear(); // 年
       let month = date.getMonth() + 1; // 月
       let day = date.getDate(); // 日
@@ -54,10 +54,10 @@ export default {
     this.currentTime();
 
   },
-  // 销毁定时器
+ 
   beforeDestroy() {
     if (this.formatDate) {
-      clearInterval(this.formatDate); // 在Vue实例销毁前，清除时间定时器
+      clearInterval(this.formatDate); //清除时间定时器
     }
   }
 }
