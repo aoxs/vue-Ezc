@@ -102,7 +102,7 @@
               <el-col :sm="8"
                       :xs="24"
                       :offset="0">
-                <el-form-item label="项目名称:">
+                <el-form-item label="项目名称:" >
                   <el-input v-model="pro.Project_Name"
                             placeholder="项目名称"></el-input>
                 </el-form-item>
@@ -175,9 +175,6 @@
                       :xs="24"
                       :offset="0">
                 <el-form-item label="节点配置:">
-                  <!-- <el-input v-model="pro.ProStatus"
-                            placeholder="请选择"></el-input> -->
-                  <!-- <prog /> -->
                   <el-select v-model="proProStatus"
                              value-key=""
                              multiple
@@ -200,34 +197,7 @@
                                 :area="pro.Area_ID"
                                 @selected="regionSelect"></v-distpicker>
                 </el-form-item>
-
               </el-col>
-
-              <!-- <el-col :sm="8"
-                      :xs="24"
-                      :offset="0">
-                <el-form-item label="省份:">
-                  <el-input v-model="pro.Province_ID"
-                            placeholder="请选择"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :sm="8"
-                      :xs="24"
-                      :offset="0">
-                <el-form-item label="城市:">
-                  <el-input v-model="pro.City_ID"
-                            placeholder="请选择"></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :sm="8"
-                      :xs="24"
-                      :offset="0">
-                <el-form-item label="区县:">
-                  <el-input v-model="pro.Area_ID"
-                            placeholder="请选择"></el-input>
-                </el-form-item>
-              </el-col> -->
 
               <el-col :sm="8"
                       :xs="24"
@@ -278,20 +248,6 @@
                 </el-form-item>
               </el-col>
 
-              <!-- <el-col :sm="8"
-                      :xs="24"
-                      :offset="0">
-                <el-form-item label="综合服务商:">
-                  <el-input placeholder=""></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :sm="8"
-                      :xs="24"
-                      :offset="0">
-                <el-form-item label="社区居民委员会:">
-                  <el-input placeholder=""></el-input>
-                </el-form-item>
-              </el-col> -->
               <el-col :sm="8"
                       :xs="0"
                       :offset="8"></el-col>
@@ -399,13 +355,10 @@
                   <tinymce v-model="pro.Description"
                            :height="300"
                            v-if="dialogProCreate" />
-
                 </el-form-item>
                 <!-- </div> -->
               </el-col>
-
             </el-row>
-
           </el-form>
 
         </div>
@@ -421,6 +374,7 @@
 
       <!-- 信息表 -->
       <el-table :data="InsProject"
+                v-loading="proLoading"
                 ref="multipleTable"
                 style="margin:10px auto;width:98%"
                 tooltip-effect="dark"
@@ -590,6 +544,7 @@ export default {
   components: { Tinymce, Pagination, Prog, VDistpicker },
   data() {
     return {
+      proLoading: false,
       proNameValue: '',
       proTypeListValue: '',
       proStatusListValue: '',
@@ -673,6 +628,7 @@ export default {
     // 加载表数据
     getTable() {
       this.InsProject = []
+      this.proLoading = true
       this.axios({
         method: "post",
         url: "/queryProject",
@@ -685,6 +641,8 @@ export default {
         // .post('/queryProject',this.qs.stringify(obj))
         .then((res) => {
           this.InsProject = res.data
+      this.proLoading = false
+
         })
     },
 

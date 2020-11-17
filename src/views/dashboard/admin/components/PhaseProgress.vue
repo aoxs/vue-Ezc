@@ -4,7 +4,8 @@
       <!-- 头部 -->
       <p class="comTitle">
         <span>阶段进度</span>
-        <el-radio-group v-model="ProItems" class="RidioGroup">
+        <el-radio-group v-model="ProItems"
+                        class="RidioGroup">
           <el-radio-button label="1"> 集体农用地 </el-radio-button>
           <el-radio-button label="2"> 其他物业 </el-radio-button>
           <el-radio-button label="3"> 私人住宅 </el-radio-button>
@@ -15,61 +16,56 @@
       <!-- 主体内容 -->
       <div>
         <!-- {{ ProItems }} -->
-        <el-row :gutter="0" style="padding:10px 10px">
-          <el-col :span="8" :offset="0">
-            <div
-              id="charts1"
-              :style="{
+        <el-row :gutter="0"
+                style="padding:10px 10px">
+          <el-col :span="8"
+                  :offset="0">
+            <div id="charts1"
+                 :style="{
                 width: '100%',
                 height: '250px',
                 
-              }"
-            ></div>
+              }"></div>
           </el-col>
-          <el-col :span="8" :offset="0">
-            <div
-              id="charts2"
-              :style="{
+          <el-col :span="8"
+                  :offset="0">
+            <div id="charts2"
+                 :style="{
                 width: '100%',
                 height: '250px',
-              }"
-            ></div>
+              }"></div>
           </el-col>
-          <el-col :span="8" :offset="0">
-            <div
-              id="charts3"
-              :style="{
+          <el-col :span="8"
+                  :offset="0">
+            <div id="charts3"
+                 :style="{
                 width: '100%',
                 height: '250px',
-              }"
-            ></div>
+              }"></div>
           </el-col>
-          <el-col :span="8" :offset="0">
-            <div
-              id="charts4"
-              :style="{
+          <el-col :span="8"
+                  :offset="0">
+            <div id="charts4"
+                 :style="{
                 width: '100%',
                 height: '250px',
-              }"
-            ></div>
+              }"></div>
           </el-col>
-          <el-col :span="8" :offset="0">
-            <div
-              id="charts5"
-              :style="{
+          <el-col :span="8"
+                  :offset="0">
+            <div id="charts5"
+                 :style="{
                 width: '100%',
                 height: '250px',
-              }"
-            ></div>
+              }"></div>
           </el-col>
-          <el-col :span="8" :offset="0">
-            <div
-              id="charts6"
-              :style="{
+          <el-col :span="8"
+                  :offset="0">
+            <div id="charts6"
+                 :style="{
                 width: '100%',
                 height: '250px',
-              }"
-            ></div>
+              }"></div>
           </el-col>
         </el-row>
       </div>

@@ -206,6 +206,7 @@
 
         <!-- 表格 -->
         <el-table :data="userTableList"
+                  v-loading="userTableLoading"
                   style="width: 95%;margin:0 auto;margin-top:10px;border-radius: 8px;"
                   stripe
                   border
@@ -294,7 +295,7 @@ export default {
   components: { Pagination },
   data() {
     return {
-
+      userTableLoading: false,
       checkUserName: '',
       dataSelect: '',
       groupInsSelect: '',
@@ -429,6 +430,7 @@ export default {
     // 加载用户表
     getUserList(userN = '', userD = 0, userG = 0) {
       this.userTableList = []
+      this.userTableLoading = true
       this.axios({
         method: "post",
         url: "/UserQuery",
@@ -442,6 +444,8 @@ export default {
         .then((res) => {
           console.log(res.data)
           this.userTableList = res.data.data
+          this.userTableLoading = false
+
         })
     },
 
@@ -661,7 +665,7 @@ export default {
 
     handleSelectionChange(val) {
       this.multipleSelection = val;
-        console.log(val)
+      console.log(val)
     },
     handleEdit(scope) {
       console.log(scope.row);

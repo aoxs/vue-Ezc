@@ -9,6 +9,7 @@
         <div style=""
              class="groupTree">
           <el-tree :data="treeList"
+                   v-loading="groupTreeLoading"
                    default-expand-all
                    :expand-on-click-node="false"
                    @node-click="handleNodeClick"
@@ -119,6 +120,7 @@
                      <p>abc{{tableData}}</p> -->
 
           <el-table :data="tableData"
+                    v-loading="groupTableLoading"
                     style="width:95%;margin:0 auto;margin-top:20px;border-radius: 8px;"
                     stripe
                     border
@@ -209,6 +211,8 @@ export default {
   components: { Pagination },
   data() {
     return {
+      groupTreeLoading: false,
+      groupTableLoading: false,
       treeList: [],
       tableData: [],
       YLData: [
@@ -249,10 +253,14 @@ export default {
   methods: {
     // 获取树形列表
     getTreeList() {
+      this.treeList = []
+      this.groupTreeLoading = true
       this.axios.get("/Sqlsysorg")
         .then((res) => {
 
           this.treeList = res.data
+          this.groupTreeLoading = false
+
         })
     },
 
@@ -261,10 +269,12 @@ export default {
       this.treeID = e.id
       console.log(e.id);
       console.log(e.label);
+      this.groupTableLoading = true
       this.axios.get("SelectSys_org?Id=" + e.id)
         .then((res) => {
           console.log(res.data)
           this.tableData = res.data
+      this.groupTableLoading = false
 
         })
 
@@ -429,12 +439,12 @@ export default {
   font-size: 14px;
   padding-right: 8px;
 }
-.showname{
-    width: 170px;//外部容器的宽度
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    display: block;
-    font-size: 14px;
-  }
+.showname {
+  width: 170px; //外部容器的宽度
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  font-size: 14px;
+}
 </style>

@@ -82,6 +82,7 @@
                          @click="">查询</el-button>
             </div> -->
             <el-table :data="roleList"
+                      v-loading="roleTableLoading"
                       border
                       stripe
                       style="margin:10px auto;width:90%"
@@ -137,6 +138,7 @@
             </el-header>
 
             <el-tree :data="funTree"
+                     v-loading="roleTreeLoading"
                      ref="tree"
                      show-checkbox
                      node-key="Id"
@@ -244,6 +246,8 @@ export default {
   components: { Pagination },
   data() {
     return {
+      roleTableLoading: false,
+      roleTreeLoading: false,
       roleList: [],
       radioId: '',
       radioName: '',
@@ -326,10 +330,13 @@ export default {
   methods: {
     // 获取角色列表
     getRoleList() {
+      this.roleList = []
+      this.roleTableLoading = true
       this.axios.get("/Roles")
         .then((res) => {
           console.log(res.data)
           this.roleList = res.data
+          this.roleTableLoading = false
         })
     },
 
@@ -446,10 +453,13 @@ export default {
 
     // 获取功能模块tree
     getTree() {
+      this.funTree = []
+      this.roleTreeLoading = true
       this.axios('/FunctionModule')
         .then((res) => {
           console.log(res.data)
           this.funTree = res.data
+          this.roleTreeLoading = false
         })
     },
 
@@ -460,6 +470,7 @@ export default {
         this.radioId = row.ID
         console.log(this.radioId)
         this.checkedKeys = []
+
         this.axios.get("/ModuleFunction?RouteId=" + this.radioId)
           .then((res) => {
             // this.checkedKeys = res.data

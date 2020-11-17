@@ -293,7 +293,7 @@ $light_gray: #eee;
   min-height: 100%;
   width: 100%;
   // background-color: $bg;
-  background-image: url('../../assets/login_images/20201012095737.jpg');
+  background-image: url('../../assets/login_images/20201116172830.jpg');
   background-size: 100% 100%;
   overflow: hidden;
 
