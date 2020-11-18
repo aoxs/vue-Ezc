@@ -7,7 +7,7 @@ import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 import Element from 'element-ui'
 import './styles/element-variables.scss'
 import enLang from 'element-ui/lib/locale/lang/en'// 如果使用中文语言包请默认支持，无需额外引入，请删除该依赖
-Element.Dialog.props.closeOnClickModal.default = false; // 全局禁用dialog弹窗遮罩层关闭dialog
+Element.Dialog.props.closeOnClickModal.default = false // 全局禁用dialog弹窗遮罩层关闭dialog
 
 import '@/styles/index.scss' // global css
 
@@ -19,15 +19,17 @@ import './icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
 
+// import defined from  './defined.js'
+// Vue.prototype.defined = defined
+
 import * as filters from './filters' // global filters
 
-
 import qs from 'qs'
-Vue.prototype.qs = qs;
+Vue.prototype.qs = qs
 
 import axios from 'axios'
 axios.defaults.baseURL = 'http://120.86.117.97:8579/api/WYDApi'
-Vue.prototype.axios = axios;
+Vue.prototype.axios = axios
 
 /**
  * If you don't want to use mock-server
@@ -43,7 +45,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 Vue.use(Element, {
-  size: Cookies.get('size') || 'medium', // set element-ui default size
+  size: Cookies.get('size') || 'medium' // set element-ui default size
   // locale: enLang // 如果使用中文，无需设置，请删除
 })
 

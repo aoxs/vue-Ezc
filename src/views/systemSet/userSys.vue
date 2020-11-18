@@ -1,7 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
-    <div style="background-color:#fff;border:1px solid #DADADA">
-
+    <div style="background-color: #fff; border: 1px solid #dadada">
       <!-- <div style="display:flex"> -->
       <!-- 树形 组织机构 -->
       <!-- <user-group></user-group> -->
@@ -16,83 +15,94 @@
       </el-button> -->
 
       <!-- 顶部搜索 -->
-      <div style="display:flex;justify-content:flex-start;background:#F5F5F5;padding:10px 20px;border-bottom:1px solid #DADADA">
-
-        <div style="width:70%;display:flex;justify-content:flex-start;">
-
-          <el-input v-model="checkUserName"
-                    placeholder="请输入名称"
-                    style="width:30%"
-                    slot=""
-                    clearable>
-            <template slot="prepend">
-              账号:
-            </template>
+      <div
+        style="
+          display: flex;
+          justify-content: flex-start;
+          background: #f5f5f5;
+          padding: 10px 20px;
+          border-bottom: 1px solid #dadada;
+        "
+      >
+        <div style="width: 70%; display: flex; justify-content: flex-start">
+          <el-input
+            slot=""
+            v-model="checkUserName"
+            placeholder="请输入名称"
+            style="width: 30%"
+            clearable
+          >
+            <template slot="prepend"> 账号 </template>
           </el-input>
 
           <div class="selectCheck">
-            <span class="check_font"
-                  style="">所属项目:</span>
-            <el-select v-model="dataSelect"
-                       placeholder="请选择"
-                       style="width:70%"
-                       clearable>
-              <el-option v-for="item in dataOption"
-                         :key="item.id"
-                         :label="item.label"
-                         :value="item.id">
-              </el-option>
-
+            <span class="check_font" style="">所属项目</span>
+            <el-select
+              v-model="dataSelect"
+              placeholder="请选择"
+              style="width: 70%"
+              clearable
+            >
+              <el-option
+                v-for="item in dataOption"
+                :key="item.id"
+                :label="item.label"
+                :value="item.id"
+              />
             </el-select>
           </div>
 
-          <div style=""
-               class="selectCheck">
-
-            <span class="check_font">所属机构:</span>
-            <el-select v-model="groupInsSelect"
-                       placeholder="请选择"
-                       style="width:70%"
-                       clearable>
-              <el-option v-for="item in groupInsOption"
-                         :key="item.id"
-                         :label="item.label"
-                         :value="item.id"></el-option>
+          <div style="" class="selectCheck">
+            <span class="check_font">所属机构</span>
+            <el-select
+              v-model="groupInsSelect"
+              placeholder="请选择"
+              style="width: 70%"
+              clearable
+            >
+              <el-option
+                v-for="item in groupInsOption"
+                :key="item.id"
+                :label="item.label"
+                :value="item.id"
+              />
             </el-select>
           </div>
-
         </div>
         <div>
-          <el-button type="info"
-                     size="small"
-                     plain
-                     @click="changeClick"><i class="el-icon-search" />查询</el-button>
-          <el-button type="info"
-                     size="small"
-                     plain
-                     @click="resetClick"><i class="el-icon-refresh" />重置</el-button>
-
+          <el-button
+            type="info"
+            size="small"
+            plain
+            @click="changeClick"
+          ><i class="el-icon-search" />查询</el-button>
+          <el-button
+            type="info"
+            size="small"
+            plain
+            @click="resetClick"
+          ><i class="el-icon-refresh" />重置</el-button>
         </div>
       </div>
       <!-- 顶部搜索end -->
 
-      <div style="width:100%;padding-top:10px;padding-bottom:20px;white-space: nowrap; ">
+      <div
+        style="
+          width: 100%;
+          padding-top: 10px;
+          padding-bottom: 20px;
+          white-space: nowrap;
+        "
+      >
         <!-- 按钮 -->
-        <div style=" padding: 5px 10px">
-          <div class="pagRight"
-               style="padding-right:20px">
+        <div style="padding: 5px 10px">
+          <div class="pagRight" style="padding-right: 20px">
             <div style="">
-              <el-button type="primary"
-                         size="small"
-                         style=""
-                         @click="groupAdd">
-                <i class="el-icon-plus"
-                   style="font-weight:1000;" />
+              <el-button type="primary" size="small" style="" @click="groupAdd">
+                <i class="el-icon-plus" style="font-weight: 1000" />
                 新建
               </el-button>
-              <el-button type="primary"
-                         size="small"
-                         @click="userDel">
+              <el-button type="primary" size="small" @click="userDel">
                 <i class="el-icon-delete-solid" />
                 删除
               </el-button>
@@ -108,42 +118,43 @@
         <!-- 按钮end -->
         <!-- 增改 弹窗 -->
 
-        <el-dialog :visible.sync="dialogVisible"
-                   :title="dialogType == 'add' ? '新建用户' : '编辑用户'"
-                   width="50%"
-                   :before-close="handleClose"
-                   top="10px">
-          <el-form :model="role"
-                   label-width="80px"
-                   label-position="right">
+        <el-dialog
+          :visible.sync="dialogVisible"
+          :title="dialogType == 'add' ? '新建用户' : '编辑用户'"
+          width="50%"
+          :before-close="handleClose"
+          top="10px"
+        >
+          <el-form :model="role" label-width="80px" label-position="right">
             <el-form-item label="登录名:">
-              <el-input v-model="role.UserName"
-                        placeholder="登录名"></el-input>
-
+              <el-input v-model="role.UserName" placeholder="登录名" />
             </el-form-item>
             <el-form-item label="名称:">
-              <el-input v-model="role.Name"
-                        placeholder="名称"></el-input>
+              <el-input v-model="role.Name" placeholder="名称" />
             </el-form-item>
             <el-form-item label="登录密码:">
-              <el-input v-model="role.Password"
-                        show-password
-                        placeholder="设置登录密码"></el-input>
+              <el-input
+                v-model="role.Password"
+                show-password
+                placeholder="设置登录密码"
+              />
             </el-form-item>
             <el-form-item label="联系电话:">
-              <el-input v-model="role.Tel"
-                        placeholder="联系电话"></el-input>
+              <el-input v-model="role.Tel" placeholder="联系电话" />
             </el-form-item>
             <el-form-item label="所属项目:">
-              <el-select v-model="role.proScope.id"
-                         multiple
-                         placeholder="请选择"
-                         style="width:100%">
-                <el-option v-for="item in dataOption"
-                           :key="item.id"
-                           :label="item.label"
-                           :value="item.id">
-                </el-option>
+              <el-select
+                v-model="role.proScope.id"
+                multiple
+                placeholder="请选择"
+                style="width: 100%"
+              >
+                <el-option
+                  v-for="item in dataOption"
+                  :key="item.id"
+                  :label="item.label"
+                  :value="item.id"
+                />
               </el-select>
 
               <!-- <div style="width:30%">
@@ -163,107 +174,122 @@
                            @change="handleChange"
                            :show-all-levels="false"
                            clearable></el-cascader> -->
-              <el-select v-model="role.groupName"
-                         value-key=""
-                         placeholder="请选择所属机构">
-                <el-option v-for="item in groupInsOption"
-                           :key="item.id"
-                           :label="item.label"
-                           :value="item.id">
-                </el-option>
+              <el-select
+                v-model="role.groupName"
+                value-key=""
+                placeholder="请选择所属机构"
+              >
+                <el-option
+                  v-for="item in groupInsOption"
+                  :key="item.id"
+                  :label="item.label"
+                  :value="item.id"
+                />
               </el-select>
             </el-form-item>
             <el-form-item label="角色:">
-              <el-select v-model="role.role"
-                         value-key=""
-                         placeholder="请选择用户角色">
-                <el-option v-for="item in userNameOptions"
-                           :key="item.ID"
-                           :label="item.Role_Name"
-                           :value="item.ID">
-                </el-option>
+              <el-select
+                v-model="role.role"
+                value-key=""
+                placeholder="请选择用户角色"
+              >
+                <el-option
+                  v-for="item in userNameOptions"
+                  :key="item.ID"
+                  :label="item.Role_Name"
+                  :value="item.ID"
+                />
               </el-select>
-
             </el-form-item>
             <el-form-item label="是否启用:">
               <el-radio-group v-model="role.IsEnd">
                 <el-radio :label="0">禁用</el-radio>
                 <el-radio :label="1">启用</el-radio>
               </el-radio-group>
-
             </el-form-item>
-
           </el-form>
-          <div style="text-align:right;">
-            <el-button type="info"
-                       @click="dialogVisible=false">取消</el-button>
-            <el-button type="primary"
-                       @click="confirmRole">保存</el-button>
+          <div style="text-align: right">
+            <el-button
+              type="info"
+              @click="dialogVisible = false"
+            >取消</el-button>
+            <el-button type="primary" @click="confirmRole">保存</el-button>
           </div>
         </el-dialog>
 
         <!-- 增改 弹窗end -->
 
         <!-- 表格 -->
-        <el-table :data="userTableList"
-                  v-loading="userTableLoading"
-                  style="width: 95%;margin:0 auto;margin-top:10px;border-radius: 8px;"
-                  stripe
-                  border
-                  tooltip-effect="dark"
-                  @selection-change="handleSelectionChange">
-          <el-table-column type="selection"
-                           width="55" />
-          <el-table-column prop="UserName"
-                           label="登录名"
-                           width="" />
-          <el-table-column prop="Name"
-                           label="名称"
-                           width="" />
-          <el-table-column prop="proScope.label"
-                           label="所属项目"
-                           width=""
-                           show-overflow-tooltip
-                           :formatter="dataStateFormat" />
+        <el-table
+          v-loading="userTableLoading"
+          :data="userTableList"
+          style="
+            width: 95%;
+            margin: 0 auto;
+            margin-top: 10px;
+            border-radius: 8px;
+          "
+          stripe
+          border
+          tooltip-effect="dark"
+          @selection-change="handleSelectionChange"
+        >
+          <el-table-column type="selection" width="55" />
+          <el-table-column prop="UserName" label="登录名" width="" />
+          <el-table-column prop="Name" label="名称" width="" />
+          <el-table-column
+            prop="proScope.label"
+            label="所属项目"
+            width=""
+            show-overflow-tooltip
+            :formatter="dataStateFormat"
+          />
           <!-- <所属项目> 内容格式化，临时注释 -->
           <!-- :formatter="dataStateFormat" -->
-          <el-table-column prop="groupName"
-                           label="所属机构"
-                           width=""
-                           show-overflow-tooltip />
+          <el-table-column
+            prop="groupName"
+            label="所属机构"
+            width=""
+            show-overflow-tooltip
+          />
 
-          <el-table-column prop="Tel"
-                           label="联系电话"
-                           width=""
-                           show-overflow-tooltip
-                           align="center" />
-          <el-table-column align="center"
-                           prop="role"
-                           label="角色"
-                           sortable
-                           width=""
-                           show-overflow-tooltip />
-          <el-table-column align="center"
-                           prop="IsEnd"
-                           label="是否启用"
-                           show-overflow-tooltip
-                           :formatter="stateFormat" />
+          <el-table-column
+            prop="Tel"
+            label="联系电话"
+            width=""
+            show-overflow-tooltip
+            align="center"
+          />
+          <el-table-column
+            align="center"
+            prop="role"
+            label="角色"
+            sortable
+            width=""
+            show-overflow-tooltip
+          />
+          <el-table-column
+            align="center"
+            prop="IsEnd"
+            label="是否启用"
+            show-overflow-tooltip
+            :formatter="stateFormat"
+          />
 
           <el-table-column align="center">
             <div slot-scope="scope">
-              <el-button size="mini"
-                         @click="groupEdit(scope)">编辑</el-button>
+              <el-button size="mini" @click="groupEdit(scope)">编辑</el-button>
             </div>
           </el-table-column>
         </el-table>
         <!-- 表格end -->
         <!-- 分页 -->
         <div class="pagRight">
-          <pagination v-show="userTableList.length>=10"
-                      :total="userTableList.length"
-                      :layout="layout">
-          </pagination>
-
+          <pagination
+            v-show="userTableList.length >= 10"
+            :total="userTableList.length"
+            :layout="layout"
+          />
         </div>
         <!-- 分页end -->
       </div>
@@ -273,25 +299,24 @@
 </template>
 
 <script>
-import { deepClone } from '@/utils';
+import { deepClone } from '@/utils'
 // import btns from './components/btns'
 // import UserGroup from './components/UserGroup'
 import Pagination from '@/components/Pagination'
 
-
 const defaultRole = {
   IsEnd: '',
   UserName: '',
-  Name: "",
-  Password: "",
-  Tel: "",
+  Name: '',
+  Password: '',
+  Tel: '',
   proScope: [],
-  groupName: "",
-  role: "",
+  groupName: '',
+  role: ''
 }
 
 export default {
-  name: 'userSys',
+  name: 'UserSys',
   components: { Pagination },
   data() {
     return {
@@ -332,12 +357,96 @@ export default {
       //   }
       // ],
       tableData: [
-        { PId: 1, loginName: "汤姆", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: { id: [4999], content: '实施主体' }, tel: "13035707258", role: "管理员", isEnable: 1 },
-        { PId: 2, loginName: "杰瑞", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: { id: [3, 124, 5123, 7654], content: '望牛墩指挥部' }, tel: "13035707258", role: "游客", isEnable: 0 },
-        { PId: 3, loginName: "泰菲", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: { id: [3, 124, 5123,], content: '谈判小组' }, tel: "13035707258", role: "管理员", isEnable: 1 },
-        { PId: 4, loginName: "布奇", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: { id: [3, 124, 5123, 245], content: '洪梅指挥部' }, tel: "13035707258", role: "管理员", isEnable: 0 },
-        { PId: 5, loginName: "斯派", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: { id: [3, 124, 5123, 245], content: '洪梅指挥部' }, tel: "13035707258", role: "管理员", isEnable: 0 },
-        { PId: 6, loginName: "泰克", userName: '张三', proScope: ['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目'], groupName: { id: [3, 124, 5123, 7654], content: '望牛墩指挥部' }, tel: "13035707258", role: "管理员", isEnable: 1 },
+        {
+          PId: 1,
+          loginName: '汤姆',
+          userName: '张三',
+          proScope: [
+            '滨海湾新区威远岛土地整备',
+            '水乡新城片区首期土地整备',
+            '黄江项目',
+            '公明轨道13号线及沿线(含车辆段)项目'
+          ],
+          groupName: { id: [4999], content: '实施主体' },
+          tel: '13035707258',
+          role: '管理员',
+          isEnable: 1
+        },
+        {
+          PId: 2,
+          loginName: '杰瑞',
+          userName: '张三',
+          proScope: [
+            '滨海湾新区威远岛土地整备',
+            '水乡新城片区首期土地整备',
+            '黄江项目',
+            '公明轨道13号线及沿线(含车辆段)项目'
+          ],
+          groupName: { id: [3, 124, 5123, 7654], content: '望牛墩指挥部' },
+          tel: '13035707258',
+          role: '游客',
+          isEnable: 0
+        },
+        {
+          PId: 3,
+          loginName: '泰菲',
+          userName: '张三',
+          proScope: [
+            '滨海湾新区威远岛土地整备',
+            '水乡新城片区首期土地整备',
+            '黄江项目',
+            '公明轨道13号线及沿线(含车辆段)项目'
+          ],
+          groupName: { id: [3, 124, 5123], content: '谈判小组' },
+          tel: '13035707258',
+          role: '管理员',
+          isEnable: 1
+        },
+        {
+          PId: 4,
+          loginName: '布奇',
+          userName: '张三',
+          proScope: [
+            '滨海湾新区威远岛土地整备',
+            '水乡新城片区首期土地整备',
+            '黄江项目',
+            '公明轨道13号线及沿线(含车辆段)项目'
+          ],
+          groupName: { id: [3, 124, 5123, 245], content: '洪梅指挥部' },
+          tel: '13035707258',
+          role: '管理员',
+          isEnable: 0
+        },
+        {
+          PId: 5,
+          loginName: '斯派',
+          userName: '张三',
+          proScope: [
+            '滨海湾新区威远岛土地整备',
+            '水乡新城片区首期土地整备',
+            '黄江项目',
+            '公明轨道13号线及沿线(含车辆段)项目'
+          ],
+          groupName: { id: [3, 124, 5123, 245], content: '洪梅指挥部' },
+          tel: '13035707258',
+          role: '管理员',
+          isEnable: 0
+        },
+        {
+          PId: 6,
+          loginName: '泰克',
+          userName: '张三',
+          proScope: [
+            '滨海湾新区威远岛土地整备',
+            '水乡新城片区首期土地整备',
+            '黄江项目',
+            '公明轨道13号线及沿线(含车辆段)项目'
+          ],
+          groupName: { id: [3, 124, 5123, 7654], content: '望牛墩指挥部' },
+          tel: '13035707258',
+          role: '管理员',
+          isEnable: 1
+        }
       ],
       // abc:[
       //   { "PId": "6", "loginName": "泰克", "userName": '张三', "proScope": "['滨海湾新区威远岛土地整备', '水乡新城片区首期土地整备', '黄江项目', '公明轨道13号线及沿线(含车辆段)项目']", "groupName": "{ id: [3, 124, 5123, 7654], content: '望牛墩指挥部' }", "tel": "13035707258", "role": "管理员", "isEnable": "1" },
@@ -346,16 +455,12 @@ export default {
         {
           value: 4988,
           label: '政府部门',
-          children: [
-            {}
-          ]
+          children: [{}]
         },
         {
           value: 4999,
           label: '实施主体',
-          children: [
-            {}
-          ]
+          children: [{}]
         },
         {
           value: 3,
@@ -374,11 +479,11 @@ export default {
                   children: [
                     {
                       value: 7654,
-                      label: '望牛墩指挥部',
+                      label: '望牛墩指挥部'
                     },
                     {
                       value: 245,
-                      label: '洪梅指挥部',
+                      label: '洪梅指挥部'
                     }
                   ]
                 }
@@ -389,10 +494,8 @@ export default {
         {
           value: 4956,
           label: '单位业主',
-          children: [
-            {}
-          ]
-        },
+          children: [{}]
+        }
       ],
       // list: null,
       // listLoading: true,
@@ -420,11 +523,30 @@ export default {
         //   "groupName": "实施主体",
         //   "role": "系统管理员"
         // },
-      ],
-    };
+      ]
+    }
   },
   created() {
     // this.fetchData()
+  },
+  mounted() {
+    this.getUserList()
+
+    // 获取下拉框数据
+    // 所属项目
+    this.axios.get('/ProjectQuery').then((res) => {
+      this.dataOption = res.data
+    })
+
+    // 所属机构
+    this.axios.get('/OrgQuery').then((res) => {
+      this.groupInsOption = res.data
+    })
+
+    // 角色列表
+    this.axios.get('/Roles').then((res) => {
+      this.userNameOptions = res.data
+    })
   },
   methods: {
     // 加载用户表
@@ -432,12 +554,12 @@ export default {
       this.userTableList = []
       this.userTableLoading = true
       this.axios({
-        method: "post",
-        url: "/UserQuery",
+        method: 'post',
+        url: '/UserQuery',
         data: {
-          "UersName": userN,
-          "ProjectId": userD,
-          "mechanismId": userG
+          UersName: userN,
+          ProjectId: userD,
+          mechanismId: userG
         }
       })
         // .post('/queryProject',this.qs.stringify(obj))
@@ -445,15 +567,15 @@ export default {
           console.log(res.data)
           this.userTableList = res.data.data
           this.userTableLoading = false
-
         })
     },
 
     // 级联选择事件
     handleChange() {
-      //选择所属机构后，修改role中的数据
-      this.role.groupName.content = this.$refs['casGroup'].getCheckedNodes()[0].label
-
+      // 选择所属机构后，修改role中的数据
+      this.role.groupName.content = this.$refs[
+        'casGroup'
+      ].getCheckedNodes()[0].label
     },
     // 查询/重置 按钮
     changeClick() {
@@ -464,13 +586,13 @@ export default {
       var userD = this.dataSelect
       var userG = this.groupInsSelect
       if (this.checkUserName == '') {
-        var userN = ""
+        var userN = ''
       }
       if (this.dataSelect == '') {
-        var userD = "0"
+        var userD = '0'
       }
       if (this.groupInsSelect == '') {
-        var userG = "0"
+        var userG = '0'
       }
 
       this.getUserList(userN, userD, userG)
@@ -489,52 +611,43 @@ export default {
     },
     // 增删改查按钮
     groupAdd() {
-      console.log(this.role);
+      console.log(this.role)
       this.dialogVisible = true
       this.dialogType = 'add'
 
       this.role = Object.assign({}, defaultRole)
       console.log(this.dataOption)
-
     },
     groupEdit(scope) {
-      console.log(scope.row);
+      console.log(scope.row)
       // this.clickUserRes = [];
       this.dialogType = 'edit'
       this.dialogVisible = true
       this.role = deepClone(scope.row)
       console.log(this.dataOption)
-
     },
     // 保存
     confirmRole() {
-
       this.role.proScope = this.role.proScope.id
       console.log(this.role)
-      this.axios.post('/UserEnd', this.role)
-        .then((res) => {
-          console.log(res.data)
-          this.getUserList()
-
-        })
-
-
-
+      this.axios.post('/UserEnd', this.role).then((res) => {
+        console.log(res.data)
+        this.getUserList()
+      })
 
       this.dialogVisible = false
       // 最后重置this.role
       this.role = Object.assign({}, defaultRole)
-
     },
     // 删除
     userDel() {
       if (this.multipleSelection.length == 0) {
-        this.$alert('未选中项目', "提示", {
+        this.$alert('未选中项目', '提示', {
           confirmButtonText: '确认',
           type: 'info'
         })
       } else if (this.multipleSelection.length > 1) {
-        this.$alert('最多只能同时执行一条', "提示", {
+        this.$alert('最多只能同时执行一条', '提示', {
           confirmButtonText: '确认',
           type: 'info'
         })
@@ -543,30 +656,27 @@ export default {
           confirmButtonText: '确认',
           cancelButtonText: '取消',
           type: 'warning'
-        })
-          .then(() => {
-            // console.log(this.multipleSelection[0].ID)
-            var delID = this.multipleSelection[0].Id
-            this.axios.get("/DelUser?Userid=" + delID)
-              .then((res) => {
-                this.getUserList()
-                if (res.data.code == 1) {
-                  this.$message({
-                    type: 'success',
-                    message: '删除成功。'
-                  })
-                } else {
-                  this.$message({
-                    type: 'error',
-                    message: '删除失败！'
-                  })
-                }
-
+        }).then(() => {
+          // console.log(this.multipleSelection[0].ID)
+          var delID = this.multipleSelection[0].Id
+          this.axios.get('/DelUser?Userid=' + delID).then((res) => {
+            this.getUserList()
+            if (res.data.code == 1) {
+              this.$message({
+                type: 'success',
+                message: '删除成功。'
               })
+            } else {
+              this.$message({
+                type: 'error',
+                message: '删除失败！'
+              })
+            }
           })
+        })
         // .then( () => {
         //   // console.log(this.multipleSelection[0].proId)
-        //   let j =  this.multipleSelection.length 
+        //   let j =  this.multipleSelection.length
         //   for(var i = 0; i<j ; i++){
         //     let id = this.multipleSelection[i].proId
         //     let _tableData = this.tableData.find( x => x.proId == id )
@@ -581,9 +691,7 @@ export default {
         // })
       }
     },
-    groupCheck() {
-
-    },
+    groupCheck() {},
     // 项目范围
     // proScopeClick() {
     //   if (this.multipleSelection.length == 0) {
@@ -614,7 +722,6 @@ export default {
       }
     },
     dataStateFormat(row, column) {
-
       return row.proScope.label.join('，')
     },
     // 如果为空格式化为-
@@ -652,23 +759,23 @@ export default {
     formatJson(filterVal, jsonData) {
       return jsonData.map((v) =>
         filterVal.map((j) => {
-          if (j === "timestamp") {
-            return parseTime(v[j]);
+          if (j === 'timestamp') {
+            return parseTime(v[j])
           } else {
-            return v[j];
+            return v[j]
           }
         })
-      );
+      )
     },
 
-    /////////////////////////
+    // ///////////////////////
 
     handleSelectionChange(val) {
-      this.multipleSelection = val;
+      this.multipleSelection = val
       console.log(val)
     },
     handleEdit(scope) {
-      console.log(scope.row);
+      console.log(scope.row)
       // this.clickUserRes = [];
       this.dialogType = 'edit'
       this.dialogVisible = true
@@ -688,44 +795,20 @@ export default {
     //   this.centerDialogVisible = false;
     // },
     handleClose(done) {
-      this.$confirm("确定关闭？")
+      this.$confirm('确定关闭？')
         .then((_) => {
-          done();
-          console.log(1, done);
-          this.centerDialogVisible = false;
+          done()
+          console.log(1, done)
+          this.centerDialogVisible = false
         })
 
         .catch((_) => {
-          console.log(2, done);
-        });
-    },
-  },
-  mounted() {
-    this.getUserList()
-
-    // 获取下拉框数据
-    // 所属项目
-    this.axios.get("/ProjectQuery")
-      .then((res) => {
-        console.log(11111, res.data)
-        this.dataOption = res.data
-      })
-
-    // 所属机构
-    this.axios.get("/OrgQuery")
-      .then((res) => {
-        this.groupInsOption = res.data
-      })
-
-    // 角色列表
-    this.axios.get("/Roles")
-      .then((res) => {
-        this.userNameOptions = res.data
-      })
-  },
-};
+          console.log(2, done)
+        })
+    }
+  }
+}
 </script>
-
 
 <style lang="scss" scoped >
 ::v-deep .selectCheck .el-input__inner {

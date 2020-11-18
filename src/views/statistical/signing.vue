@@ -1,12 +1,12 @@
 <template>
   <div class="dashboard-editor-container">
-    <div style="background-color: #fff;border: 1px solid #DADADA;">
+    <div style="background-color: #fff; border: 1px solid #dadada">
       <!-- 内容header -->
       <!-- <div style="padding:20px 30px;background-color:#F5F5F5;display: flex;
   justify-content: flex-end;border-bottom:1px solid #DADADA">
         <i class="el-icon-refresh"
            style="font-size:28px;font-weight: 1000;" />
-        
+
       </div> -->
       <!-- 内容header end -->
 
@@ -15,8 +15,7 @@
       <!-- partial -->
 
       <!-- 全屏内容   -->
-      <div id="signing"
-           class="sigMian">
+      <div id="signing" class="sigMian">
         <!-- <svg v-if="PageStarted"
              class="preview"
              xmlns="http://www.w3.org/2000/svg"
@@ -122,186 +121,210 @@
         </svg>
         <div v-else> -->
         <!-- header -->
-        <div style="width:100%; padding:0px 10px; position: relative;">
-          <p style="text-align:center;margin:0px;margin-top:10px;margin-bottom:20px;font-size:24px">英联E征拆签约平台</p>
-          <svg-icon style="font-size:16px;position: absolute;top:15px;right: 0px;"
-                    icon-class="fullscreen"
-                    id="full_screen" />
+        <div style="width: 100%; padding: 0px 10px; position: relative">
+          <p
+            style="
+              text-align: center;
+              margin: 0px;
+              margin-top: 15px;
+              margin-bottom: 20px;
+              font-size: 24px;
+              font-weight: 700;
+            "
+          >
+            英联E征拆签约实时统计平台
+          </p>
+          <svg-icon
+            id="full_screen"
+            style="font-size: 16px; position: absolute; top: 14px; right: 0px"
+            icon-class="fullscreen"
+          />
           <div class="infoDiv">
-            <!-- <el-row :gutter="20">
-            <el-col :span="8"> -->
+            <div class="statDiv">
+              <div class="sigLabel">
+                <img src="./images/ksh34.png" class="sigLabelImg" alt="">
+                <img src="./images/ksh34.png" class="sigLabelImg" alt="">
+                <img src="./images/ksh34.png" class="sigLabelImg" alt="">
+                <img src="./images/ksh34.png" class="sigLabelImg" alt="">
 
-            <div class="sigLabel">
-              <img src="./images/ksh34.png"
-                   class="sigLabelImg"
-                   alt="">
-              <img src="./images/ksh34.png"
-                   class="sigLabelImg"
-                   alt="">
-              <img src="./images/ksh34.png"
-                   class="sigLabelImg"
-                   alt="">
-              <img src="./images/ksh34.png"
-                   class="sigLabelImg"
-                   alt="">
-              <!-- <img style="position: absolute;top:0px;left:0px;width: 100%;" src="./images/bnt.png" alt=""> -->
-              <span style="font-weight: 800">已签约 &nbsp;<span class="sigNum">{{b}}/{{a}}</span></span>
+                <el-table :data="statTab" :show-header="false" style="padding-top:28px">
+                  <el-table-column
+                    prop=""
+                    min-width="80"
+                    align="right"
+                    show-overflow-tooltip
+                  >
+                    <template slot-scope="scope">
+                      <span class="sigNumsp">{{ scope.row.name }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop=""
+                    min-width="170"
+                    show-overflow-tooltip
+                  >
+                    <template
+                      slot-scope="scope"
+                    ><span class="sigNum">{{ scope.row.num }}</span></template>
+                  </el-table-column>
+                </el-table>
+              </div>
             </div>
-            <!-- </el-col>
-            <el-col :span="8"> -->
+
+            <!-- 时钟 -->
             <div class="timeDiv">
-              <span class="timeCss">{{nowDateArr[0]}}</span>
-              <span class="timeCss">{{nowDateArr[1]}}</span>
-              <span class="timeCss">{{nowDateArr[2]}}</span>
-              <span class="timeCss">{{nowDateArr[3]}}</span>
+              <span class="timeCss">{{ nowDateArr[0] }}</span>
+              <span class="timeCss">{{ nowDateArr[1] }}</span>
+              <span class="timeCss">{{ nowDateArr[2] }}</span>
+              <span class="timeCss">{{ nowDateArr[3] }}</span>
               <span class="timeCss">年</span>
-              <span class="timeCss">{{nowDateArr[4]}}</span>
-              <span class="timeCss">{{nowDateArr[5]}}</span>
+              <span class="timeCss">{{ nowDateArr[4] }}</span>
+              <span class="timeCss">{{ nowDateArr[5] }}</span>
               <span class="timeCss">月</span>
-              <span class="timeCss">{{nowDateArr[6]}}</span>
-              <span class="timeCss">{{nowDateArr[7]}}</span>
+              <span class="timeCss">{{ nowDateArr[6] }}</span>
+              <span class="timeCss">{{ nowDateArr[7] }}</span>
               <span class="timeCss">日</span>
               <br>
-              <span class="timeCss">{{nowDateArr[8]}}</span>
-              <span class="timeCss">{{nowDateArr[9]}}</span>
+              <span class="timeCss">{{ nowDateArr[8] }}</span>
+              <span class="timeCss">{{ nowDateArr[9] }}</span>
               <span class="timeCss">:</span>
-              <span class="timeCss">{{nowDateArr[10]}}</span>
-              <span class="timeCss">{{nowDateArr[11]}}</span>
+              <span class="timeCss">{{ nowDateArr[10] }}</span>
+              <span class="timeCss">{{ nowDateArr[11] }}</span>
               <span class="timeCss">:</span>
-              <span class="timeCss">{{nowDateArr[12]}}</span>
-              <span class="timeCss">{{nowDateArr[13]}}</span>
+              <span class="timeCss">{{ nowDateArr[12] }}</span>
+              <span class="timeCss">{{ nowDateArr[13] }}</span>
               &nbsp;
               <span class="timeCss">星</span>
               <span class="timeCss">期</span>
-              <span class="timeCss">{{nowDateArr[14]}}</span>
+              <span class="timeCss">{{ nowDateArr[14] }}</span>
             </div>
-
-            <!-- </el-col>
-            <el-col :span="8"> -->
-            <div class="sigLabel">
-              <img src="./images/ksh34.png"
-                   class="sigLabelImg"
-                   alt="">
-              <img src="./images/ksh34.png"
-                   class="sigLabelImg"
-                   alt="">
-              <img src="./images/ksh34.png"
-                   class="sigLabelImg"
-                   alt="">
-              <img src="./images/ksh34.png"
-                   class="sigLabelImg"
-                   alt="">
-              占比：50%
-            </div>
-            <!-- </el-col>
-          </el-row> -->
+            <!-- 时钟end -->
           </div>
         </div>
         <!-- header end -->
 
         <!-- 数据 -->
+
+        <div class="sigDiv" style="width: 573px">
+          <img
+            src="./images/ksh42.png"
+            style="position: absolute; top: -2px; left: -2px"
+            alt=""
+          >
+          <img
+            src="./images/ksh43.png"
+            style="position: absolute; top: -2px; right: -2px"
+            alt=""
+          >
+          <img
+            src="./images/ksh44.png"
+            style="position: absolute; bottom: -2px; right: -2px"
+            alt=""
+          >
+          <img
+            src="./images/ksh45.png"
+            style="position: absolute; bottom: -2px; left: -2px"
+            alt=""
+          >
+          <div class="sigTitle">
+            <span>签约实时统计</span>
+            <img src="./images/ksh33.png" alt="" class="tablesIMG">
+          </div>
+          <el-table
+            :data="tableData"
+            border
+            height="300"
+            style="margin: 10px auto; width: 98%; height: 300px;"
+          >
+            <el-table-column
+              prop="sigTeam"
+              label="小组"
+              width="55"
+              align="center"
+            />
+            <el-table-column
+              prop="sigPeople"
+              label="协议编号"
+              width="65"
+              align="center"
+              show-overflow-tooltip
+            />
+            <el-table-column
+              prop="sigPeople"
+              label="权利人"
+              width="60"
+              align="center"
+            />
+            <el-table-column
+              prop="sigDate"
+              label="签约时间"
+              width="150"
+              align="center"
+            />
+            <el-table-column
+              prop="sigPhoto"
+              label="签约照片"
+              width="153"
+              align="center"
+            >
+              <template slot-scope="scope">
+                <el-image
+                  :src="scope.row.sigPhoto"
+                  :preview-src-list="scope.row.sigPhotoBig"
+                  fit="contain"
+                  :lazy="true"
+                  style="width: 150px; max-height: 60px; margin-top: 1px"
+                />
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="sigRanking"
+              label="排名"
+              width="55"
+              align="center"
+            />
+          </el-table>
+        </div>
         <el-row :gutter="20">
-
-          <el-col :span="10">
-            <div class="sigDiv">
-              <img src="./images/ksh42.png"
-                   style="position: absolute;top: -2px;left:-2px"
-                   alt="">
-              <img src="./images/ksh43.png"
-                   style="position: absolute;top: -2px;right:-2px"
-                   alt="">
-              <img src="./images/ksh44.png"
-                   style="position: absolute;bottom: -2px;right:-2px"
-                   alt="">
-              <img src="./images/ksh45.png"
-                   style="position: absolute;bottom: -2px;left:-2px"
-                   alt="">
+          <el-col :span="24">
+            <div class="sigDiv" style="width: 70%">
+              <img
+                src="./images/ksh42.png"
+                style="position: absolute; top: -2px; left: -2px"
+                alt=""
+              >
+              <img
+                src="./images/ksh43.png"
+                style="position: absolute; top: -2px; right: -2px"
+                alt=""
+              >
+              <img
+                src="./images/ksh44.png"
+                style="position: absolute; bottom: -2px; right: -2px"
+                alt=""
+              >
+              <img
+                src="./images/ksh45.png"
+                style="position: absolute; bottom: -2px; left: -2px"
+                alt=""
+              >
               <div class="sigTitle">
-                <span>签约实时统计图</span>
-                <img src="./images/ksh31.png"
-                     alt=""
-                     class="chartsIMG">
+                <span>小组进度排名</span>
+                <img src="./images/ksh33.png" alt="" class="chartsIMG">
               </div>
-              <div id="charts1"
-                   :style="{
-                width: '100%',
-                height: '400px',}"></div>
+              <div
+                id="charts1"
+                :style="{
+                  width: '100%',
+                  height: '370px',
+                }"
+              />
             </div>
-
           </el-col>
-          <el-col :span="14"
-                  :offset="0">
-            <div class="sigDiv">
-
-              <img src="./images/ksh42.png"
-                   style="position: absolute;top: -2px;left:-2px"
-                   alt="">
-              <img src="./images/ksh43.png"
-                   style="position: absolute;top: -2px;right:-2px"
-                   alt="">
-              <img src="./images/ksh44.png"
-                   style="position: absolute;bottom: -2px;right:-2px"
-                   alt="">
-              <img src="./images/ksh45.png"
-                   style="position: absolute;bottom: -2px;left:-2px"
-                   alt="">
-              <div class="sigTitle">
-                <span>签约实时统计表</span>
-                <img src="./images/ksh33.png"
-                     alt=""
-                     class="tablesIMG">
-              </div>
-              <el-table :data="tableData"
-                        border
-                        height="250"
-                        style="margin:10px auto;width:98%; height: 300px;">
-                <el-table-column prop="sigTeam"
-                                 label="小组"
-                                 min-width="65"
-                                 align="center">
-                </el-table-column>
-                <el-table-column prop="sigPeople"
-                                 label="协议编号"
-                                 min-width="80"
-                                 align="center">
-                </el-table-column>
-                <el-table-column prop="sigPeople"
-                                 label="权利人"
-                                 min-width="80"
-                                 align="center">
-                </el-table-column>
-                <el-table-column prop="sigDate"
-                                 label="签约时间"
-                                 min-width="170"
-                                 align="center">
-                </el-table-column>
-                <el-table-column prop="sigPhoto"
-                                 label="签约照片"
-                                 min-width="180"
-                                 align="center">
-                  <template slot-scope="scope">
-                    <el-image :src="scope.row.sigPhoto"
-                              :preview-src-list="scope.row.sigPhotoBig"
-                              fit="contain"
-                              :lazy="true"
-                              style="width:150px;max-height:60px"></el-image>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="sigRanking"
-                                 label="排名"
-                                 min-width="70"
-                                 align="center">
-                </el-table-column>
-
-              </el-table>
-            </div>
-
-          </el-col>
-
         </el-row>
+
         <!-- 数据end -->
         <!-- </div> -->
-
       </div>
       <!-- 全屏内容end   -->
     </div>
@@ -309,12 +332,10 @@
 </template>
 <script>
 // import './css/signing.css'
-import screenfull from "screenfull";
+import screenfull from 'screenfull'
 import echarts from 'echarts'
 // require('echarts/theme/macarons') // echarts theme
 // import resize from './mixins/resize'
-
-
 
 // const exampleData = new Array(10).fill({
 //   sigTeam: '一组', sigPeople: "张三", sigDate: "2020/11/13 17:24:09", sigPhoto: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg", sigPhotoBig: ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg"], sigRanking: 23
@@ -325,7 +346,7 @@ export default {
     return {
       a: 600,
       b: 320,
-      windowHeight: document.documentElement.clientHeight,  //实时元素高度
+      windowHeight: document.documentElement.clientHeight, // 实时元素高度
       PageStarted: true,
       sigChartsTotal: 80,
       sigAccounted: 60,
@@ -333,51 +354,134 @@ export default {
       srcList: [],
       isFullscreen: false,
       Server_Date: '',
-      nowDate: "", // 当前日期时间
+      nowDate: '', // 当前日期时间
       nowDateArr: [],
+      statTab: [
+        { name: '已签约:', num: '320/600' },
+        { name: '占比:', num: '70%' }
+      ],
       tableData: [
         {
-          sigTeam: '一组', sigPeople: "张三", sigDate: "2020/11/13 17:24:09", sigPhoto: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg", sigPhotoBig: ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg"], sigRanking: 23
+          sigTeam: '一组',
+          sigPeople: '张三',
+          sigDate: '2020/11/13 17:24:09',
+          sigPhoto:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg',
+          sigPhotoBig: [
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg'
+          ],
+          sigRanking: 23
         },
         {
-          sigTeam: '二组', sigPeople: "李四", sigDate: "2020/11/13 17:24:09", sigPhoto: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265502127&di=3f5c2aed2b54d5ea04990dfa0abb8162&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fd71c42fe1838bedcb40463db99b7c944.jpeg",
-          sigPhotoBig: ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265502127&di=3f5c2aed2b54d5ea04990dfa0abb8162&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fd71c42fe1838bedcb40463db99b7c944.jpeg"], sigRanking: 22
+          sigTeam: '二组',
+          sigPeople: '李四',
+          sigDate: '2020/11/13 17:24:09',
+          sigPhoto:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265502127&di=3f5c2aed2b54d5ea04990dfa0abb8162&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fd71c42fe1838bedcb40463db99b7c944.jpeg',
+          sigPhotoBig: [
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265502127&di=3f5c2aed2b54d5ea04990dfa0abb8162&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fd71c42fe1838bedcb40463db99b7c944.jpeg'
+          ],
+          sigRanking: 22
         },
         {
-          sigTeam: '二组', sigPeople: "李四", sigDate: "2020/11/13 17:24:09", sigPhoto: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265502127&di=3f5c2aed2b54d5ea04990dfa0abb8162&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fd71c42fe1838bedcb40463db99b7c944.jpeg",
-          sigPhotoBig: ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265502127&di=3f5c2aed2b54d5ea04990dfa0abb8162&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fd71c42fe1838bedcb40463db99b7c944.jpeg"], sigRanking: 22
+          sigTeam: '二组',
+          sigPeople: '李四',
+          sigDate: '2020/11/13 17:24:09',
+          sigPhoto:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265502127&di=3f5c2aed2b54d5ea04990dfa0abb8162&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fd71c42fe1838bedcb40463db99b7c944.jpeg',
+          sigPhotoBig: [
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265502127&di=3f5c2aed2b54d5ea04990dfa0abb8162&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fd71c42fe1838bedcb40463db99b7c944.jpeg'
+          ],
+          sigRanking: 22
         },
         {
-          sigTeam: '二组', sigPeople: "李四", sigDate: "2020/11/13 17:24:09", sigPhoto: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265502127&di=3f5c2aed2b54d5ea04990dfa0abb8162&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fd71c42fe1838bedcb40463db99b7c944.jpeg",
-          sigPhotoBig: ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265502127&di=3f5c2aed2b54d5ea04990dfa0abb8162&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fd71c42fe1838bedcb40463db99b7c944.jpeg"], sigRanking: 22
+          sigTeam: '二组',
+          sigPeople: '李四',
+          sigDate: '2020/11/13 17:24:09',
+          sigPhoto:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265502127&di=3f5c2aed2b54d5ea04990dfa0abb8162&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fd71c42fe1838bedcb40463db99b7c944.jpeg',
+          sigPhotoBig: [
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265502127&di=3f5c2aed2b54d5ea04990dfa0abb8162&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fd71c42fe1838bedcb40463db99b7c944.jpeg'
+          ],
+          sigRanking: 22
         },
         {
-          sigTeam: '二组', sigPeople: "李四", sigDate: "2020/11/13 17:24:09", sigPhoto: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg",
-          sigPhotoBig: ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg"], sigRanking: 22
+          sigTeam: '二组',
+          sigPeople: '李四',
+          sigDate: '2020/11/13 17:24:09',
+          sigPhoto:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg',
+          sigPhotoBig: [
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg'
+          ],
+          sigRanking: 22
         },
         {
-          sigTeam: '二组', sigPeople: "李四", sigDate: "2020/11/13 17:24:09", sigPhoto: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg",
-          sigPhotoBig: ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg"], sigRanking: 22
+          sigTeam: '二组',
+          sigPeople: '李四',
+          sigDate: '2020/11/13 17:24:09',
+          sigPhoto:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg',
+          sigPhotoBig: [
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg'
+          ],
+          sigRanking: 22
         },
         {
-          sigTeam: '二组', sigPeople: "李四", sigDate: "2020/11/13 17:24:09", sigPhoto: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg",
-          sigPhotoBig: ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg"], sigRanking: 22
-        },
-      ],
-
-    };
+          sigTeam: '二组',
+          sigPeople: '李四',
+          sigDate: '2020/11/13 17:24:09',
+          sigPhoto:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg',
+          sigPhotoBig: [
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg'
+          ],
+          sigRanking: 22
+        }
+      ]
+    }
   },
   watch: {
     // windowWidth(val) {
     //   console.log("宽度", val, this.windowWidth)
     // },
     windowHeight(val) {
-      console.log("高度", val, this.windowHeight)
-    },
+      console.log('高度', val, this.windowHeight)
+    }
+  },
+  created() {
+    // this.play()
+    // setTimeout( ()=>{
+    //  this.PageStarted = false
+    //  },3000 )
+  },
+  mounted() {
+    // window.onresize = () => {
+    //   return (() => {
+    //     window.fullHeight = document.getElementById('signing').clientHeight;
+    //     window.fullWidth = document.getElementById('signing').clientWidth;
+    //     this.windowHeight = window.fullHeight;  // 高
+    //     this.windowWidth = window.fullWidth; // 宽
+    //   })()
+    // };
+
+    this.currentTime()
+    const element = document.getElementById('signing')
+    document.getElementById('full_screen').addEventListener('click', () => {
+      if (screenfull.enabled) {
+        screenfull.request(element) // 元素全屏
+      }
+    })
+
+    this.sigCharts()
+  },
+
+  beforeDestroy() {
+    if (this.formatDate) {
+      clearInterval(this.formatDate) // 清除时间定时器
+    }
   },
   methods: {
-
-
     // change() {
     //   this.tableData.push(this.tableData[0]);//把第一条数据插入数组最有一条
     //   this.tableData.shift();//删除数组中第一条数据
@@ -390,29 +494,28 @@ export default {
     //   this.tableData = this.tableData.concat(exampleData);
     // },
     currentTime() {
-      setInterval(this.formatDate, 100);
+      setInterval(this.formatDate, 100)
     },
     formatDate() {
-      let date = new Date()
-      let year = date.getFullYear(); // 年
-      let month = date.getMonth() + 1; // 月
-      let day = date.getDate(); // 日
-      let week = date.getDay(); // 星期
-      let weekArr = ["日", "一", "二", "三", "四", "五", "六"];
-      let hour = date.getHours();
-      hour = hour < 10 ? "0" + hour : hour; //补零
-      let minute = date.getMinutes();
-      minute = minute < 10 ? "0" + minute : minute; //补零
-      let second = date.getSeconds();
-      second = second < 10 ? "0" + second : second; //补零
-      this.nowDate = `${year}${month}${day}${hour}${minute}${second}${weekArr[week]}`;
-      this.nowDateArr = this.nowDate.split("")
+      const date = new Date()
+      const year = date.getFullYear() // 年
+      const month = date.getMonth() + 1 // 月
+      const day = date.getDate() // 日
+      const week = date.getDay() // 星期
+      const weekArr = ['日', '一', '二', '三', '四', '五', '六']
+      let hour = date.getHours()
+      hour = hour < 10 ? '0' + hour : hour // 补零
+      let minute = date.getMinutes()
+      minute = minute < 10 ? '0' + minute : minute // 补零
+      let second = date.getSeconds()
+      second = second < 10 ? '0' + second : second // 补零
+      this.nowDate = `${year}${month}${day}${hour}${minute}${second}${weekArr[week]}`
+      this.nowDateArr = this.nowDate.split('')
     },
 
     sigCharts() {
-
-      var sigChart = echarts.init(document.getElementById("charts1"));
-      let option = {
+      var sigChart = echarts.init(document.getElementById('charts1'))
+      const option = {
         // title: {
         //   text: "签约统计",
         //   textStyle: {
@@ -426,17 +529,17 @@ export default {
         //   }
         // },
         xAxis: {
-          type: "category",
+          type: 'category',
           data: ['一组', '二组', '三组', '四组', '五组', '六组', '七组'],
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#fff"
+              color: '#fff'
             }
           },
           axisLine: {
             lineStyle: {
-              color: "#fff"
+              color: '#fff'
             }
           }
         },
@@ -445,49 +548,63 @@ export default {
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#fff"
+              color: '#fff'
             }
           },
           axisLine: {
             lineStyle: {
-              color: "#fff"
+              color: '#fff'
             }
           }
         },
         series: [
           {
-            type: "bar",
+            type: 'bar',
             data: this.sigChartsData,
 
             label: {
               show: true,
               position: 'insideBottom',
-              formatter: '已签约\n{c}/' + this.sigChartsTotal + '\n\n占比\n' + this.sigAccounted + '%'
+              formatter:
+                '已签约\n{c}/' +
+                this.sigChartsTotal +
+                '\n\n占比\n' +
+                this.sigAccounted +
+                '%'
             },
             itemStyle: {
-              //通常情况下：
+              // 通常情况下：
               normal: {
-                //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组中的颜色
-                color: function (params) {
+                // 每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组中的颜色
+                color: function(params) {
                   var colorList = [
-                    '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
-                    '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
-                    '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
-                  ];
-                  return colorList[params.dataIndex];
-                },
-
-
-              },
-            },
-          },
-
+                    '#C1232B',
+                    '#B5C334',
+                    '#FCCE10',
+                    '#E87C25',
+                    '#27727B',
+                    '#FE8463',
+                    '#9BCA63',
+                    '#FAD860',
+                    '#F3A43B',
+                    '#60C0DD',
+                    '#D7504B',
+                    '#C6E579',
+                    '#F4E001',
+                    '#F0805A',
+                    '#26C0C0'
+                  ]
+                  return colorList[params.dataIndex]
+                }
+              }
+            }
+          }
         ],
 
         tooltip: {
           show: true
-        },
-        //工具栏提示
+        }
+        // 工具栏提示
         // toolbox: {
         //   show: true,
         //   feature: {
@@ -496,52 +613,13 @@ export default {
         //     }
         //   }
         // }
-      };
-      sigChart.setOption(option);
-      window.onresize = sigChart.resize;
-    },
-
-  },
-  created() {
-    // this.play()
-    // setTimeout( ()=>{
-    //  this.PageStarted = false
-    //  },3000 )
-
-  },
-  mounted() {
-
-
-
-
-
-    // window.onresize = () => {
-    //   return (() => {
-    //     window.fullHeight = document.getElementById('signing').clientHeight;
-    //     window.fullWidth = document.getElementById('signing').clientWidth;
-    //     this.windowHeight = window.fullHeight;  // 高
-    //     this.windowWidth = window.fullWidth; // 宽
-    //   })()
-    // };
-
-    this.currentTime();
-    const element = document.getElementById('signing');
-    document.getElementById('full_screen').addEventListener('click', () => {
-      if (screenfull.enabled) {
-        screenfull.request(element); // 元素全屏
       }
-    });
-
-    this.sigCharts()
-  },
-
-  beforeDestroy() {
-    if (this.formatDate) {
-      clearInterval(this.formatDate); //清除时间定时器
+      sigChart.setOption(option)
+      window.onresize = sigChart.resize
     }
   }
 }
- </script>
+</script>
 <style lang="scss" scoped>
 // 入场效果
 /*
@@ -614,7 +692,11 @@ text {
   // background-color: #061436;
   min-height: 750px;
   color: white;
-  padding: 10px 30px;
+  padding-top: 10px;
+  padding-left: 55px;
+  padding-bottom: 10px;
+  padding-right: 55px;
+
   // background-color: #061436;
   background-image: url(./images/bg.jpg);
 
@@ -628,25 +710,28 @@ text {
   // background-color: #13CE66;
   margin-top: 10px;
   padding: 10px 10px;
-  border: 1px solid #1890FF;
+  border: 1px solid #1890ff;
   border-radius: 5px;
-  box-shadow: 0px 0px 10px 3px #1890FF inset;
+  box-shadow: 0px 0px 10px 3px #1890ff inset;
 }
 .infoDiv {
-  display: flex;
-  justify-content: space-between;
+  // border: 1px solid red;
+  // display: flex;
+  // justify-content: space-between;
+  position: relative;
+}
+.statDiv {
+  width: 20%;
+
+  position: absolute;
+  top: 35px;
+  left: 15px;
 }
 .sigLabel {
-  width: 20%;
-  height: 60px;
-  line-height: 36px;
-  text-align: center;
-  border: 1px solid #1890FF;
-  padding: 10px 10px;
-  margin-top: 10px;
+  height: 96px;
+  border: 1px solid #1890ff;
   position: relative;
-  box-shadow: 0px 0px 5px 1px #1890FF inset;
-
+  box-shadow: 0px 0px 5px 1px #1890ff inset;
 }
 
 .sigLabelImg {
@@ -687,35 +772,40 @@ text {
   bottom: 0;
 }
 .chartsIMG {
-  width: 320px;
+  width: 500px;
   // width: 55%;
   position: absolute;
   left: 0;
   bottom: 0;
 }
 
+.sigNumsp {
+  font-size: 18px;
+  font-weight: 800;
+}
 .sigNum {
   font-size: 24px;
   font-weight: 1000;
-  color: #0796FF;
+  color: #0796ff;
 }
-.timeDiv{
+
+.timeDiv {
+  padding-top: 15px;
   text-align: center;
 }
 .timeDiv span {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 800;
   color: #fff;
 }
 .timeCss {
-  display:inline-block;
-  border:1px solid #1890FF;
+  display: inline-block;
+  border: 1px solid #1890ff;
   border-radius: 5px;
-  box-shadow: 0px 0px 5px 1px #1890FF inset;
+  box-shadow: 0px 0px 5px 1px #1890ff inset;
   // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) inset;
-  margin:5px 1px;
-  padding:8px 5px;
-  
+  margin: 5px 1px;
+  padding: 8px 5px;
 }
 
 .timeSpanCss {
@@ -724,11 +814,42 @@ text {
 //   background-color: #061436 !important;
 //   color: white
 // }
+.sigLabel {
+  ::v-deep .el-table__row > td {
+    border: none;
+  }
+  ::v-deep .el-table::before {
+    //去掉最下面的那一条线
+    height: 0px;
+  }
+
+}
+
+.sigTitle {
+}
+::v-deep .el-table .cell {
+  line-height: 16px;
+}
 ::v-deep .el-table,
 ::v-deep .el-table__expanded-cell {
   background-color: rgba(255, 255, 255, 0);
 }
-
+::v-deep .el-table .cell {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+::v-deep .el-table th,
+::v-deep .el-table td {
+  padding: 0 0;
+}
+::v-deep .el-table--border th:first-child .cell,
+::v-deep .el-table--border td:first-child .cell {
+  padding-left: 0px;
+}
+::v-deep .el-table--medium th,
+::v-deep .el-table--medium td {
+  padding: 0 0;
+}
 ::v-deep .el-table th,
 ::v-deep .el-table tr {
   background-color: rgba(255, 255, 255, 0);
