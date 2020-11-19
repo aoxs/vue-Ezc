@@ -4,20 +4,19 @@
       <div style="display: flex">
         <!-- 树形结构框 -->
         <!-- <user-group @childFn="parentFn"></user-group> -->
-        <div style="" class="groupTree">
-          <el-tree
-            v-loading="groupTreeLoading"
-            :data="treeList"
-            default-expand-all
-            :expand-on-click-node="false"
-            highlight-current
-            @node-click="handleNodeClick"
-          >
-            <div slot-scope="{ node, data }" class="showname">
+        <div style=""
+             class="groupTree">
+          <el-tree v-loading="groupTreeLoading"
+                   :data="treeList"
+                   default-expand-all
+                   :expand-on-click-node="false"
+                   highlight-current
+                   @node-click="handleNodeClick">
+            <!-- <div slot-scope="{ node, data }" class="showname">
               <span>
-                {{ node.label }}
+                {{ node.data }}
               </span>
-            </div>
+            </div> -->
             <!--
             <span class="custom-tree-node"
                   slot-scope="{ node,data }">
@@ -38,14 +37,13 @@
           <div style="display: flex; justify-content: flex-end">
             <!-- 按钮 -->
             <div style="padding: 5px 10px">
-              <div class="pagRight" style="padding-right: 20px">
+              <div class="pagRight"
+                   style="padding-right: 20px">
                 <div style="">
-                  <el-button
-                    type="primary"
-                    size="small"
-                    style=""
-                    @click="groupAdd"
-                  >
+                  <el-button type="primary"
+                             size="small"
+                             style=""
+                             @click="groupAdd">
                     <i class="el-icon-circle-plus" />
                     新建
                   </el-button>
@@ -55,7 +53,9 @@
       <i class="el-icon-edit" />
       编辑
     </el-button> -->
-                  <el-button type="primary" size="small" @click="groupDel">
+                  <el-button type="primary"
+                             size="small"
+                             @click="groupDel">
                     <i class="el-icon-delete-solid" />
                     删除
                   </el-button>
@@ -69,50 +69,39 @@
               </div>
             </div>
             <!-- 弹窗 -->
-            <el-dialog
-              :visible.sync="dialogGroup"
-              :before-close="handleClose"
-              :title="dialogType === 'edit' ? '编辑组织结构' : '新建组织结构'"
-              top="10px"
-            >
-              <el-form :model="group" label-width="80px" label-position="right">
+            <el-dialog :visible.sync="dialogGroup"
+                       :before-close="handleClose"
+                       :title="dialogType === 'edit' ? '编辑组织结构' : '新建组织结构'"
+                       top="10px">
+              <el-form :model="group"
+                       label-width="80px"
+                       label-position="right">
                 <el-form-item label="机构名称:">
-                  <el-input
-                    v-model="group.Org_Name"
-                    placeholder="机构名称"
-                  />
+                  <el-input v-model="group.Org_Name"
+                            placeholder="机构名称" />
                 </el-form-item>
                 <el-form-item label="服务类型:">
-                  <el-input
-                    v-model="group.Org_Type"
-                    placeholder="服务类型"
-                  />
+                  <el-input v-model="group.Org_Type"
+                            placeholder="服务类型" />
                 </el-form-item>
                 <el-form-item label="服务内容:">
-                  <el-input
-                    v-model="group.Description"
-                    placeholder="服务内容"
-                  />
+                  <el-input v-model="group.Description"
+                            placeholder="服务内容" />
                 </el-form-item>
                 <el-form-item label="负责人:">
-                  <el-input
-                    v-model="group.Manager"
-                    placeholder="负责人姓名"
-                  />
+                  <el-input v-model="group.Manager"
+                            placeholder="负责人姓名" />
                 </el-form-item>
                 <el-form-item label="联系电话:">
-                  <el-input
-                    v-model="group.Tel"
-                    placeholder="联系电话"
-                  />
+                  <el-input v-model="group.Tel"
+                            placeholder="联系电话" />
                 </el-form-item>
               </el-form>
               <div style="text-align: right">
-                <el-button
-                  type="info"
-                  @click="dialogGroup = false"
-                >取消</el-button>
-                <el-button type="primary" @click="confirmRole">保存</el-button>
+                <el-button type="info"
+                           @click="dialogGroup = false">取消</el-button>
+                <el-button type="primary"
+                           @click="confirmRole">保存</el-button>
               </div>
             </el-dialog>
           </div>
@@ -126,61 +115,48 @@
                      @click="abcdd2">test2</el-button>
                      <p>abc{{tableData}}</p> -->
 
-          <el-table
-            v-loading="groupTableLoading"
-            :data="tableData"
-            style="
+          <el-table v-loading="groupTableLoading"
+                    :data="tableData"
+                    style="
               width: 95%;
               margin: 0 auto;
               margin-top: 20px;
               border-radius: 8px;
             "
-            stripe
-            border
-            tooltip-effect="dark"
-            @selection-change="handleSelectionChange"
-          >
-            <el-table-column type="selection" width="55" />
-            <el-table-column
-              prop="Org_Name"
-              label="机构名称"
-              width=""
-              sortable
-              show-overflow-tooltip
-            />
-            <el-table-column
-              prop="Org_Type"
-              label="服务类型"
-              width=""
-              sortable
-              show-overflow-tooltip
-            />
-            <el-table-column
-              prop="Description"
-              label="服务内容"
-              width=""
-              sortable
-              show-overflow-tooltip
-            />
-            <el-table-column
-              prop="Manager"
-              label="负责人"
-              width=""
-              sortable
-              show-overflow-tooltip
-            />
-            <el-table-column
-              prop="Tel"
-              label="联系电话"
-              width=""
-              show-overflow-tooltip
-            />
+                    stripe
+                    border
+                    tooltip-effect="dark"
+                    @selection-change="handleSelectionChange">
+            <el-table-column type="selection"
+                             width="55" />
+            <el-table-column prop="Org_Name"
+                             label="机构名称"
+                             width=""
+                             sortable
+                             show-overflow-tooltip />
+            <el-table-column prop="Org_Type"
+                             label="服务类型"
+                             width=""
+                             sortable
+                             show-overflow-tooltip />
+            <el-table-column prop="Description"
+                             label="服务内容"
+                             width=""
+                             sortable
+                             show-overflow-tooltip />
+            <el-table-column prop="Manager"
+                             label="负责人"
+                             width=""
+                             sortable
+                             show-overflow-tooltip />
+            <el-table-column prop="Tel"
+                             label="联系电话"
+                             width=""
+                             show-overflow-tooltip />
             <el-table-column align="center">
               <div slot-scope="scope">
-                <el-button
-                  size="mini"
-                  @click="groupEdit(scope)"
-                >编辑</el-button>
+                <el-button size="mini"
+                           @click="groupEdit(scope)">编辑</el-button>
                 <!-- <el-dialog title="提示"
                            :visible.sync="editDialogVisible"
                            width="80%"
@@ -198,13 +174,11 @@
           </el-table>
           <!-- 组织结构表end -->
           <!-- 分页 -->
-          <div class="pagRight">
-            <pagination
-              v-show="YLData.length >= 10"
-              :total="YLData.length"
-              :layout="layout"
-            />
-          </div>
+          <!-- <div class="pagRight">
+            <pagination v-show="YLData.length >= 10"
+                        :total="YLData.length"
+                        :layout="layout" />
+          </div> -->
           <!-- 分页end -->
         </div>
       </div>
@@ -235,15 +209,19 @@ export default {
       groupTableLoading: false,
       treeList: [],
       tableData: [],
-      YLData: [
-        {
-          groupName: '谈判小组',
-          serviceType: '谈判',
-          serviceContent: '谈判',
-          principal: '王萧',
-          tel: '13011112222'
-        }
-      ],
+      defaultProps: {
+        children: 'children',
+        label: 'pid' == 22 ? 'type' : 'lable'
+      },
+      // YLData: [
+      //   {
+      //     groupName: '谈判小组',
+      //     serviceType: '谈判',
+      //     serviceContent: '谈判',
+      //     principal: '王萧',
+      //     tel: '13011112222'
+      //   }
+      // ],
       // testData: [
       //   {
       //     groupName: '望牛墩指挥部',

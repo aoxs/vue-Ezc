@@ -944,7 +944,7 @@ export default {
     },
     // 保存
     updataPro() {
-      console.log(this.pro.Province_ID)
+      
       var d = new Date()
       var year = d.getFullYear()
       var month = d.getMonth() + 1

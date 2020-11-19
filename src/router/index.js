@@ -837,6 +837,12 @@ export const asyncRoutes = [
     },
     children: [
       {
+        path: 'canvasvideo',
+        component: () => import('@/views/test/canvasvideo'),
+        name: 'canvasvideo',
+        meta: { title: '摄像头' }
+      },
+      {
         path: 'goozi',
         component: () => import('@/views/test/goozi'),
         name: 'goozi',
