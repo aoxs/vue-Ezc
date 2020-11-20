@@ -183,27 +183,14 @@
               </el-form-item>
               <el-form-item style="margin:0px;padding:0px;">
                 <el-checkbox-group size="small"
+                                   v-loading="roleCheckboxLoading"
                                    v-model="checkboxBottom"
                                    style="padding:10px;"
                                    :disabled="buttomcheckbox?false:true">
-                  <el-checkbox border
+                  <el-checkbox v-for="i in btnList"
+                               border
                                style="margin:5px;padding:5px 5px 5px 5px"
-                               label="新增"
-                               name="type">
-                  </el-checkbox>
-                  <el-checkbox border
-                               style="margin:5px;padding:5px 5px 5px 5px"
-                               label="编辑"
-                               name="type">
-                  </el-checkbox>
-                  <el-checkbox border
-                               style="margin:5px;padding:5px 5px 5px 5px"
-                               label="删除"
-                               name="type">
-                  </el-checkbox>
-                  <el-checkbox border
-                               style="margin:5px;padding:5px 5px 5px 5px"
-                               label="查看详情"
+                               :label="i.Button_Name"
                                name="type">
                   </el-checkbox>
                 </el-checkbox-group>
@@ -248,7 +235,9 @@ export default {
     return {
       roleTableLoading: false,
       roleTreeLoading: false,
+      roleCheckboxLoading: false,
       roleList: [],
+      btnList: [],
       radioId: '',
       radioName: '',
       funModelId: '',
@@ -444,7 +433,7 @@ export default {
       this.$confirm("确定关闭？")
         .then((_) => {
           done();
-          this.centerDialogVisible = false;
+
         })
         .catch((_) => {
         });
@@ -470,11 +459,13 @@ export default {
         this.radioId = row.ID
         console.log(this.radioId)
         this.checkedKeys = []
-
+        this.roleTreeLoading = true
         this.axios.get("/ModuleFunction?RouteId=" + this.radioId)
           .then((res) => {
             // this.checkedKeys = res.data
             this.$refs.tree.setCheckedKeys(res.data);
+            this.roleTreeLoading = false
+
           })
         this.contRadio = row.ID
         this.checkboxBottom = []
@@ -550,18 +541,30 @@ export default {
       console.log(node.Id)
       this.funModelId = node.Id
       console.log(this.radioId)
-      this.axios.get('GetButtonPermissions?RoleId=' + this.radioId + '&ModuleId=' + node.Id)
-        .then((res) => {
-          console.log(res.data)
-          if (res.data.length > 0) {
-            this.buttomcheckbox = true
-            this.checkboxBottom = res.data
-          } else {
-            this.checkboxBottom = []
-            this.buttomcheckbox = false
-          }
-          // this.checkboxBottom = res.data
-        })
+      this.roleCheckboxLoading = true
+
+      this.axios.get('GetButton?RoleId=' + this.radioId + '&ModuleId=' + node.Id).then((res) => {
+        console.log(res)
+        this.btnList = res.data.data
+        this.axios.get('GetButtonPermissions?RoleId=' + this.radioId + '&ModuleId=' + node.Id)
+          .then((res) => {
+            console.log(res.data)
+            this.roleCheckboxLoading = false
+            if (res.data.length > 0) {
+              this.buttomcheckbox = true
+              this.checkboxBottom = res.data
+            } else {
+              this.checkboxBottom = []
+              this.btnList = []
+              this.buttomcheckbox = false
+            }
+            // this.checkboxBottom = res.data
+          })
+      })
+
+
+
+
     },
 
     // 按钮权限
@@ -614,6 +617,9 @@ export default {
 
   flex-direction: row-reverse;
 } */
+::v-deep .el-form-item__content{
+ height: 65px;
+}
 .table {
   border-radius: 10px;
   border: 1px solid #dddddd;

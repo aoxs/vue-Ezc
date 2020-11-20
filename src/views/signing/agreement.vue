@@ -1,25 +1,39 @@
 <template>
   <div class="dashboard-editor-container">
     <div style="background-color: #fff; border: 1px solid #dadada">
-      <!-- 顶部搜索 -->
+      <!-- 顶部 -->
       <div style="
           background: #f5f5f5;
           padding: 10px 20px;
           border-bottom: 1px solid #dadada;
         ">
+        <!-- 顶部搜索 -->
         <div style="display: flex; justify-content: flex-start">
-          <el-input slot=""
+          <!-- <el-input slot=""
                     v-model="PartyA"
                     clearable
                     placeholder="请输入名称"
                     style="width: 20%">
-            <template slot="prepend"> 甲方： </template>
-          </el-input>
+            <template slot="prepend"> 小组： </template>
+          </el-input> -->
+          <div class="selectCheck">
+            <span class="check_font"
+                  style="">小组：</span>
+            <el-select v-model="repTem"
+                       clearable
+                       placeholder="请选择"
+                       style="width: 70%">
+              <el-option v-for="item in repTemList"
+                         :key="item.id"
+                         :label="item.label"
+                         :value="item.id" />
+            </el-select>
+          </div>
           <el-input slot=""
                     v-model="PartyB"
                     clearable
                     placeholder="请输入名称"
-                    style="width: 20%">
+                    style="width: 30%;margin-left:5px;">
             <template slot="prepend"> 乙方： </template>
           </el-input>
           <div>
@@ -28,7 +42,7 @@
                        plain
                        @click="changeClick"><i class="el-icon-search" />查询</el-button>
             <el-button size="small"
-                       style="margin-left: 10px"
+                       style="margin-left: 5px"
                        plain
                        @click="resetClick"><i class="el-icon-refresh" />重置</el-button>
           </div>
@@ -44,17 +58,56 @@
                        placeholder="请选择"
                        style="width: 70%">
               <el-option v-for="item in repTemList"
-                         :key="item.ID"
-                         :label="item.Name"
-                         :value="item.Code" />
+                         :key="item.id"
+                         :label="item.label"
+                         :value="item.id" />
             </el-select>
           </div>
           <el-button size="small"
-                     style="margin-left: 10px"
+                     style="margin-left: 5px;margin-right:10px"
                      plain
-                     @click="changeClick"><i class="el-icon-printer" />打印</el-button>
+                     @click="printClick"><i class="el-icon-printer" />打印</el-button>
+          <div class="selectCheck">
+            <span class="check_font"
+                  style="">补偿方式：</span>
+            <el-select v-model="repTem"
+                       clearable
+                       placeholder="请选择"
+                       style="width: 70%">
+              <el-option v-for="item in repTemList"
+                         :key="item.id"
+                         :label="item.label"
+                         :value="item.id" />
+            </el-select>
+          </div>
+          <el-button size="small"
+                     style="margin-left: 5px"
+                     plain
+                     @click="fillClick"><i class="el-icon-printer" />确定</el-button>
         </div>
         <!-- 报告模板end -->
+      </div>
+      <!-- 顶部end -->
+      <!-- 报告模板弹窗 -->
+      <div class="dialogTemp">
+        <el-dialog :title="dialogType"
+                   :visible.sync="dialogSigTemp"
+                   width="80%"
+                   top="10px"
+                   :before-close="handleClose">
+          <div>
+            <tinymce v-model="content"
+                     id="tiny"
+                     ref="editorName"
+                     :height="350" />
+          </div>
+          <span slot="footer">
+            <el-button @click="dialogSigTemp = false">取消</el-button>
+            <el-button type="primary"
+                       @click="">打印</el-button>
+          </span>
+        </el-dialog>
+
       </div>
 
       <!-- 按钮 -->
@@ -97,64 +150,48 @@
       <div class="edit">
         <el-dialog :title="dialogType"
                    :visible.sync="dialogSigCreate"
-                   width="90%"
+                   width="50%"
                    top="10px"
                    :before-close="handleClose">
-          <!-- <el-form :model="sigInfo"
-                 label-width="80px"
-                 label-position="right">
-          <el-form-item label="协议编号:"> -->
-          <div class="sigDiaBox">
-            <div class="boxHeader">
-              基本情况
-            </div>
-            <div style="width:98%;margin:5px auto;">
-              <el-input slot=""
-                        v-model="sigInfo.ID"
-                        placeholder=""
-                        :disabled="eninput"
-                        style="width: 100%">
-                <template slot="prepend">协议编号 </template>
-              </el-input>
-              <el-input slot=""
-                        v-model="sigInfo.ID"
-                        placeholder=""
-                        :disabled="eninput"
-                        style="width: 50%">
-                <template slot="prepend">身份证号 </template>
-              </el-input>
+          <el-form :model="sigInfo"
+                   label-width="100px"
+                   label-position="right">
+            <el-form-item label="小组:">
+              <el-select v-model="sigInfo.proScope"
+                         multiple
+                         placeholder="小组"
+                         style="width: 100%">
+                <el-option v-for="item in repTemList"
+                           :key="item.id"
+                           :label="item.label"
+                           :value="item.id" />
+              </el-select>
 
-              <el-input slot=""
-                        v-model="sigInfo.ID"
-                        placeholder=""
-                        :disabled="eninput"
-                        style="width: 50%">
-                <template slot="prepend">法定代表人 </template>
-              </el-input>
+            </el-form-item>
+            <el-form-item label="乙方:">
+              <el-input v-model="sigInfo.Name"
+                        placeholder="乙方" />
+            </el-form-item>
+            <el-form-item label="身份证号:">
+              <el-input v-model="sigInfo.shenfID"
+                        placeholder="身份证号" />
+            </el-form-item>
+            <el-form-item label="住址:">
+              <el-input v-model="sigInfo.Tel"
+                        placeholder="住址" />
+            </el-form-item>
+            <el-form-item label="协议编号:">
+              <el-input v-model="sigInfo.Tel"
+                        placeholder="协议编号" />
+            </el-form-item>
+            <el-form-item label="测绘编号:">
+              <el-input v-model="sigInfo.Tel"
+                        placeholder="测绘编号" />
+            </el-form-item>
 
-              <el-input slot=""
-                        v-model="sigInfo.ID"
-                        placeholder=""
-                        :disabled="eninput"
-                        style="width: 50%">
-                <template slot="prepend">房屋地址 </template>
-              </el-input>
-              <el-input slot=""
-                        v-model="sigInfo.ID"
-                        placeholder=""
-                        :disabled="eninput"
-                        style="width: 50%">
-                <template slot="prepend">用地面积 </template>
-                <template slot="append">m²</template>
-              </el-input>
-            </div>
-
-          </div>
-
-          <!-- </el-form-item>
-
-        </el-form> -->
-
+           
+            
+          </el-form>
           <span slot="footer">
             <el-button @click="sigCancel">取消</el-button>
             <el-button type="primary"
@@ -221,7 +258,7 @@
                          width=""
                          align="center"
                          show-overflow-tooltip />
-        <el-table-column prop="sigDate"
+        <!-- <el-table-column prop="sigDate"
                          label="补偿方式"
                          width=""
                          align="center"
@@ -236,9 +273,9 @@
           <div slot-scope="scope">
             <el-button size="mini"
                        @click="SigPrint(scope)"> <i class="el-icon-printer" />预览/打印</el-button>
-            <!-- <el-button size="mini" @click="groupEdit(scope)">打印</el-button> -->
+          
           </div>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column align="center">
           <div slot-scope="scope">
             <el-button size="mini"
@@ -288,13 +325,23 @@
 </template>
 
 <script>
+import Tinymce from '@/components/Tinymce'
+
 export default {
+  name: 'agreement',
+  components: { Tinymce },
   data() {
     return {
       PartyA: '',
       PartyB: '',
       repTem: '',
-      repTemList: [],
+      repTemList: [
+        { id: 1, label: '测试一' },
+        { id: 2, label: '测试二' },
+        { id: 3, label: '测试三' },
+        { id: 4, label: '测试四' },
+        { id: 5, label: '测试五' },
+      ],
       multipleSelection: [],
       proLoading: false,
       InsSigSys: [{ addressB: 'abc' }],
@@ -304,19 +351,52 @@ export default {
       sigInfo: {},
       eninput: false,
       cameraBtn: true,
-      imgSrc:'',
+      imgSrc: '',
+      dialogSigTemp: false,
+      content: '',
     }
   },
   mounted() { },
   methods: {
     // 乱七八糟按钮一堆
     changeClick() {
-      console.log('甲方:', this.PartyA)
+      console.log('小组:', this.PartyA)
       console.log('乙方:', this.PartyB)
     },
     resetClick() {
       this.PartyA = ''
       this.PartyB = ''
+    },
+    printClick() {
+
+      if (this.multipleSelection.length == 0) {
+        this.$alert('未选中项目', '提示', {
+          confirmButtonText: '确认',
+          type: 'info'
+        })
+      } else if (this.multipleSelection.length > 1) {
+        this.$alert('最多只能同时执行一条', '提示', {
+          confirmButtonText: '确认',
+          type: 'info'
+        })
+      } else {
+        if (!this.repTem) {
+          this.$alert('请选择报告模板', '提示', {
+            confirmButtonText: '确认',
+            type: 'info'
+          })
+        } else {
+          this.dialogType = '打印模板'
+          this.dialogSigTemp = true
+          console.log(this.repTem)
+          console.log(this.multipleSelection)
+        }
+
+      }
+
+    },
+    fillClick() {
+
     },
     createSig() {
       this.dialogType = '新建'
@@ -354,24 +434,7 @@ export default {
           type: 'warning'
         })
           .then(() => {
-            // console.log(this.multipleSelection[0].ID)
-            // var delId = this.multipleSelection[0].ID
-            // this.axios.get('/delProject?Id=' + delId)
-            //   .then((res) => {
-            //     if (res.data.code == 1) {
-            //       this.$message({
-            //         type: 'success',
-            //         message: '删除成功。'
-            //       })
-            //     } else {
-            //       this.$message({
-            //         type: 'error',
-            //         message: '删除失败!'
-            //       })
-            //     }
-            //     this.getTable()
-            //   })
-          
+
           })
       }
     },
@@ -399,7 +462,7 @@ export default {
         // 实时拍照效果
         this.$refs.video.play()
         //重置按钮
-      this.cameraBtn = true
+        this.cameraBtn = true
 
       }).catch(error => {
         console.error('摄像头开启失败，请检查摄像头是否可用！')
@@ -445,7 +508,7 @@ export default {
       console.log(size + 'kB') 　　  // 上传拍照信息  调用接口上传图片 .........
 
       this.imgSrc = imgBase64
-     
+
 
 
 
@@ -461,7 +524,7 @@ export default {
       let ADOM = document.createElement('a')
       // ADOM.href = this.headImgSrc
       ADOM.href = this.imgSrc
-      ADOM.download =   new Date().getTime() + '.jpeg'
+      ADOM.download = new Date().getTime() + '.jpeg'
       ADOM.click()
     },
 
@@ -479,12 +542,10 @@ export default {
       this.$confirm('确定关闭？')
         .then((_) => {
           done()
-          console.log(1, done)
-          this.editDialogVisible = false
         })
 
         .catch((_) => {
-          console.log(2, done)
+
         })
     }
   },
@@ -502,7 +563,11 @@ export default {
   font-size: 18px;
   color: #fff;
 }
-
+.dialogTemp {
+  ::v-deep .el-dialog__body {
+    // padding: 0px 20px;
+  }
+}
 .camera {
   ::v-deep .el-dialog__body {
     padding: 0px 0px;
@@ -544,5 +609,8 @@ export default {
   border-right: 1px solid #dcdfe6;
   white-space: nowrap;
   text-align: center;
+}
+::v-deep .el-form-item {
+  margin-bottom: 5px;
 }
 </style>

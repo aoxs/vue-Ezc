@@ -15,7 +15,9 @@
       <!-- partial -->
 
       <!-- 全屏内容   -->
-      <div id="signing" class="sigMian">
+      <div id="signing"
+           class="sigMian"
+           :style="{height: sigdiv1h}">
         <!-- <svg v-if="PageStarted"
              class="preview"
              xmlns="http://www.w3.org/2000/svg"
@@ -122,50 +124,50 @@
         <div v-else> -->
         <!-- header -->
         <div style="width: 100%; padding: 0px 10px; position: relative">
-          <p
-            style="
+          <p style="
               text-align: center;
               margin: 0px;
               margin-top: 15px;
               margin-bottom: 20px;
               font-size: 24px;
               font-weight: 700;
-            "
-          >
+            ">
             英联E征拆签约实时统计平台
           </p>
-          <svg-icon
-            id="full_screen"
-            style="font-size: 16px; position: absolute; top: 14px; right: 0px"
-            icon-class="fullscreen"
-          />
+          <svg-icon id="full_screen"
+                    style="font-size: 16px; position: absolute; top: 14px; right: 0px"
+                    icon-class="fullscreen" />
           <div class="infoDiv">
             <div class="statDiv">
               <div class="sigLabel">
-                <img src="./images/ksh34.png" class="sigLabelImg" alt="">
-                <img src="./images/ksh34.png" class="sigLabelImg" alt="">
-                <img src="./images/ksh34.png" class="sigLabelImg" alt="">
-                <img src="./images/ksh34.png" class="sigLabelImg" alt="">
+                <img src="./images/ksh34.png"
+                     class="sigLabelImg"
+                     alt="">
+                <img src="./images/ksh34.png"
+                     class="sigLabelImg"
+                     alt="">
+                <img src="./images/ksh34.png"
+                     class="sigLabelImg"
+                     alt="">
+                <img src="./images/ksh34.png"
+                     class="sigLabelImg"
+                     alt="">
 
-                <el-table :data="statTab" :show-header="false" style="padding-top:28px">
-                  <el-table-column
-                    prop=""
-                    min-width="80"
-                    align="right"
-                    show-overflow-tooltip
-                  >
+                <el-table :data="statTab"
+                          :show-header="false"
+                          style="padding-top:28px">
+                  <el-table-column prop=""
+                                   min-width="80"
+                                   align="right"
+                                   show-overflow-tooltip>
                     <template slot-scope="scope">
                       <span class="sigNumsp">{{ scope.row.name }}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop=""
-                    min-width="170"
-                    show-overflow-tooltip
-                  >
-                    <template
-                      slot-scope="scope"
-                    ><span class="sigNum">{{ scope.row.num }}</span></template>
+                  <el-table-column prop=""
+                                   min-width="170"
+                                   show-overflow-tooltip>
+                    <template slot-scope="scope"><span class="sigNum">{{ scope.row.num }}</span></template>
                   </el-table-column>
                 </el-table>
               </div>
@@ -204,124 +206,99 @@
         <!-- header end -->
 
         <!-- 数据 -->
-
-        <div class="sigDiv" style="width: 573px">
-          <img
-            src="./images/ksh42.png"
-            style="position: absolute; top: -2px; left: -2px"
-            alt=""
-          >
-          <img
-            src="./images/ksh43.png"
-            style="position: absolute; top: -2px; right: -2px"
-            alt=""
-          >
-          <img
-            src="./images/ksh44.png"
-            style="position: absolute; bottom: -2px; right: -2px"
-            alt=""
-          >
-          <img
-            src="./images/ksh45.png"
-            style="position: absolute; bottom: -2px; left: -2px"
-            alt=""
-          >
+        <!-- <el-row :gutter="20">
+          <el-col :span="18"
+                  :offset="0"> -->
+        <div class="sigDiv"
+        style="height:30%">
+          <img src="./images/ksh42.png"
+               style="position: absolute; top: -2px; left: -2px"
+               alt="">
+          <img src="./images/ksh43.png"
+               style="position: absolute; top: -2px; right: -2px"
+               alt="">
+          <img src="./images/ksh44.png"
+               style="position: absolute; bottom: -2px; right: -2px"
+               alt="">
+          <img src="./images/ksh45.png"
+               style="position: absolute; bottom: -2px; left: -2px"
+               alt="">
           <div class="sigTitle">
             <span>签约实时统计</span>
-            <img src="./images/ksh33.png" alt="" class="tablesIMG">
+            <img src="./images/ksh33.png"
+                 alt=""
+                 class="tablesIMG">
           </div>
-          <el-table
-            :data="tableData"
-            border
-            height="300"
-            style="margin: 10px auto; width: 98%; height: 300px;"
-          >
-            <el-table-column
-              prop="sigTeam"
-              label="小组"
-              width="55"
-              align="center"
-            />
-            <el-table-column
-              prop="sigPeople"
-              label="协议编号"
-              width="65"
-              align="center"
-              show-overflow-tooltip
-            />
-            <el-table-column
-              prop="sigPeople"
-              label="权利人"
-              width="60"
-              align="center"
-            />
-            <el-table-column
-              prop="sigDate"
-              label="签约时间"
-              width="150"
-              align="center"
-            />
-            <el-table-column
-              prop="sigPhoto"
-              label="签约照片"
-              width="153"
-              align="center"
-            >
+          <el-table :data="tableData"
+                    border
+                    height="50%"
+                    style="margin: 10px auto; width: 98%; ">
+            <el-table-column prop="sigTeam"
+                             label="小组"
+                             min-width="55"
+                             align="center" />
+            <el-table-column prop="sigPeople"
+                             label="协议编号"
+                             min-width="65"
+                             align="center"
+                             show-overflow-tooltip />
+            <el-table-column prop="sigPeople"
+                             label="权利人"
+                             min-width="60"
+                             align="center" />
+            <el-table-column prop="sigDate"
+                             label="签约时间"
+                             min-width="150"
+                             align="center" />
+            <el-table-column prop="sigPhoto"
+                             label="签约照片"
+                             min-width="153"
+                             align="center">
               <template slot-scope="scope">
-                <el-image
-                  :src="scope.row.sigPhoto"
-                  :preview-src-list="scope.row.sigPhotoBig"
-                  fit="contain"
-                  :lazy="true"
-                  style="width: 150px; max-height: 60px; margin-top: 1px"
-                />
+                <el-image :src="scope.row.sigPhoto"
+                          :preview-src-list="scope.row.sigPhotoBig"
+                          fit="contain"
+                          :lazy="true"
+                          style="width: 150px; max-height: 30px; margin-top: 1px" />
               </template>
             </el-table-column>
-            <el-table-column
-              prop="sigRanking"
-              label="排名"
-              width="55"
-              align="center"
-            />
+            <el-table-column prop="sigRanking"
+                             label="排名"
+                             min-width="55"
+                             align="center" />
           </el-table>
         </div>
-        <el-row :gutter="20">
-          <el-col :span="24">
-            <div class="sigDiv" style="width: 70%">
-              <img
-                src="./images/ksh42.png"
-                style="position: absolute; top: -2px; left: -2px"
-                alt=""
-              >
-              <img
-                src="./images/ksh43.png"
-                style="position: absolute; top: -2px; right: -2px"
-                alt=""
-              >
-              <img
-                src="./images/ksh44.png"
-                style="position: absolute; bottom: -2px; right: -2px"
-                alt=""
-              >
-              <img
-                src="./images/ksh45.png"
-                style="position: absolute; bottom: -2px; left: -2px"
-                alt=""
-              >
-              <div class="sigTitle">
-                <span>小组进度排名</span>
-                <img src="./images/ksh33.png" alt="" class="chartsIMG">
-              </div>
-              <div
-                id="charts1"
-                :style="{
+        <!-- </el-col>
+
+          <el-col :span="24"> -->
+        <div class="sigDiv"
+             style="height: 38%">
+          <img src="./images/ksh42.png"
+               style="position: absolute; top: -2px; left: -2px"
+               alt="">
+          <img src="./images/ksh43.png"
+               style="position: absolute; top: -2px; right: -2px"
+               alt="">
+          <img src="./images/ksh44.png"
+               style="position: absolute; bottom: -2px; right: -2px"
+               alt="">
+          <img src="./images/ksh45.png"
+               style="position: absolute; bottom: -2px; left: -2px"
+               alt="">
+          <div class="sigTitle">
+            <span>小组进度排名</span>
+            <img src="./images/ksh33.png"
+                 alt=""
+                 class="chartsIMG">
+          </div>
+          <div id="charts1"
+               :style="{
                   width: '100%',
-                  height: '370px',
-                }"
-              />
-            </div>
-          </el-col>
-        </el-row>
+                  height: '100%',
+                }" />
+        </div>
+        <!-- </el-col>
+        </el-row> -->
 
         <!-- 数据end -->
         <!-- </div> -->
@@ -337,16 +314,15 @@ import echarts from 'echarts'
 // require('echarts/theme/macarons') // echarts theme
 // import resize from './mixins/resize'
 
-// const exampleData = new Array(10).fill({
-//   sigTeam: '一组', sigPeople: "张三", sigDate: "2020/11/13 17:24:09", sigPhoto: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg", sigPhotoBig: ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg"], sigRanking: 23
-// });
 
 export default {
   data() {
     return {
       a: 600,
       b: 320,
-      windowHeight: document.documentElement.clientHeight, // 实时元素高度
+      windowWidth: document.documentElement.clientWidth,  //实时屏幕宽度
+      windowHeight: document.documentElement.clientHeight,   //实时屏幕高度
+      sigdiv1h: '',
       PageStarted: true,
       sigChartsTotal: 80,
       sigAccounted: 60,
@@ -361,6 +337,39 @@ export default {
         { name: '占比:', num: '70%' }
       ],
       tableData: [
+        {
+          sigTeam: '一组',
+          sigPeople: '张三',
+          sigDate: '2020/11/13 17:24:09',
+          sigPhoto:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg',
+          sigPhotoBig: [
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg'
+          ],
+          sigRanking: 23
+        },
+        {
+          sigTeam: '一组',
+          sigPeople: '张三',
+          sigDate: '2020/11/13 17:24:09',
+          sigPhoto:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg',
+          sigPhotoBig: [
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg'
+          ],
+          sigRanking: 23
+        },
+        {
+          sigTeam: '一组',
+          sigPeople: '张三',
+          sigDate: '2020/11/13 17:24:09',
+          sigPhoto:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg',
+          sigPhotoBig: [
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605265475394&di=cc189a0837db9dd2cc43a148d08cb440&imgtype=0&src=http%3A%2F%2Fimg.douyucdn.cn%2Fdata%2Fyuba%2Fdefault%2Fc8%2F71%2Fc8713a3e8bb567790cd742af3b981e71831bd1c7e6eb.jpg'
+          ],
+          sigRanking: 23
+        },
         {
           sigTeam: '一组',
           sigPeople: '张三',
@@ -442,11 +451,17 @@ export default {
     }
   },
   watch: {
-    // windowWidth(val) {
-    //   console.log("宽度", val, this.windowWidth)
-    // },
+
     windowHeight(val) {
-      console.log('高度', val, this.windowHeight)
+      let than = this
+      than.sigdiv1h = than.windowHeight + 'px'
+      
+      console.log("实时屏幕高度：", val, than.windowHeight);
+    },
+    windowWidth(val) {
+      let than = this
+
+      console.log("实时屏幕宽度：", val, than.windowWidth);
     }
   },
   created() {
@@ -456,14 +471,33 @@ export default {
     //  },3000 )
   },
   mounted() {
+    console.log('操')
+    let than = this
+    window.addEventListener('resize', () => {
+      console.log('操')
+      return (() => {
+        window.fullHeight = document.documentElement.clientHeight;
+        window.fullWidth = document.documentElement.clientWidth;
+        than.windowHeight = window.fullHeight;  // 高
+        than.windowWidth = window.fullWidth; // 宽
+      })()
+    });
+    // <!--把window.onresize事件挂在到mounted函数上-->
     // window.onresize = () => {
-    //   return (() => {
-    //     window.fullHeight = document.getElementById('signing').clientHeight;
-    //     window.fullWidth = document.getElementById('signing').clientWidth;
+
+    //     window.fullHeight = document.documentElement.clientHeight;
+    //     window.fullWidth = document.documentElement.clientWidth;
     //     this.windowHeight = window.fullHeight;  // 高
     //     this.windowWidth = window.fullWidth; // 宽
-    //   })()
+
     // };
+    //  window.onresize = () => {
+    //       return (() => {
+    //         window.screenWidth = document.body.clientWidth
+    //         that.screenWidth = window.screenWidth
+    //         console.log(that.screenWidth)
+    //       })()
+    //     }
 
     this.currentTime()
     const element = document.getElementById('signing')
@@ -482,6 +516,8 @@ export default {
     }
   },
   methods: {
+
+
     // change() {
     //   this.tableData.push(this.tableData[0]);//把第一条数据插入数组最有一条
     //   this.tableData.shift();//删除数组中第一条数据
@@ -576,7 +612,7 @@ export default {
               // 通常情况下：
               normal: {
                 // 每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组中的颜色
-                color: function(params) {
+                color: function (params) {
                   var colorList = [
                     '#C1232B',
                     '#B5C334',
@@ -690,7 +726,7 @@ text {
 
 .sigMian {
   // background-color: #061436;
-  min-height: 750px;
+  // min-height: 600px;
   color: white;
   padding-top: 10px;
   padding-left: 55px;
@@ -707,6 +743,7 @@ text {
 }
 .sigDiv {
   position: relative;
+  
   // background-color: #13CE66;
   margin-top: 10px;
   padding: 10px 10px;
@@ -822,11 +859,32 @@ text {
     //去掉最下面的那一条线
     height: 0px;
   }
-
+  ::v-deep .el-table__body-wrapper::-webkit-scrollbar {
+    /*width: 0;宽度为0隐藏*/
+    width: 0px;
+  }
 }
 
-.sigTitle {
+.sigDiv {
+  ::v-deep .el-table__body-wrapper::-webkit-scrollbar {
+    height: 0px;
+  }
+  ::v-deep .el-table__body-wrapper::-webkit-scrollbar-thumb {
+    background-color: #dfe6ec;
+    border-radius: 10px;
+  }
+  // ::v-deep .el-table__body-wrapper::-webkit-scrollbar-thumb {
+  //   border-radius: 0px;
+  //   height: 0px;
+  //   background: #eee;
+  // }
+  // ::v-deep .el-table__body-wrapper::-webkit-scrollbar-track {
+  //   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  //   border-radius: 0px;
+  //   background: rgba(0, 0, 0, 0);
+  // }
 }
+
 ::v-deep .el-table .cell {
   line-height: 16px;
 }
@@ -860,22 +918,12 @@ text {
   background-color: rgba(255, 255, 255, 0);
 }
 
-::v-deep .el-table__body-wrapper::-webkit-scrollbar {
-  /*width: 0;宽度为0隐藏*/
-  width: 0px;
-}
+// ::v-deep .el-table__body-wrapper::-webkit-scrollbar {
+//   /*width: 0;宽度为0隐藏*/
+//   // width: 0px;
+//   background: rgba(255, 255, 255, 0);
+// }
 ::v-deep .gutter {
-  width: 0px !important;
+  // width: 0px !important;
 }
-
-// ::v-deep .el-table__body-wrapper::-webkit-scrollbar-thumb {
-//   border-radius: 0px;
-//   height: 0px;
-//   background: #eee;
-// }
-// ::v-deep .el-table__body-wrapper::-webkit-scrollbar-track {
-//   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-//   border-radius: 0px;
-//   background: rgba(0, 0, 0, 0.4);
-// }
 </style>

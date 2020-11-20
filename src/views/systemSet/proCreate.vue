@@ -989,7 +989,7 @@ export default {
       this.$confirm('确定关闭？')
         .then((_) => {
           done()
-          this.editDialogVisible = false
+
         })
         .catch((_) => {
 

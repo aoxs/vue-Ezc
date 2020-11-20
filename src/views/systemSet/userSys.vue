@@ -125,7 +125,7 @@
           :before-close="handleClose"
           top="10px"
         >
-          <el-form :model="role" label-width="80px" label-position="right">
+          <el-form :model="role" label-width="100px" label-position="right">
             <el-form-item label="登录名:">
               <el-input v-model="role.UserName" placeholder="登录名" />
             </el-form-item>
@@ -201,10 +201,10 @@
                 />
               </el-select>
             </el-form-item>
-            <el-form-item label="是否启用:">
+            <el-form-item label="设为小组账号:">
               <el-radio-group v-model="role.IsEnd">
-                <el-radio :label="0">禁用</el-radio>
-                <el-radio :label="1">启用</el-radio>
+                <el-radio :label="1">是</el-radio>
+                <el-radio :label="0">否</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-form>
@@ -271,7 +271,7 @@
           <el-table-column
             align="center"
             prop="IsEnd"
-            label="是否启用"
+            label="小组账号"
             show-overflow-tooltip
             :formatter="stateFormat"
           />
@@ -714,9 +714,9 @@ export default {
     // table内容格式化
     stateFormat(row, column) {
       if (row.IsEnd == 1) {
-        return '启用'
+        return '是'
       } else if (row.IsEnd == 0) {
-        return '禁用'
+        return '否'
       } else {
         return '未设置'
       }
@@ -798,12 +798,10 @@ export default {
       this.$confirm('确定关闭？')
         .then((_) => {
           done()
-          console.log(1, done)
-          this.centerDialogVisible = false
-        })
 
+        })
         .catch((_) => {
-          console.log(2, done)
+
         })
     }
   }
@@ -819,7 +817,7 @@ export default {
 //   display: flex;
 //   flex-direction: row-reverse;
 // }
-.el-form-item {
+::v-deep .el-form-item {
   margin-bottom: 5px;
 }
 .selectCheck {

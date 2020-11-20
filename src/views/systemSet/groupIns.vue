@@ -6,25 +6,34 @@
         <!-- <user-group @childFn="parentFn"></user-group> -->
         <div style=""
              class="groupTree">
-          <el-tree v-loading="groupTreeLoading"
-                   :data="treeList"
+          <el-tree v-loading="groupTreeLoading1"
+                   :data="treeList1"
                    default-expand-all
                    :expand-on-click-node="false"
                    highlight-current
                    @node-click="handleNodeClick">
-            <!-- <div slot-scope="{ node, data }" class="showname">
-              <span>
-                {{ node.data }}
-              </span>
-            </div> -->
-            <!--
-            <span class="custom-tree-node"
-                  slot-scope="{ node,data }">
-              <span>{{ node.label }}</span>
-              <span >
-                {{data.pid}}
-              </span>
-            </span> -->
+          </el-tree>
+          <el-tree v-loading="groupTreeLoading2"
+                   :data="treeList2"
+                   default-expand-all
+                   :expand-on-click-node="false"
+                   highlight-current
+                   @node-click="handleNodeClick">
+          </el-tree>
+          <el-tree v-loading="groupTreeLoading3"
+                   :data="treeList3"
+                   :props="defaultProps3"
+                   default-expand-all
+                   :expand-on-click-node="false"
+                   highlight-current
+                   @node-click="handleNodeClick">
+          </el-tree>
+          <el-tree v-loading="groupTreeLoading4"
+                   :data="treeList4"
+                   default-expand-all
+                   :expand-on-click-node="false"
+                   highlight-current
+                   @node-click="handleNodeClick">
           </el-tree>
         </div>
 
@@ -205,13 +214,19 @@ export default {
   components: { Pagination },
   data() {
     return {
-      groupTreeLoading: false,
+      groupTreeLoading1: false,
+      groupTreeLoading2: false,
+      groupTreeLoading3: false,
+      groupTreeLoading4: false,
       groupTableLoading: false,
-      treeList: [],
+      treeList1: [],
+      treeList2: [],
+      treeList3: [],
+      treeList4: [],
       tableData: [],
-      defaultProps: {
+      defaultProps3: {
         children: 'children',
-        label: 'pid' == 22 ? 'type' : 'lable'
+        label: 'type'
       },
       // YLData: [
       //   {
@@ -249,16 +264,43 @@ export default {
     }
   },
   mounted() {
-    this.getTreeList()
+    this.getTreeList1()
+    this.getTreeList2()
+    this.getTreeList4()
+    this.getTreeList3()
   },
   methods: {
     // 获取树形列表
-    getTreeList() {
-      this.treeList = []
-      this.groupTreeLoading = true
-      this.axios.get('/Sqlsysorg').then((res) => {
-        this.treeList = res.data
-        this.groupTreeLoading = false
+    getTreeList1() {
+      this.treeList1 = []
+      this.groupTreeLoading1 = true
+      this.axios.post('/Json_GetDepartmentTreeOne').then((res) => {
+        this.treeList1 = res.data
+        this.groupTreeLoading1 = false
+      })
+    },
+    getTreeList2() {
+      this.treeList2 = []
+      this.groupTreeLoading2 = true
+      this.axios.post('/Json_GetDepartmentTreetwo').then((res) => {
+        this.treeList2 = res.data
+        this.groupTreeLoading2 = false
+      })
+    },
+    getTreeList3() {
+      this.treeList3 = []
+      this.groupTreeLoading3 = true
+      this.axios.post('/Json_GetDepartmentTreethree').then((res) => {
+        this.treeList3 = res.data
+        this.groupTreeLoading3 = false
+      })
+    },
+    getTreeList4() {
+      this.treeList4 = []
+      this.groupTreeLoading4 = true
+      this.axios.post('/Json_GetDepartmentTreefour').then((res) => {
+        this.treeList4 = res.data
+        this.groupTreeLoading4 = false
       })
     },
 
@@ -278,7 +320,7 @@ export default {
     // 增删改 按钮
     groupAdd() {
       if (!this.treeID) {
-        this.$alert('父级项目节点', '提示', {
+        this.$alert('未选择父级项目节点', '提示', {
           confirmButtonText: '确认',
           type: 'info'
         })
@@ -324,8 +366,10 @@ export default {
                 console.log(res.data)
                 this.tableData = res.data
               })
-
-              this.getTreeList()
+this.getTreeList1()
+    this.getTreeList2()
+    this.getTreeList4()
+    this.getTreeList3()
             } else {
               this.$message({
                 type: 'error',
@@ -361,7 +405,10 @@ export default {
             console.log(res.data)
             this.tableData = res.data
           })
-          this.getTreeList()
+this.getTreeList1()
+    this.getTreeList2()
+    this.getTreeList4()
+    this.getTreeList3()
         })
     },
 
@@ -387,12 +434,11 @@ export default {
       this.$confirm('确定关闭？')
         .then((_) => {
           done()
-          console.log(1, done)
-          this.editDialogVisible = false
+
         })
 
         .catch((_) => {
-          console.log(2, done)
+
         })
     }
   }

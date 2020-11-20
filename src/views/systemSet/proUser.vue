@@ -241,12 +241,11 @@ export default {
       this.$confirm("确定关闭？")
         .then((_) => {
           done();
-          console.log(1, done);
-          this.editDialogVisible = false;
+
         })
 
         .catch((_) => {
-          console.log(2, done);
+
         });
     },
   }
