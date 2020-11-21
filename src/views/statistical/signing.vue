@@ -471,10 +471,10 @@ export default {
     //  },3000 )
   },
   mounted() {
-    console.log('操')
+    
     let than = this
     window.addEventListener('resize', () => {
-      console.log('操')
+     
       return (() => {
         window.fullHeight = document.documentElement.clientHeight;
         window.fullWidth = document.documentElement.clientWidth;

@@ -6,51 +6,89 @@
           background: #f5f5f5;
           padding: 10px 20px;
           border-bottom: 1px solid #dadada;
+
         ">
-        <!-- 顶部搜索 -->
-        <div style="display: flex; justify-content: flex-start">
-          <!-- <el-input slot=""
+        <div style="display:flex;justify-content: space-between;">
+
+          <!-- 顶部搜索 -->
+          <div style="display: flex; justify-content: flex-start;">
+            <!-- <el-input slot=""
                     v-model="PartyA"
                     clearable
                     placeholder="请输入名称"
                     style="width: 20%">
             <template slot="prepend"> 小组： </template>
           </el-input> -->
-          <div class="selectCheck">
-            <span class="check_font"
-                  style="">小组：</span>
-            <el-select v-model="repTem"
-                       clearable
-                       placeholder="请选择"
-                       style="width: 70%">
-              <el-option v-for="item in repTemList"
-                         :key="item.id"
-                         :label="item.label"
-                         :value="item.id" />
-            </el-select>
+
+            <div class="selectCheck">
+              <span class="check_font"
+                    style="">小组：</span>
+              <el-select v-model="repTem"
+                         clearable
+                         placeholder="请选择"
+                         style="width: 80%">
+                <el-option v-for="item in repTemList"
+                           :key="item.id"
+                           :label="item.label"
+                           :value="item.id" />
+              </el-select>
+            </div>
+            <el-input slot=""
+                      v-model="PartyB"
+                      clearable
+                      placeholder="请输入名称"
+                      style="width:35%;margin-left:5px;">
+              <template slot="prepend"> 乙方： </template>
+            </el-input>
+            <div>
+              <el-button size="small"
+                         style="margin-left: 10px"
+                         plain
+                         @click="changeClick"><i class="el-icon-search" />查询</el-button>
+              <el-button size="small"
+                         style="margin-left: 5px"
+                         plain
+                         @click="resetClick"><i class="el-icon-refresh" />重置</el-button>
+            </div>
           </div>
-          <el-input slot=""
-                    v-model="PartyB"
-                    clearable
-                    placeholder="请输入名称"
-                    style="width: 30%;margin-left:5px;">
-            <template slot="prepend"> 乙方： </template>
-          </el-input>
-          <div>
-            <el-button size="small"
-                       style="margin-left: 10px"
-                       plain
-                       @click="changeClick"><i class="el-icon-search" />查询</el-button>
-            <el-button size="small"
-                       style="margin-left: 5px"
-                       plain
-                       @click="resetClick"><i class="el-icon-refresh" />重置</el-button>
+          <!-- 按钮 -->
+          <div style="display: flex;justify-content: flex-end; margin-right: 20px;
+        ">
+            <el-button type="primary"
+                       size="small"
+                       @click="createSig">
+              <i class="el-icon-circle-plus" />
+              新建
+            </el-button>
+            <el-button type="primary"
+                       size="small"
+                       @click="editSig">
+              <i class="el-icon-edit-outline" />
+              编辑
+            </el-button>
+            <el-button type="primary"
+                       size="small"
+                       @click="showSig">
+              <i class="el-icon-edit-outline" />
+              查看详情
+            </el-button>
+            <el-button type="primary"
+                       size="small"
+                       @click="delSig">
+              <i class="el-icon-delete-solid" />
+
+              删除
+            </el-button>
           </div>
+          <!-- 按钮end -->
         </div>
         <!-- 顶部搜索end -->
+<div>
+  剩余房源  住宅{{shengyuzhuzhai}}  办公{{shengyubangong}}  厂房{{shengyuchangfang}}
+
+</div>
         <!-- 报告模板 -->
-        <div style="margin-top: 5px; display: flex; justify-content: flex-start">
-          <div class="selectCheck">
+        <!-- <div class="selectCheck">
             <span class="check_font"
                   style="">报告模板：</span>
             <el-select v-model="repTem"
@@ -66,8 +104,8 @@
           <el-button size="small"
                      style="margin-left: 5px;margin-right:10px"
                      plain
-                     @click="printClick"><i class="el-icon-printer" />打印</el-button>
-          <div class="selectCheck">
+                     @click="printClick"><i class="el-icon-printer" />打印</el-button> -->
+        <!-- <div class="selectCheck">
             <span class="check_font"
                   style="">补偿方式：</span>
             <el-select v-model="repTem"
@@ -83,8 +121,8 @@
           <el-button size="small"
                      style="margin-left: 5px"
                      plain
-                     @click="fillClick"><i class="el-icon-printer" />确定</el-button>
-        </div>
+                     @click="fillClick"><i class="el-icon-printer" />确定</el-button> -->
+
         <!-- 报告模板end -->
       </div>
       <!-- 顶部end -->
@@ -110,42 +148,6 @@
 
       </div>
 
-      <!-- 按钮 -->
-      <div style="
-          display: flex;
-          justify-content: flex-end;
-          margin-top: 20px;
-          margin-bottom: 10px;
-          margin-right: 20px;
-        ">
-        <el-button type="primary"
-                   size="small"
-                   @click="createSig">
-          <i class="el-icon-circle-plus" />
-          新建
-        </el-button>
-        <el-button type="primary"
-                   size="small"
-                   @click="editSig">
-          <i class="el-icon-edit-outline" />
-          编辑
-        </el-button>
-        <el-button type="primary"
-                   size="small"
-                   @click="showSig">
-          <i class="el-icon-edit-outline" />
-          查看详情
-        </el-button>
-        <el-button type="primary"
-                   size="small"
-                   @click="delSig">
-          <i class="el-icon-delete-solid" />
-
-          删除
-        </el-button>
-      </div>
-      <!-- 按钮end -->
-
       <!-- 编辑/查看弹窗 -->
       <div class="edit">
         <el-dialog :title="dialogType"
@@ -161,6 +163,7 @@
                          multiple
                          placeholder="小组"
                          style="width: 100%">
+
                 <el-option v-for="item in repTemList"
                            :key="item.id"
                            :label="item.label"
@@ -168,6 +171,31 @@
               </el-select>
 
             </el-form-item>
+            <!-- <el-form-item label="补偿方式：">
+              <el-select v-model="comp"
+                         multiple
+                         placeholder="选择补偿方式"
+                         style="">
+                <el-option v-for="item in repTemList"
+                           :key="item.id"
+                           :label="item.label"
+                           :value="item.id" />
+              </el-select>
+
+              <el-button style="margin-left:5px"
+                         type="primary"
+                         size="small"
+                         @click="compBtn">十</el-button>
+              <ul>
+                <li v-for="(t,i) of sigInfocomp"
+                    :key="i"
+                    :task="t"
+                    :i="i">{{i+1}} {{task}} <a href="javascript:;">×</a></li>
+
+              </ul>
+
+            </el-form-item> -->
+
             <el-form-item label="乙方:">
               <el-input v-model="sigInfo.Name"
                         placeholder="乙方" />
@@ -180,6 +208,11 @@
               <el-input v-model="sigInfo.Tel"
                         placeholder="住址" />
             </el-form-item>
+            <el-form-item label="可选房源/套:">
+              <el-input v-model="sigInfo.Tel"
+                        placeholder="可选房源/套" />
+            </el-form-item>
+
             <el-form-item label="协议编号:">
               <el-input v-model="sigInfo.Tel"
                         placeholder="协议编号" />
@@ -189,8 +222,6 @@
                         placeholder="测绘编号" />
             </el-form-item>
 
-           
-            
           </el-form>
           <span slot="footer">
             <el-button @click="sigCancel">取消</el-button>
@@ -213,49 +244,136 @@
         <el-table-column type="selection"
                          width="45"
                          align="center" />
-        <el-table-column prop="PartyB"
+        <el-table-column prop="xiaozu"
                          label="小组"
                          align="center"
-                         width="100" />
+                         width="60" />
         <el-table-column prop="PartyB"
                          label="乙方"
                          align="center"
-                         width="100" />
-        <el-table-column prop="lowReqB"
+                         width="60" />
+        <el-table-column prop="shenfenID"
                          label="身份证号"
                          align="center"
-                         width="100"
+                         width="80"
                          show-overflow-tooltip />
         <el-table-column prop="addressB"
                          label="住址"
                          align="center"
-                         width=""
+                         width="100"
                          show-overflow-tooltip />
-        <el-table-column prop="addressB"
+        <el-table-column prop="lowReqB"
+                         label="可选房源/套"
+                         align="center"
+                         width="95"
+                         show-overflow-tooltip />
+        <el-table-column prop="xieyi"
                          label="协议编号"
                          align="center"
                          width=""
                          show-overflow-tooltip />
-        <el-table-column prop="addressB"
+        <el-table-column prop="cehui"
                          label="测绘编号"
                          align="center"
                          width=""
                          show-overflow-tooltip />
-        <el-table-column prop="sigPhoto"
+        <el-table-column label="选房"
+                         align="center">
+          <el-table-column prop="zhuzhai"
+                           label="住宅/套"
+                           min-width="90"
+                           align="center">
+            <template slot-scope="scope">
+              <el-select v-model="scope.row.zhuzhai"
+                         collapse-tags
+                         clearable
+                         @change="zhuzhaiChange(scope)"
+                         placeholder="请选择"
+                         style="width: 100%">
+                <el-option v-for="item in repTemList"
+                           :key="item.id"
+                           :label="item.label"
+                           :value="item.id" />
+              </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column prop="bangong"
+                           label="办公/套"
+                           min-width="90"
+                           align="center">
+            <template slot-scope="scope">
+              <el-select v-model="scope.row.bangong"
+                         collapse-tags
+                         clearable
+                         @change="bangongChange(scope)"
+                         placeholder="请选择"
+                         style="width: 100%">
+                <el-option v-for="item in repTemList"
+                           :key="item.id"
+                           :label="item.label"
+                           :value="item.id" />
+              </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column prop="changfang"
+                           label="厂房/套"
+                           min-width="90"
+                           align="center">
+            <template slot-scope="scope">
+              <el-select v-model="scope.row.changfang"
+                         collapse-tags
+                         clearable
+                         @change="changfangChange(scope)"
+                         placeholder="请选择"
+                         style="width: 100%">
+                <el-option v-for="item in repTemList"
+                           :key="item.id"
+                           :label="item.label"
+                           :value="item.id" />
+              </el-select>
+            </template>
+          </el-table-column>
+        </el-table-column>
+        <el-table-column prop="moban"
+                         label="签约模板"
+                         min-width="90"
+                         align="center">
+          <template slot-scope="scope">
+            <el-select v-model="moban"
+                       collapse-tags
+                       placeholder="请选择"
+                       style="width: 100%">
+              <el-option v-for="item in repTemList"
+                         :key="item.id"
+                         :label="item.label"
+                         :value="item.id" />
+            </el-select>
+          </template>
+        </el-table-column>
+        asd
+        <el-table-column align="center"
+                         width="">
+          <div slot-scope="scope">
+            <el-button size="mini"
+                       @click="SigPrint(scope)"> <i class="el-icon-printer" />打印</el-button>
+
+          </div>
+        </el-table-column>
+
+        <el-table-column prop="zhaopian"
                          label="签约照片"
                          min-width="180"
                          align="center">
           <template slot-scope="scope">
-            <el-image :src="scope.row.sigPhoto"
-                      :preview-src-list="scope.row.sigPhotoBig"
+            <el-image :src="scope.row.zhaopian"
+                      :preview-src-list="scope.row.zhaopianBig"
                       fit="contain"
-                      :lazy="true"
                       style="width: 150px; max-height: 60px" />
           </template>
         </el-table-column>
         <el-table-column prop="sigDate"
                          label="签约时间"
-                         width=""
+                         width="200"
                          align="center"
                          show-overflow-tooltip />
         <!-- <el-table-column prop="sigDate"
@@ -335,16 +453,25 @@ export default {
       PartyA: '',
       PartyB: '',
       repTem: '',
+      shengyuzhuzhai: 123,
+      shengyubangong: 888,
+      shengyuchangfang: 230,
       repTemList: [
-        { id: 1, label: '测试一' },
-        { id: 2, label: '测试二' },
-        { id: 3, label: '测试三' },
-        { id: 4, label: '测试四' },
-        { id: 5, label: '测试五' },
+        { id: 1, label: '1' },
+        { id: 2, label: '2' },
+        { id: 3, label: '3' },
+        { id: 4, label: '4' },
+        { id: 5, label: '5' },
+        { id: 6, label: '6' },
+        { id: 7, label: '7' },
+        { id: 8, label: '8' },
       ],
       multipleSelection: [],
       proLoading: false,
-      InsSigSys: [{ addressB: 'abc' }],
+      InsSigSys: [
+        { xiaozu: "一组", PartyB: '乙方', shenfenID: "441622111133330000", addressB: '广东省深圳市福田区紫竹七道1号', lowReqB: "3", xieyi: "xyz-7788", cehui: 'qwe_0026', zhuzhai: 0, bangong: 0, changfang: 0, zhaopian: "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aoxs/4eec6c80-0aa9-11eb-b244-a9f5e5565f30.png", zhaopianBig: ["https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aoxs/4eec6c80-0aa9-11eb-b244-a9f5e5565f30.png"], sigDate: '2020-11-21 14:06:51.789' }
+      ],
+      moban: '',
       dialogSigCreate: false,
       dialogType: '编辑',
       CameraDialog: false,
@@ -354,45 +481,90 @@ export default {
       imgSrc: '',
       dialogSigTemp: false,
       content: '',
+      comp: '',
+      sigInfocomp: [],
+
     }
   },
-  mounted() { },
+  mounted() {
+    this.$nextTick(function () {
+      this.setColSpan();
+    })
+  },
   methods: {
+    setColSpan() {
+      // console.log(document.getElementsByClassName("el-table__header"))
+      // 获取表头的所有单元格
+      var x = document.getElementsByClassName("el-table__header")[0].rows[0].cells
+      // 将第二列表头单元格的colSpan设为2
+      x[9].colSpan = 2
+      // 将第三列表头单元格的display设为none
+      x[10].style.display = 'none'
+    },
+
+
     // 乱七八糟按钮一堆
     changeClick() {
-      console.log('小组:', this.PartyA)
+      console.log('小组:', this.repTem)
       console.log('乙方:', this.PartyB)
     },
     resetClick() {
-      this.PartyA = ''
+      this.repTem = ''
       this.PartyB = ''
+    },
+    zhuzhaiChange(scope) {
+      if (scope.row.zhuzhai + scope.row.bangong + scope.row.changfang > scope.row.lowReqB) {
+        this.$alert('所选数量不能大于可选房源', "提示", {
+          confirmButtonText: '确认',
+          type: 'info'
+        }).then(() => {
+         
+        })
+         scope.row.zhuzhai = 0
+          scope.row.bangong = 0
+          scope.row.changfang = 0
+      }
+      console.log(scope.row.zhuzhai)
+      console.log(scope.row.bangong)
+      console.log(scope.row.changfang)
+    },
+    bangongChange(scope) {
+      if (scope.row.zhuzhai + scope.row.bangong + scope.row.changfang > scope.row.lowReqB) {
+        this.$alert('所选数量不能大于可选房源', "提示", {
+          confirmButtonText: '确认',
+          type: 'info'
+        }).then(() => {
+         
+        })
+         scope.row.zhuzhai = 0
+          scope.row.bangong = 0
+          scope.row.changfang = 0
+      }
+      console.log(scope.row.zhuzhai)
+      console.log(scope.row.bangong)
+      console.log(scope.row.changfang)
+
+    },
+    changfangChange(scope) {
+      if (scope.row.zhuzhai + scope.row.bangong + scope.row.changfang > scope.row.lowReqB) {
+        this.$alert('所选数量不能大于可选房源', "提示", {
+          confirmButtonText: '确认',
+          type: 'info'
+        }).then(() => {
+         
+        })
+         scope.row.zhuzhai = 0
+          scope.row.bangong = 0
+          scope.row.changfang = 0
+      }
+      console.log(scope.row.zhuzhai)
+      console.log(scope.row.bangong)
+      console.log(scope.row.changfang)
     },
     printClick() {
 
-      if (this.multipleSelection.length == 0) {
-        this.$alert('未选中项目', '提示', {
-          confirmButtonText: '确认',
-          type: 'info'
-        })
-      } else if (this.multipleSelection.length > 1) {
-        this.$alert('最多只能同时执行一条', '提示', {
-          confirmButtonText: '确认',
-          type: 'info'
-        })
-      } else {
-        if (!this.repTem) {
-          this.$alert('请选择报告模板', '提示', {
-            confirmButtonText: '确认',
-            type: 'info'
-          })
-        } else {
-          this.dialogType = '打印模板'
-          this.dialogSigTemp = true
-          console.log(this.repTem)
-          console.log(this.multipleSelection)
-        }
 
-      }
+
 
     },
     fillClick() {
@@ -438,6 +610,18 @@ export default {
           })
       }
     },
+
+    compBtn() {
+      console.log(typeof (this.comp), this.comp)
+      var arr = []
+      for (let i in this.comp) {
+        this.sigInfocomp.push(this.comp[i])
+        console.log("this.sigInfocomp:", this.sigInfocomp)
+        console.log("this.comp[i]", this.comp[i])
+
+      }
+      this.comp = []
+    },
     // 保存
     sigUp() {
       this.dialogSigCreate = false
@@ -447,7 +631,25 @@ export default {
       this.dialogSigCreate = false
 
     },
-    openCamera() {
+    SigPrint(scope) {
+      console.log(scope.row)
+      console.log(this.moban)
+      if (!this.moban) {
+        this.$alert('请选择报告模板', '提示', {
+          confirmButtonText: '确认',
+          type: 'info'
+        })
+      } else {
+        this.dialogType = '打印模板'
+        this.dialogSigTemp = true
+        console.log(scope.row)
+        console.log(this.moban)
+      }
+
+
+    },
+    openCamera(scope) {
+      console.log(scope.row)
       this.CameraDialog = true
       this.callCamera()
     },
@@ -503,7 +705,7 @@ export default {
       // 由字节转换为KB 判断大小
       let str = imgBase64.replace('data:image/jpeg;base64,', '')
       let strLength = str.length
-      let fileLength = parseInt(strLength - (strLength / 8) * 2)　　　 // 图片尺寸  用于判断
+      let fileLength = parseInt(strLength - (strLength / 8) * 2)　　　 // 图片尺寸
       let size = (fileLength / 1024).toFixed(2)
       console.log(size + 'kB') 　　  // 上传拍照信息  调用接口上传图片 .........
 
@@ -592,7 +794,8 @@ export default {
 //   margin-bottom: 5px;
 // }
 .selectCheck {
-  width: 30%;
+  width: 35%;
+  height: 36px;
   // margin-left: 20px;
   display: flex;
   border: 1px solid #dcdfe6;
@@ -601,7 +804,8 @@ export default {
 }
 .check_font {
   display: block;
-  width: 35%;
+  // justify-content: space-between;
+  width: 83px;
   padding: 10px 10px;
   font-size: 14px;
   color: #909399;
