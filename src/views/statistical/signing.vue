@@ -127,8 +127,8 @@
           <p style="
               text-align: center;
               margin: 0px;
-              margin-top: 15px;
-              margin-bottom: 20px;
+              margin-top: 10px;
+              margin-bottom: 10px;
               font-size: 24px;
               font-weight: 700;
             ">
@@ -209,68 +209,92 @@
         <!-- <el-row :gutter="20">
           <el-col :span="18"
                   :offset="0"> -->
-        <div class="sigDiv"
-        style="height:30%">
-          <img src="./images/ksh42.png"
-               style="position: absolute; top: -2px; left: -2px"
-               alt="">
-          <img src="./images/ksh43.png"
-               style="position: absolute; top: -2px; right: -2px"
-               alt="">
-          <img src="./images/ksh44.png"
-               style="position: absolute; bottom: -2px; right: -2px"
-               alt="">
-          <img src="./images/ksh45.png"
-               style="position: absolute; bottom: -2px; left: -2px"
-               alt="">
-          <div class="sigTitle">
-            <span>签约实时统计</span>
-            <img src="./images/ksh33.png"
-                 alt=""
-                 class="tablesIMG">
+        <div style="display:flex; justify-content: space-between;">
+          <div class="sigDiv"
+               style="height:30%;width: 80%;">
+            <img src="./images/ksh42.png"
+                 style="position: absolute; top: -2px; left: -2px"
+                 alt="">
+            <img src="./images/ksh43.png"
+                 style="position: absolute; top: -2px; right: -2px"
+                 alt="">
+            <img src="./images/ksh44.png"
+                 style="position: absolute; bottom: -2px; right: -2px"
+                 alt="">
+            <img src="./images/ksh45.png"
+                 style="position: absolute; bottom: -2px; left: -2px"
+                 alt="">
+            <div class="sigTitle">
+              <span>签约实时统计</span>
+              <img src="./images/ksh33.png"
+                   alt=""
+                   class="tablesIMG">
+            </div>
+            <el-table :data="sigTableData"
+                      border
+                      height="65%"
+                      style="margin: 10px auto; width: 98%; ">
+              <el-table-column prop="Remake"
+                               label="小组"
+                               min-width="55"
+                               align="center" />
+              <el-table-column prop="ContractNum"
+                               label="协议编号"
+                               min-width="65"
+                               align="center"
+                               show-overflow-tooltip />
+              <el-table-column prop="Obligee"
+                               label="权利人"
+                               min-width="60"
+                               align="center" />
+              <el-table-column prop="SignTime"
+                               label="签约时间"
+                               min-width="150"
+                               align="center" />
+              <el-table-column prop="Potos"
+                               label="签约照片"
+                               min-width="153"
+                               align="center">
+                <template slot-scope="scope">
+                  <el-image :src="scope.row.Potos"
+                            :preview-src-list="scope.row.PotosBig"
+                            fit="contain"
+                            :lazy="true"
+                            style="width: 150px; max-height: 30px; margin-top: 1px" />
+                </template>
+              </el-table-column>
+              <el-table-column prop=""
+                               label="排名"
+                               min-width="55"
+                               align="center" />
+            </el-table>
           </div>
-          <el-table :data="tableData"
-                    border
-                    height="50%"
-                    style="margin: 10px auto; width: 98%; ">
-            <el-table-column prop="sigTeam"
-                             label="小组"
-                             min-width="55"
-                             align="center" />
-            <el-table-column prop="sigPeople"
-                             label="协议编号"
-                             min-width="65"
-                             align="center"
-                             show-overflow-tooltip />
-            <el-table-column prop="sigPeople"
-                             label="权利人"
-                             min-width="60"
-                             align="center" />
-            <el-table-column prop="sigDate"
-                             label="签约时间"
-                             min-width="150"
-                             align="center" />
-            <el-table-column prop="sigPhoto"
-                             label="签约照片"
-                             min-width="153"
-                             align="center">
-              <template slot-scope="scope">
-                <el-image :src="scope.row.sigPhoto"
-                          :preview-src-list="scope.row.sigPhotoBig"
-                          fit="contain"
-                          :lazy="true"
-                          style="width: 150px; max-height: 30px; margin-top: 1px" />
-              </template>
-            </el-table-column>
-            <el-table-column prop="sigRanking"
-                             label="排名"
-                             min-width="55"
-                             align="center" />
-          </el-table>
-        </div>
-        <!-- </el-col>
+          <div class="sigDiv"
+               style="height:30%;width: 19%;">
+            <img src="./images/ksh42.png"
+                 style="position: absolute; top: -2px; left: -2px"
+                 alt="">
+            <img src="./images/ksh43.png"
+                 style="position: absolute; top: -2px; right: -2px"
+                 alt="">
+            <img src="./images/ksh44.png"
+                 style="position: absolute; bottom: -2px; right: -2px"
+                 alt="">
+            <img src="./images/ksh45.png"
+                 style="position: absolute; bottom: -2px; left: -2px"
+                 alt="">
+            <div class="sigTitle">
+              <span>剩余房源</span>
+              <!-- <img src="./images/ksh33.png"
+                 alt=""
+                 class="tablesIMG"> -->
 
-          <el-col :span="24"> -->
+            </div>
+            <div>住宅:<span>{{NumType.Housenum}}</span></div>
+            <div>办公:<span>{{NumType.Officenum}}</span></div>
+            <div>厂房:<span>{{NumType.Factornum}}</span></div>
+          </div>
+        </div>
         <div class="sigDiv"
              style="height: 38%">
           <img src="./images/ksh42.png"
@@ -323,10 +347,12 @@ export default {
       windowWidth: document.documentElement.clientWidth,  //实时屏幕宽度
       windowHeight: document.documentElement.clientHeight,   //实时屏幕高度
       sigdiv1h: '',
+      NumType: {},
       PageStarted: true,
       sigChartsTotal: 80,
       sigAccounted: 60,
-      sigChartsData: [20, 8, 51, 70, 72, 80, 66],
+      sigChartsname: [],
+      sigChartsData: [],
       srcList: [],
       isFullscreen: false,
       Server_Date: '',
@@ -335,6 +361,11 @@ export default {
       statTab: [
         { name: '已签约:', num: '320/600' },
         { name: '占比:', num: '70%' }
+      ],
+      shengyuTable: [
+        { name: "住宅", num: 800 },
+        { name: "厂房", num: 800 },
+        { name: "办公", num: 800 },
       ],
       tableData: [
         {
@@ -447,7 +478,8 @@ export default {
           ],
           sigRanking: 22
         }
-      ]
+      ],
+      sigTableData: [],
     }
   },
   watch: {
@@ -455,7 +487,7 @@ export default {
     windowHeight(val) {
       let than = this
       than.sigdiv1h = than.windowHeight + 'px'
-      
+
       console.log("实时屏幕高度：", val, than.windowHeight);
     },
     windowWidth(val) {
@@ -469,12 +501,17 @@ export default {
     // setTimeout( ()=>{
     //  this.PageStarted = false
     //  },3000 )
+    let than = this
+
+    than.sigdiv1h = than.windowHeight + 'px'
+    this.getChartsData()
   },
   mounted() {
-    
+    this.getNumType()
+    this.getsigTableData()
     let than = this
+
     window.addEventListener('resize', () => {
-     
       return (() => {
         window.fullHeight = document.documentElement.clientHeight;
         window.fullWidth = document.documentElement.clientWidth;
@@ -504,10 +541,10 @@ export default {
     document.getElementById('full_screen').addEventListener('click', () => {
       if (screenfull.enabled) {
         screenfull.request(element) // 元素全屏
+
       }
     })
-
-    this.sigCharts()
+    // this.sigCharts()
   },
 
   beforeDestroy() {
@@ -516,7 +553,35 @@ export default {
     }
   },
   methods: {
-
+    // 获取统计表
+    getsigTableData() {
+      this.axios.get('/QuerySignRile?Id=143').then((res) => {
+        console.log(res.data)
+        this.sigTableData = res.data
+      })
+    },
+    // 获取剩余房源数量
+    getNumType() {
+      this.axios.get('/NumType?id=143').then((res) => {
+        console.log(res.data)
+        this.NumType = res.data[0]
+        console.log(this.NumType)
+      })
+    },
+    // 获取小组进度排名图表
+    getChartsData() {
+      this.axios.get('/Census?Id=143').then((res) => {
+        console.log(res.data)
+        for (var i in res.data) {
+          console.log(i, res.data[i])
+          this.sigChartsname.push(res.data[i].GroupName)
+          this.sigChartsData.push(res.data[i].MustNum)
+        }
+        console.log(this.sigChartsname)
+        console.log(this.sigChartsData)
+        this.sigCharts()
+      })
+    },
 
     // change() {
     //   this.tableData.push(this.tableData[0]);//把第一条数据插入数组最有一条
@@ -530,7 +595,7 @@ export default {
     //   this.tableData = this.tableData.concat(exampleData);
     // },
     currentTime() {
-      setInterval(this.formatDate, 100)
+      setInterval(this.formatDate, 200)
     },
     formatDate() {
       const date = new Date()
@@ -551,6 +616,7 @@ export default {
 
     sigCharts() {
       var sigChart = echarts.init(document.getElementById('charts1'))
+
       const option = {
         // title: {
         //   text: "签约统计",
@@ -566,7 +632,7 @@ export default {
         // },
         xAxis: {
           type: 'category',
-          data: ['一组', '二组', '三组', '四组', '五组', '六组', '七组'],
+          data: this.sigChartsname,
           axisLabel: {
             show: true,
             textStyle: {
@@ -628,7 +694,16 @@ export default {
                     '#C6E579',
                     '#F4E001',
                     '#F0805A',
-                    '#26C0C0'
+                    '#26C0C0',
+                    '#C1232B',
+                    '#B5C334',
+                    '#FCCE10',
+                    '#E87C25',
+                    '#27727B',
+                    '#FE8463',
+                    '#9BCA63',
+                    '#FAD860',
+                    '#F3A43B',
                   ]
                   return colorList[params.dataIndex]
                 }
@@ -726,7 +801,7 @@ text {
 
 .sigMian {
   // background-color: #061436;
-  // min-height: 600px;
+  min-height: 800px;
   color: white;
   padding-top: 10px;
   padding-left: 55px;
@@ -743,7 +818,7 @@ text {
 }
 .sigDiv {
   position: relative;
-  
+
   // background-color: #13CE66;
   margin-top: 10px;
   padding: 10px 10px;
@@ -761,7 +836,7 @@ text {
   width: 20%;
 
   position: absolute;
-  top: 35px;
+  top: 10px;
   left: 15px;
 }
 .sigLabel {
@@ -827,12 +902,13 @@ text {
 }
 
 .timeDiv {
-  padding-top: 15px;
+  padding-top: 8px;
   text-align: center;
 }
 .timeDiv span {
   font-size: 28px;
   font-weight: 800;
+  line-height: 28px;
   color: #fff;
 }
 .timeCss {
@@ -842,7 +918,7 @@ text {
   box-shadow: 0px 0px 5px 1px #1890ff inset;
   // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) inset;
   margin: 5px 1px;
-  padding: 8px 5px;
+  padding: 6px 5px;
 }
 
 .timeSpanCss {

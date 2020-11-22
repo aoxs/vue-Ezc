@@ -183,7 +183,7 @@
                   v-for="item in groupInsOption"
                   :key="item.id"
                   :label="item.label"
-                  :value="item.id"
+                  :value="item.label"
                 />
               </el-select>
             </el-form-item>
@@ -197,7 +197,7 @@
                   v-for="item in userNameOptions"
                   :key="item.ID"
                   :label="item.Role_Name"
-                  :value="item.ID"
+                  :value="item.Role_Name"
                 />
               </el-select>
             </el-form-item>
@@ -528,6 +528,7 @@ export default {
   },
   created() {
     // this.fetchData()
+  
   },
   mounted() {
     this.getUserList()
@@ -612,10 +613,11 @@ export default {
     // 增删改查按钮
     groupAdd() {
       console.log(this.role)
+      this.role = Object.assign({}, defaultRole)
       this.dialogVisible = true
       this.dialogType = 'add'
 
-      this.role = Object.assign({}, defaultRole)
+      
       console.log(this.dataOption)
     },
     groupEdit(scope) {
@@ -658,7 +660,7 @@ export default {
           type: 'warning'
         }).then(() => {
           // console.log(this.multipleSelection[0].ID)
-          var delID = this.multipleSelection[0].Id
+          var delID = this.multipleSelection[0].UserId
           this.axios.get('/DelUser?Userid=' + delID).then((res) => {
             this.getUserList()
             if (res.data.code == 1) {

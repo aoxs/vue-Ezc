@@ -183,6 +183,8 @@ export default {
           console.log(res.data)
           if (!res.data) {
             this.$message.error('账号或密码错误')
+                    this.loading = false
+
           } else {
             this.$refs.loginForm.validate(valid => {
               if (valid) {
