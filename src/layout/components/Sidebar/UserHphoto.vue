@@ -33,9 +33,15 @@ export default {
   data(){
     return{
       image: '',
-      username: 'Admin'
+      username: ''
     }
-  }
+  },
+  methods:{
+
+  },
+  mounted(){
+    this.username = this.$store.getters.roles[0]
+  },
 };
 </script>
 

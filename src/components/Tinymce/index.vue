@@ -115,7 +115,7 @@ export default {
     initTinymce() {
       const _this = this
       window.tinymce.init({
-        readonly: 1,
+        // readonly: 1,
         selector: `#${this.tinymceId}`,
         language: this.languageTypeList['zh'],
         height: this.height,

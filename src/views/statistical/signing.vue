@@ -231,9 +231,11 @@
                    class="tablesIMG">
             </div>
             <el-table :data="sigTableData"
+                      v-loading="sigTableLoading"
+                      ref="table"
                       border
-                      height="65%"
-                      style="margin: 10px auto; width: 98%; ">
+                      height="203"
+                      style="margin: 10px auto; width: 98%;">
               <el-table-column prop="Remake"
                                label="小组"
                                min-width="55"
@@ -256,14 +258,14 @@
                                min-width="153"
                                align="center">
                 <template slot-scope="scope">
-                  <el-image :src="scope.row.Potos"
+                  <el-image :src="'http://120.86.117.97:8579/file/'+scope.row.Potos"
                             :preview-src-list="scope.row.PotosBig"
                             fit="contain"
                             :lazy="true"
                             style="width: 150px; max-height: 30px; margin-top: 1px" />
                 </template>
               </el-table-column>
-              <el-table-column prop=""
+              <el-table-column prop="FormWork"
                                label="排名"
                                min-width="55"
                                align="center" />
@@ -284,19 +286,28 @@
                  style="position: absolute; bottom: -2px; left: -2px"
                  alt="">
             <div class="sigTitle">
-              <span>剩余房源</span>
-              <!-- <img src="./images/ksh33.png"
-                 alt=""
-                 class="tablesIMG"> -->
+              <span>剩余补偿面积</span>
 
             </div>
-            <div>住宅:<span>{{NumType.Housenum}}</span></div>
-            <div>办公:<span>{{NumType.Officenum}}</span></div>
-            <div>厂房:<span>{{NumType.Factornum}}</span></div>
+            <div id="charts2"
+                 v-loading="sigPieLoading"
+                 :style="{
+                  width: '100%',
+                  height: '200px',
+                }" />
+            <!--
+            <div class="sigTitle">
+              <span>剩余房源</span>
+            </div>
+            <div>住宅:<span>{{NumType.Housenum}}m²</span></div>
+            <div>办公:<span>{{NumType.Officenum}}m²</span></div>
+            <div>工业:<span>{{NumType.Factornum}}m²</span></div>
+            <div>集中商业:<span>{{NumType.BusinessNum}}m²</span></div>
+            <div>底层商铺:<span>{{NumType.Lowsbus}}m²</span></div> -->
           </div>
         </div>
         <div class="sigDiv"
-             style="height: 38%">
+             style="height: 30%;padding-bottom:20px">
           <img src="./images/ksh42.png"
                style="position: absolute; top: -2px; left: -2px"
                alt="">
@@ -315,11 +326,12 @@
                  alt=""
                  class="chartsIMG">
           </div>
+
           <div id="charts1"
                :style="{
                   width: '100%',
                   height: '100%',
-                }" />
+                }"> </div>
         </div>
         <!-- </el-col>
         </el-row> -->
@@ -335,6 +347,7 @@
 // import './css/signing.css'
 import screenfull from 'screenfull'
 import echarts from 'echarts'
+import { color } from 'echarts/lib/export'
 // require('echarts/theme/macarons') // echarts theme
 // import resize from './mixins/resize'
 
@@ -342,6 +355,9 @@ import echarts from 'echarts'
 export default {
   data() {
     return {
+      sigPieLoading: false,
+      sigBarLoading: false,
+      sigTableLoading: false,
       a: 600,
       b: 320,
       windowWidth: document.documentElement.clientWidth,  //实时屏幕宽度
@@ -519,6 +535,19 @@ export default {
         than.windowWidth = window.fullWidth; // 宽
       })()
     });
+
+    // 控制表格高度
+    // this.$nextTick(function () {
+    //   this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 347;
+
+    //   // 监听窗口大小变化
+    //   let self = this;
+    //   window.addEventListener('resize', () => {
+
+    //     self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 347
+    //     console.log('888aaa', self.tableHeight)
+    //   })
+    // })
     // <!--把window.onresize事件挂在到mounted函数上-->
     // window.onresize = () => {
 
@@ -544,34 +573,49 @@ export default {
 
       }
     })
-    // this.sigCharts()
+    this.sigCharts()
   },
 
   beforeDestroy() {
-    if (this.formatDate) {
-      clearInterval(this.formatDate) // 清除时间定时器
-    }
+    // if (this.formatDate) {
+    clearInterval(this.formatDate) // 清除时间定时器
+    // }
+    // window.removeEventListener('resize', this.measure1(), false)
+
   },
   methods: {
     // 获取统计表
     getsigTableData() {
+      this.sigTableLoading = true
       this.axios.get('/QuerySignRile?Id=143').then((res) => {
         console.log(res.data)
         this.sigTableData = res.data
+        for (var i in this.sigTableData) {
+          this.sigTableData[i].PotosBig = []
+          var potosBig = 'http://120.86.117.97:8579/file/' + this.sigTableData[i].Potos
+          this.sigTableData[i].PotosBig.push(potosBig)
+        }
+        this.sigTableLoading = false
       })
     },
     // 获取剩余房源数量
     getNumType() {
+      this.sigPieLoading = true
       this.axios.get('/NumType?id=143').then((res) => {
         console.log(res.data)
+        this.sigPieLoading = false
         this.NumType = res.data[0]
         console.log(this.NumType)
+        this.sigPieCharts()
       })
     },
     // 获取小组进度排名图表
     getChartsData() {
+      this.sigBarLoading = true
       this.axios.get('/Census?Id=143').then((res) => {
         console.log(res.data)
+              this.sigBarLoading = false
+ 
         for (var i in res.data) {
           console.log(i, res.data[i])
           this.sigChartsname.push(res.data[i].GroupName)
@@ -580,6 +624,7 @@ export default {
         console.log(this.sigChartsname)
         console.log(this.sigChartsData)
         this.sigCharts()
+
       })
     },
 
@@ -612,12 +657,95 @@ export default {
       second = second < 10 ? '0' + second : second // 补零
       this.nowDate = `${year}${month}${day}${hour}${minute}${second}${weekArr[week]}`
       this.nowDateArr = this.nowDate.split('')
+
+    },
+    sigPieCharts() {
+      var sigPieChart = echarts.init(document.getElementById('charts2'))
+      var pieData = [{
+        name: '住宅',
+        value: this.NumType.Housenum
+      }, {
+        name: '办公',
+        value: this.NumType.Officenum
+      }, {
+        name: '集中商业',
+        value: this.NumType.BusinessNum
+      },
+      {
+        name: '工业',
+        value: this.NumType.Factornum
+      }, {
+        name: '底层商铺',
+        value: this.NumType.Lowsbus
+      },];
+
+      const optionPie = {
+        // title: [{
+        //   text: '剩余补偿面积'
+        // }, 
+        // {
+        //   subtext: 'alignTo: "edge"',
+        //   // left: '83.33%',
+        //   // top: '75%',
+        //   textAlign: 'center',
+
+        // }
+        // ],
+        // grid: [
+        //   {
+        //     top: '30%',
+        //     left: '0%',
+        //     right: '0%',
+        //     bottom: '0%',
+        //     containLabel: true
+        //   },
+        // ],
+
+        series: [{
+          type: 'pie',
+          radius: '80%',
+          hoverAnimation: true,
+          center: ['50%', '50%'],
+          data: pieData,
+          animation: true,
+          itemStyle: {
+            // normal: {
+            label: {
+              show: true,
+              postion: 'inner',
+              formatter: '{b}',
+              textStyle: {
+                fontWeight: 500,
+                fontSize: 14
+              }
+            },
+            labelLine: {
+              show: false
+            },
+          },
+
+          // left: '0%',
+          // right: 0,
+          // top: 0,
+          // bottom: 0
+        }],
+        tooltip: {                    //提示框样式，鼠标悬浮交互时的信息提示
+          trigger: 'item',
+          formatter: "{b} : {c}m² ({d}%)"
+        },
+        color: ['#c487ee', '#deb140', '#49dff0', '#6f81da', '#00ffb4'],
+
+      }
+      sigPieChart.setOption(optionPie)
+
+
+      window.addEventListener('resize', () => sigPieChart.resize())
     },
 
     sigCharts() {
       var sigChart = echarts.init(document.getElementById('charts1'))
 
-      const option = {
+      const optionBar = {
         // title: {
         //   text: "签约统计",
         //   textStyle: {
@@ -630,11 +758,22 @@ export default {
         //     color: '#fff'
         //   }
         // },
+        grid: [
+          {
+            top: '4%',
+            left: '3%',
+            right: '4%',
+            bottom: '8%',
+            containLabel: true
+          },
+        ],
         xAxis: {
           type: 'category',
           data: this.sigChartsname,
           axisLabel: {
             show: true,
+            interval: 0,
+            rotate: 40,
             textStyle: {
               color: '#fff'
             }
@@ -725,8 +864,9 @@ export default {
         //   }
         // }
       }
-      sigChart.setOption(option)
-      window.onresize = sigChart.resize
+      sigChart.setOption(optionBar)
+      window.addEventListener('resize', () => sigChart.resize())
+
     }
   }
 }
@@ -801,11 +941,11 @@ text {
 
 .sigMian {
   // background-color: #061436;
-  min-height: 800px;
+  min-height: 790px;
   color: white;
   padding-top: 10px;
   padding-left: 55px;
-  padding-bottom: 10px;
+  padding-bottom: 30px;
   padding-right: 55px;
 
   // background-color: #061436;
@@ -820,6 +960,7 @@ text {
   position: relative;
 
   // background-color: #13CE66;
+  min-height: 285px;
   margin-top: 10px;
   padding: 10px 10px;
   border: 1px solid #1890ff;
@@ -830,6 +971,9 @@ text {
   // border: 1px solid red;
   // display: flex;
   // justify-content: space-between;
+  height: 30%;
+  border: 1px solid red;
+
   position: relative;
 }
 .statDiv {

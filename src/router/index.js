@@ -88,6 +88,8 @@ export const constantRoutes = [
       }
     ]
   },
+]
+export const asyncRoutes = [
   {
     path: '/overview',
     component: Layout,
@@ -97,7 +99,7 @@ export const constantRoutes = [
         path: 'overview',
         component: () => import('@/views/Overview/index'),
         name: 'Overview',
-        meta: { title: '项目概述', icon: 'documentation', affix: true }
+        meta: { title: '项目概述', icon: 'documentation', affix: true, roles: ['admin'] }
       }
     ]
   },
@@ -108,14 +110,15 @@ export const constantRoutes = [
     name: 'prodyn',
     meta: {
       title: '项目动态',
-      icon: 'component'
+      icon: 'component',
+      roles: ['admin'] 
     },
     children: [
       {
         path: 'proNews',
         component: () => import('@/views/prodyn/proNews'),
         name: 'proNews',
-        meta: { title: '项目新闻' }
+        meta: { title: '项目新闻', }
       }, {
         path: 'NewsDetails/:id(\\d+)',
         component: () => import('@/views/prodyn/NewsDetails'),
@@ -126,7 +129,7 @@ export const constantRoutes = [
         path: 'proPolicy',
         component: () => import('@/views/prodyn/proPolicy'),
         name: 'proPolicy',
-        meta: { title: '相关政策' }
+        meta: { title: '相关政策'}
       }, {
         path: 'proInfo',
         component: () => import('@/views/prodyn/proInfo'),
@@ -143,7 +146,7 @@ export const constantRoutes = [
     component: Layout,
     // redirect: '/index',
     name: 'proMap',
-    meta: { title: '项目地图', icon: 'international', affix: true },
+    meta: { title: '项目地图', icon: 'international', affix: true, roles: ['admin'] },
 
     children: [
       {
@@ -164,19 +167,19 @@ export const constantRoutes = [
     path: '/statistical',
     component: Layout,
     name: 'statistical',
-    meta: { title: '统计分析', icon: 'education' },
+    meta: { title: '统计分析', icon: 'education', },
     children: [
       {
         path: 'survey',
         component: () => import('@/views/statistical/survey'),
         name: 'survey',
-        meta: { title: '意愿调查' },
+        meta: { title: '意愿调查', roles: ['admin'] },
       },
       {
         path: 'MadeBy',
         component: () => import('@/views/statistical/MadeBy'),
         name: 'MadeBy',
-        meta: { title: '确权统计' },
+        meta: { title: '确权统计', roles: ['admin'] },
       },
       {
         path: 'signing',
@@ -188,13 +191,13 @@ export const constantRoutes = [
         path: 'payment',
         component: () => import('@/views/statistical/payment'),
         name: 'payment',
-        meta: { title: '付款统计' },
+        meta: { title: '付款统计', roles: ['admin'] },
       },
       {
         path: 'demolition',
         component: () => import('@/views/statistical/demolition'),
         name: 'demolition',
-        meta: { title: '移交拆除' },
+        meta: { title: '移交拆除', roles: ['admin'] },
       },
     ]
   },
@@ -204,7 +207,7 @@ export const constantRoutes = [
     name: 'info',
     meta: {
       title: '基础信息',
-      icon: 'clipboard'
+      icon: 'clipboard', roles: ['admin']
     },
     children: [
       {
@@ -239,7 +242,7 @@ export const constantRoutes = [
     name: 'EarlyStage',
     meta: {
       title: '前期阶段',
-      icon: 'table'
+      icon: 'table', roles: ['admin']
     },
     children: [
       {
@@ -280,7 +283,7 @@ export const constantRoutes = [
     name: 'infoCheck',
     meta: {
       title: '信息核查',
-      icon: 'nested'
+      icon: 'nested', roles: ['admin']
     },
     children: [
       {
@@ -310,7 +313,7 @@ export const constantRoutes = [
         path: 'negotiations',
         component: () => import('@/views/signing/negotiations'),
         name: 'negotiations',
-        meta: { title: '评估谈判' }
+        meta: { title: '评估谈判', roles: ['admin'] }
       },
       {
         path: 'agreement',
@@ -327,7 +330,7 @@ export const constantRoutes = [
     name: 'delivery',
     meta: {
       title: '支付移交',
-      icon: 'skill'
+      icon: 'skill', roles: ['admin']
     },
     children: [
       {
@@ -355,12 +358,13 @@ export const constantRoutes = [
   {
     path: '/fileMang',
     component: Layout,
+
     children: [
       {
         path: 'index',
         component: () => import('@/views/fileMang/index'),
         name: 'fileMang',
-        meta: { title: '档案管理', icon: 'excel', noCache: true }
+        meta: { title: '档案管理', icon: 'excel', noCache: true, roles: ['admin'] }
       }
     ]
   },
@@ -385,7 +389,7 @@ export const constantRoutes = [
   //     //   name: 'fileMang',
   //     //   meta: { title: '档案管理' }
   //     // },
-     
+
   //     {
   //       path: 'relevantData',
   //       component: () => import('@/views/ProTools/relevantData'),
@@ -407,7 +411,7 @@ export const constantRoutes = [
         path: 'contact',
         component: () => import('@/views/proMang/contact'),
         name: 'contact',
-        meta: { title: '通讯录' }
+        meta: { title: '通讯录',roles: ['admin'] }
       },
       {
         path: 'tempConfig',
@@ -416,10 +420,17 @@ export const constantRoutes = [
         meta: { title: '模板配置' }
       },
       {
+        path: 'NumConfig',
+        component: () => import('@/views/proMang/NumConfig'),
+        name: 'NumConfig',
+        meta: { title: '房源配置',roles: ['admin'] }
+      },
+      {
         path: 'NewsTools',
         component: () => import('@/views/proMang/NewsTools'),
         name: 'NewsTools',
-        meta: { title: '新闻管理' }
+        meta: { title: '新闻管理',roles: ['admin']
+        ,roles: ['admin'] }
       },
       {
         path: 'createnews',
@@ -521,13 +532,13 @@ export const constantRoutes = [
   
   */
 
-]
 
-/**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
- */
-export const asyncRoutes = [
+
+  /**
+   * asyncRoutes
+   * the routes that need to be dynamically loaded based on user roles
+   */
+
 
 
 
@@ -539,7 +550,8 @@ export const asyncRoutes = [
     name: 'systemSet',
     meta: {
       title: '系统管理',
-      icon: 'user'
+      icon: 'user',roles: ['admin']
+      
     },
     children: [
       {
@@ -833,9 +845,15 @@ export const asyncRoutes = [
     name: 'test',
     meta: {
       title: '测试路由',
-      icon: 'eye'
+      icon: 'eye', roles: ['admin']
     },
     children: [
+      {
+        path: 'tete01',
+        component: () => import('@/views/test/tete01'),
+        name: 'tete01',
+        meta: { title: '拍照上传' }
+      },
       {
         path: 'canvasvideo',
         component: () => import('@/views/test/canvasvideo'),
@@ -902,17 +920,10 @@ export const asyncRoutes = [
   },
 
 
-
-
-
-
-
-
-
-
   {
     path: '/icon',
     component: Layout,
+    meta:{ roles: ['admin']},
     children: [
       {
         path: 'index',

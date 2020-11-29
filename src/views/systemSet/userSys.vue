@@ -15,94 +15,85 @@
       </el-button> -->
 
       <!-- 顶部搜索 -->
-      <div
-        style="
+      <div style="
           display: flex;
           justify-content: flex-start;
           background: #f5f5f5;
           padding: 10px 20px;
           border-bottom: 1px solid #dadada;
-        "
-      >
+        ">
         <div style="width: 70%; display: flex; justify-content: flex-start">
-          <el-input
-            slot=""
-            v-model="checkUserName"
-            placeholder="请输入名称"
-            style="width: 30%"
-            clearable
-          >
+          <el-input slot=""
+                    v-model="checkUserName"
+                    placeholder="请输入名称"
+                    style="width: 30%"
+                    clearable>
             <template slot="prepend"> 账号 </template>
           </el-input>
 
           <div class="selectCheck">
-            <span class="check_font" style="">所属项目</span>
-            <el-select
-              v-model="dataSelect"
-              placeholder="请选择"
-              style="width: 70%"
-              clearable
-            >
-              <el-option
-                v-for="item in dataOption"
-                :key="item.id"
-                :label="item.label"
-                :value="item.id"
-              />
+            <span class="check_font"
+                  style="">所属项目</span>
+            <el-select v-model="dataSelect"
+                       placeholder="请选择"
+                       style="width: 70%"
+                       clearable>
+              <el-option v-for="item in dataOption"
+                         :key="item.id"
+                         :label="item.label"
+                         :value="item.id" />
             </el-select>
           </div>
 
-          <div style="" class="selectCheck">
+          <div style=""
+               class="selectCheck">
             <span class="check_font">所属机构</span>
-            <el-select
-              v-model="groupInsSelect"
-              placeholder="请选择"
-              style="width: 70%"
-              clearable
-            >
-              <el-option
-                v-for="item in groupInsOption"
-                :key="item.id"
-                :label="item.label"
-                :value="item.id"
-              />
+            <el-select v-model="groupInsSelect"
+                       placeholder="请选择"
+                       style="width: 70%"
+                       clearable>
+              <el-option v-for="item in groupInsOption"
+                         :key="item.id"
+                         :label="item.label"
+                         :value="item.id" />
             </el-select>
           </div>
         </div>
         <div>
-          <el-button
-            type="info"
-            size="small"
-            plain
-            @click="changeClick"
-          ><i class="el-icon-search" />查询</el-button>
-          <el-button
-            type="info"
-            size="small"
-            plain
-            @click="resetClick"
-          ><i class="el-icon-refresh" />重置</el-button>
+          <el-button type="info"
+                     size="small"
+                     plain
+                     @click="changeClick"><i class="el-icon-search" />查询</el-button>
+          <el-button type="info"
+                     size="small"
+                     plain
+                     @click="resetClick"><i class="el-icon-refresh" />重置</el-button>
         </div>
       </div>
       <!-- 顶部搜索end -->
 
-      <div
-        style="
+      <div style="
           width: 100%;
           padding-top: 10px;
           padding-bottom: 20px;
           white-space: nowrap;
-        "
-      >
+        ">
         <!-- 按钮 -->
         <div style="padding: 5px 10px">
-          <div class="pagRight" style="padding-right: 20px">
+          <div class="pagRight"
+               style="padding-right: 20px">
             <div style="">
-              <el-button type="primary" size="small" style="" @click="groupAdd">
-                <i class="el-icon-plus" style="font-weight: 1000" />
+              <el-button type="primary"
+                         size="small"
+                         style=""
+                         @click="groupAdd">
+                <i class="el-icon-plus"
+                   style="font-weight: 1000" />
                 新建
               </el-button>
-              <el-button type="primary" size="small" @click="userDel">
+              <el-button type="primary"
+                         size="small"
+                         @click="userDel">
                 <i class="el-icon-delete-solid" />
                 删除
               </el-button>
@@ -118,43 +109,40 @@
         <!-- 按钮end -->
         <!-- 增改 弹窗 -->
 
-        <el-dialog
-          :visible.sync="dialogVisible"
-          :title="dialogType == 'add' ? '新建用户' : '编辑用户'"
-          width="50%"
-          :before-close="handleClose"
-          top="10px"
-        >
-          <el-form :model="role" label-width="100px" label-position="right">
+        <el-dialog :visible.sync="dialogVisible"
+                   :title="dialogType == 'add' ? '新建用户' : '编辑用户'"
+                   width="50%"
+                   :before-close="handleClose"
+                   top="10px">
+          <el-form :model="role"
+                   label-width="100px"
+                   label-position="right">
             <el-form-item label="登录名:">
-              <el-input v-model="role.UserName" placeholder="登录名" />
+              <el-input v-model="role.UserName"
+                        placeholder="登录名" />
             </el-form-item>
             <el-form-item label="名称:">
-              <el-input v-model="role.Name" placeholder="名称" />
+              <el-input v-model="role.Name"
+                        placeholder="名称" />
             </el-form-item>
             <el-form-item label="登录密码:">
-              <el-input
-                v-model="role.Password"
-                show-password
-                placeholder="设置登录密码"
-              />
+              <el-input v-model="role.Password"
+                        show-password
+                        placeholder="设置登录密码" />
             </el-form-item>
             <el-form-item label="联系电话:">
-              <el-input v-model="role.Tel" placeholder="联系电话" />
+              <el-input v-model="role.Tel"
+                        placeholder="联系电话" />
             </el-form-item>
             <el-form-item label="所属项目:">
-              <el-select
-                v-model="role.proScope.id"
-                multiple
-                placeholder="请选择"
-                style="width: 100%"
-              >
-                <el-option
-                  v-for="item in dataOption"
-                  :key="item.id"
-                  :label="item.label"
-                  :value="item.id"
-                />
+              <el-select v-model="role.proScope.id"
+                         multiple
+                         placeholder="请选择"
+                         style="width: 100%">
+                <el-option v-for="item in dataOption"
+                           :key="item.id"
+                           :label="item.label"
+                           :value="item.id" />
               </el-select>
 
               <!-- <div style="width:30%">
@@ -174,31 +162,23 @@
                            @change="handleChange"
                            :show-all-levels="false"
                            clearable></el-cascader> -->
-              <el-select
-                v-model="role.groupName"
-                value-key=""
-                placeholder="请选择所属机构"
-              >
-                <el-option
-                  v-for="item in groupInsOption"
-                  :key="item.id"
-                  :label="item.label"
-                  :value="item.label"
-                />
+              <el-select v-model="role.groupName"
+                         value-key=""
+                         placeholder="请选择所属机构">
+                <el-option v-for="item in groupInsOption"
+                           :key="item.id"
+                           :label="item.label"
+                           :value="item.label" />
               </el-select>
             </el-form-item>
             <el-form-item label="角色:">
-              <el-select
-                v-model="role.role"
-                value-key=""
-                placeholder="请选择用户角色"
-              >
-                <el-option
-                  v-for="item in userNameOptions"
-                  :key="item.ID"
-                  :label="item.Role_Name"
-                  :value="item.Role_Name"
-                />
+              <el-select v-model="role.role"
+                         value-key=""
+                         placeholder="请选择用户角色">
+                <el-option v-for="item in userNameOptions"
+                           :key="item.ID"
+                           :label="item.Role_Name"
+                           :value="item.Role_Name" />
               </el-select>
             </el-form-item>
             <el-form-item label="设为小组账号:">
@@ -209,87 +189,78 @@
             </el-form-item>
           </el-form>
           <div style="text-align: right">
-            <el-button
-              type="info"
-              @click="dialogVisible = false"
-            >取消</el-button>
-            <el-button type="primary" @click="confirmRole">保存</el-button>
+            <el-button type="info"
+                       @click="dialogVisible = false">取消</el-button>
+            <el-button type="primary"
+                       @click="confirmRole">保存</el-button>
           </div>
         </el-dialog>
 
         <!-- 增改 弹窗end -->
 
         <!-- 表格 -->
-        <el-table
-          v-loading="userTableLoading"
-          :data="userTableList"
-          style="
+        <el-table v-loading="userTableLoading"
+                  :data="userTableList"
+                  style="
             width: 95%;
             margin: 0 auto;
             margin-top: 10px;
             border-radius: 8px;
           "
-          stripe
-          border
-          tooltip-effect="dark"
-          @selection-change="handleSelectionChange"
-        >
-          <el-table-column type="selection" width="55" />
-          <el-table-column prop="UserName" label="登录名" width="" />
-          <el-table-column prop="Name" label="名称" width="" />
-          <el-table-column
-            prop="proScope.label"
-            label="所属项目"
-            width=""
-            show-overflow-tooltip
-            :formatter="dataStateFormat"
-          />
+                  stripe
+                  border
+                  tooltip-effect="dark"
+                  @selection-change="handleSelectionChange">
+          <el-table-column type="selection"
+                           width="55" />
+          <el-table-column prop="UserName"
+                           label="登录名"
+                           width="" />
+          <el-table-column prop="Name"
+                           label="名称"
+                           width="" />
+          <el-table-column prop="proScope.label"
+                           label="所属项目"
+                           width=""
+                           show-overflow-tooltip
+                           :formatter="dataStateFormat" />
           <!-- <所属项目> 内容格式化，临时注释 -->
           <!-- :formatter="dataStateFormat" -->
-          <el-table-column
-            prop="groupName"
-            label="所属机构"
-            width=""
-            show-overflow-tooltip
-          />
+          <el-table-column prop="groupName"
+                           label="所属机构"
+                           width=""
+                           show-overflow-tooltip />
 
-          <el-table-column
-            prop="Tel"
-            label="联系电话"
-            width=""
-            show-overflow-tooltip
-            align="center"
-          />
-          <el-table-column
-            align="center"
-            prop="role"
-            label="角色"
-            sortable
-            width=""
-            show-overflow-tooltip
-          />
-          <el-table-column
-            align="center"
-            prop="IsEnd"
-            label="小组账号"
-            show-overflow-tooltip
-            :formatter="stateFormat"
-          />
+          <el-table-column prop="Tel"
+                           label="联系电话"
+                           width=""
+                           show-overflow-tooltip
+                           align="center" />
+          <el-table-column align="center"
+                           prop="role"
+                           label="角色"
+                           sortable
+                           width=""
+                           show-overflow-tooltip />
+          <el-table-column align="center"
+                           prop="IsEnd"
+                           label="小组账号"
+                           show-overflow-tooltip
+                           :formatter="stateFormat" />
 
           <el-table-column align="center">
             <div slot-scope="scope">
-              <el-button size="mini" @click="groupEdit(scope)">编辑</el-button>
+              <el-button size="mini"
+                         @click="groupEdit(scope)">编辑</el-button>
             </div>
           </el-table-column>
         </el-table>
         <!-- 表格end -->
         <!-- 分页 -->
         <div class="pagRight">
-          <pagination
-            v-show="userTableList.length >= 10"
-            :total="userTableList.length"
-            :layout="layout"
-          />
+          <pagination v-show="userTableList.length >= 10"
+                      :total="userTableList.length"
+                      :layout="layout" />
         </div>
         <!-- 分页end -->
       </div>
@@ -528,7 +499,7 @@ export default {
   },
   created() {
     // this.fetchData()
-  
+
   },
   mounted() {
     this.getUserList()
@@ -617,7 +588,7 @@ export default {
       this.dialogVisible = true
       this.dialogType = 'add'
 
-      
+
       console.log(this.dataOption)
     },
     groupEdit(scope) {
@@ -693,7 +664,7 @@ export default {
         // })
       }
     },
-    groupCheck() {},
+    groupCheck() { },
     // 项目范围
     // proScopeClick() {
     //   if (this.multipleSelection.length == 0) {

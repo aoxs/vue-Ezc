@@ -1,18 +1,19 @@
 <template>
-  <div :class="{'hidden':hidden}" class="pagination-container">
-    <el-pagination
-      :background="background"
-      :current-page.sync="currentPage"
-      :page-size.sync="pageSize"
-      :layout="layout"
-      :page-sizes="pageSizes"
-      :total="total"
-      :pager-count="4"
-      :small="small"
-      v-bind="$attrs"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+  <div :class="{'hidden':hidden}"
+       class="pagination-container">
+    <el-pagination :background="background"
+                   :current-page.sync="currentPage"
+                   :page-size.sync="pageSize"
+                   :layout="layout"
+                   
+                   :total="total"
+                   :pager-count="5"
+                   :small="small"
+                   v-bind="$attrs"
+                 
+                   @current-change="handleCurrentChange" />
+                   <!-- :page-sizes="pageSizes" 分页数量 -->
+                     <!-- @size-change="handleSizeChange"  -->
   </div>
 </template>
 
@@ -37,12 +38,12 @@ export default {
     pageSizes: {
       type: Array,
       default() {
-        return [5, 10, 20, 30, 50]
+        return [10, 20, 30, 50]
       }
     },
     layout: {
       type: String,
-      default: 'total, sizes, prev, pager, next'
+      default: 'total, prev, pager, next'
     },
     background: {
       type: Boolean,
@@ -81,12 +82,14 @@ export default {
   },
   methods: {
     handleSizeChange(val) {
+      console.log("page1:", this.currentPage, "limit:", val)
       this.$emit('pagination', { page: this.currentPage, limit: val })
       if (this.autoScroll) {
         scrollTo(0, 800)
       }
     },
     handleCurrentChange(val) {
+      console.log("page2:", val, "limit:", this.pageSize)
       this.$emit('pagination', { page: val, limit: this.pageSize })
       if (this.autoScroll) {
         scrollTo(0, 800)
